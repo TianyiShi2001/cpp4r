@@ -34,10 +34,27 @@ namespace basic
             }
         }
     }
+    void switch_example()
+    {
+        int d{5};
+        switch (d)
+        {
+        case 0:
+            printf("It's Sunday!\n");
+            break;
+        case 6:
+            printf("It's Saturday!\n");
+            break;
+        default:
+            printf("It's weekday.\n");
+            break;
+        }
+    }
     void main()
     {
         while_example();
         for_traditional();
+        switch_example();
     }
 } // namespace basic
 
