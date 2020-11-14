@@ -4,35 +4,35 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1.3 Pointers | C++ for Rustaceans</title>
-  <meta name="description" content="1.3 Pointers | C++ for Rustaceans" />
+  <title>Reading This Book | C++ for Rustaceans</title>
+  <meta name="description" content="Reading This Book | C++ for Rustaceans" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1.3 Pointers | C++ for Rustaceans" />
+  <meta property="og:title" content="Reading This Book | C++ for Rustaceans" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="1.3 Pointers | C++ for Rustaceans" />
+  <meta property="og:description" content="Reading This Book | C++ for Rustaceans" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1.3 Pointers | C++ for Rustaceans" />
+  <meta name="twitter:title" content="Reading This Book | C++ for Rustaceans" />
   
-  <meta name="twitter:description" content="1.3 Pointers | C++ for Rustaceans" />
+  <meta name="twitter:description" content="Reading This Book | C++ for Rustaceans" />
   
 
 <meta name="author" content="Tianyi Shi" />
 
 
-<meta name="date" content="2020-11-13" />
+<meta name="date" content="2020-11-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="hello-data-types.html"/>
-
+<link rel="prev" href="index.html"/>
+<link rel="next" href="about-this-book.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -132,18 +132,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li><strong><a href="https://tianyishi2001.github.io/audiotags">audiotags Manual</a></strong></li>
+<li><strong><a href="https://tianyishi2001.github.io/cpp4r">C++ for Rustaceans</a></strong></li>
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Disclaimer</a></li>
-<li class="chapter" data-level="" data-path="reading-this-book-html.html"><a href="reading-this-book-html.html"><i class="fa fa-check"></i>Reading This Book (HTML)</a></li>
+<li class="chapter" data-level="" data-path="reading-this-book.html"><a href="reading-this-book.html"><i class="fa fa-check"></i>Reading This Book</a></li>
 <li class="chapter" data-level="" data-path="about-this-book.html"><a href="about-this-book.html"><i class="fa fa-check"></i>About this Book</a></li>
 <li class="chapter" data-level="" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="1" data-path="hello-c.html"><a href="hello-c.html"><i class="fa fa-check"></i><b>1</b> Hello C++</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="hello-world.html"><a href="hello-world.html"><i class="fa fa-check"></i><b>1.1</b> Hello world</a></li>
-<li class="chapter" data-level="1.2" data-path="hello-data-types.html"><a href="hello-data-types.html"><i class="fa fa-check"></i><b>1.2</b> Hello Data Types</a></li>
-<li class="chapter" data-level="1.3" data-path="pointers.html"><a href="pointers.html"><i class="fa fa-check"></i><b>1.3</b> Pointers</a></li>
+<li class="chapter" data-level="1.2" data-path="hello-data-types-and-variables.html"><a href="hello-data-types-and-variables.html"><i class="fa fa-check"></i><b>1.2</b> Hello Data Types and Variables</a></li>
+<li class="chapter" data-level="1.3" data-path="pointers-and-references.html"><a href="pointers-and-references.html"><i class="fa fa-check"></i><b>1.3</b> Pointers and References</a></li>
+<li class="chapter" data-level="1.4" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>1.4</b> Control Flow</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="control-flow.html"><a href="control-flow.html#if...else"><i class="fa fa-check"></i><b>1.4.1</b> <code>if...else</code></a></li>
+<li class="chapter" data-level="1.4.2" data-path="control-flow.html"><a href="control-flow.html#while-loop"><i class="fa fa-check"></i><b>1.4.2</b> <code>while</code> Loop</a></li>
+<li class="chapter" data-level="1.4.3" data-path="control-flow.html"><a href="control-flow.html#for-loop"><i class="fa fa-check"></i><b>1.4.3</b> <code>for</code> Loop</a></li>
+<li class="chapter" data-level="1.4.4" data-path="control-flow.html"><a href="control-flow.html#goto-statement-and-breaking-outer-loops"><i class="fa fa-check"></i><b>1.4.4</b> <code>goto</code> Statement and Breaking outer Loops</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -165,37 +172,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="pointers" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Pointers</h2>
-<p>Syntaxes related to pointers and references in C++ are…interesing.</p>
-<p>In rust, when you take a reference to a type <code>T</code>, the type of the reference is <code>&amp;T</code>. The syntax can’t be more natual: you add <code>&amp;</code> to both LHS and RHS:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb7-1"><a href="pointers.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span>  <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb7-2"><a href="pointers.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a<span class="op">:</span> <span class="op">&amp;</span><span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span><span class="dv">5</span><span class="op">;</span> <span class="co">// type annotations are not required; this is just for demonstration</span></span></code></pre></div>
-<p>and when you deference, you use <code>*</code>. Just remembering that <code>*</code> is the reverse of <code>&amp;</code>, everything is natual as well. Every <code>*</code> just removes one <code>&amp;</code> from both LHS and RHS:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb8-1"><a href="pointers.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a<span class="op">:</span> <span class="op">&amp;</span><span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span><span class="dv">5</span><span class="op">;</span></span>
-<span id="cb8-2"><a href="pointers.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span> <span class="op">*</span>p_a<span class="op">;</span></span>
-<span id="cb8-3"><a href="pointers.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span> <span class="op">*&amp;*&amp;*&amp;</span>a</span></code></pre></div>
-<p>In C, this is what you would do to make a pointer:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="pointers.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    a =  <span class="dv">5</span>;</span>
-<span id="cb9-2"><a href="pointers.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> *p_a = &amp;<span class="dv">5</span>;</span>
-<span id="cb9-3"><a href="pointers.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
-<span id="cb9-4"><a href="pointers.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> * p_a = &amp;<span class="dv">5</span>;</span>
-<span id="cb9-5"><a href="pointers.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
-<span id="cb9-6"><a href="pointers.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>*  p_a = &amp;<span class="dv">5</span>;</span></code></pre></div>
-<p>and to dereference a pointer:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="pointers.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> b = *p_a;</span></code></pre></div>
-<p>You add <code>&amp;</code> to RHS, but you add <code>*</code> to LHS. Weird. What’s worse, despite the fact that the variable name really is <code>p_a</code>, not <code>*p_a</code>, and the type really is <code>int*</code>, most people and formatters prepend the asterisk before the variable name, which looks like you’re declaring an <code>int</code> which is clearly not true. So why are people doing that? There are some discussion on <a href="https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type">StackOverflow</a>.</p>
-<p>To be consistent with this weird convention, tools will also name pointer types as <code>`T *`</code> (with a space in between), not <code>`T*`</code>.</p>
-
+<div id="reading-this-book" class="section level1 unnumbered">
+<h1>Reading This Book</h1>
+<ul>
+<li>use left and right arrow keys to navigate to the previous/next page</li>
+<li>click the “font” (big “A”) button on the top-left and change to a serif font if you happen to hate sans-serif fonts as I do.</li>
+<li>If you believe that serious stuff must be rendered by LaTeX as I do, there is a LaTex-rendered PDF for you to download (click the download button on the top)</li>
+<li>If you love to read on a Kindle, there is also an epub output (click the download button on the top).</li>
+</ul>
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="hello-data-types.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="about-this-book.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

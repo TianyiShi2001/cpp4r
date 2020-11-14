@@ -5,7 +5,7 @@ bookdown::gitbook:
     toc:
       collapse: subsection
       before: |
-        <li><strong><a href="https://tianyishi2001.github.io/audiotags">audiotags Manual</a></strong></li>
+        <li><strong><a href="https://tianyishi2001.github.io/cpp4r">C++ for Rustaceans</a></strong></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     download: ["pdf", "epub"]
