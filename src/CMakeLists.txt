@@ -13,14 +13,14 @@ set(CMAKE_CXX_COMPILER "clang++")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(cpp-learn main.cpp)
+
 add_executable(helloworld hello/helloworld.cpp)
 add_executable(hellotypes hello/hellotypes.cpp)
 add_executable(hellopointers hello/hellopointers.cpp)
 add_executable(controlflow hello/controlflow.cpp)
 add_subdirectory(Adder)
 
-target_link_libraries(${PROJECT_NAME} adder)
+# target_link_libraries(helloworld adder)
 
-target_include_directories(${PROJECT_NAME} PUBLIC Adder)
-target_link_directories(${PROJECT_NAME} PRIVATE Adder)
+# target_include_directories(helloworld PUBLIC Adder)
+# target_link_directories(helloworld PRIVATE Adder)

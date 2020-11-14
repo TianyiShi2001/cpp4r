@@ -38,6 +38,7 @@ namespace break_outer
     void with_goto()
     {
         printf("Break outer loop using goto:\n");
+        std::cout << "ijk " << std::endl;
         for (int i = 0; i < 3; ++i)
         {
 
@@ -47,12 +48,12 @@ namespace break_outer
                 {
                     if (i == 1)
                     {
-                        goto the_end;
+                        goto for_i_end;
                     }
-                    std::cout << "i: " << i << " j: " << j << " k " << k << std::endl;
+                    std::cout << i << j << k << std::endl;
                 }
             }
-        the_end:
+        for_i_end:
         {
         }
         }
@@ -61,6 +62,7 @@ namespace break_outer
     void with_flag()
     {
         printf("Break outer loop using flag:\n");
+        std::cout << "ijk " << std::endl;
         bool i_is_1{false};
         for (int i = 0; i < 3; ++i)
         {
@@ -78,7 +80,7 @@ namespace break_outer
                     {
                         i_is_1 = false;
                     }
-                    std::cout << "i: " << i << " j: " << j << " k " << k << std::endl;
+                    std::cout << i << j << k << std::endl;
                 }
                 if (i_is_1)
                 {
@@ -91,6 +93,7 @@ namespace break_outer
     void with_lambda()
     {
         printf("Break outer loop using lambda:\n");
+        std::cout << "ijk " << std::endl;
         for (int i = 0; i < 3; ++i)
         {
             [&] {
@@ -102,7 +105,7 @@ namespace break_outer
                         {
                             return;
                         }
-                        std::cout << "i: " << i << " j: " << j << " k " << k << std::endl;
+                        std::cout << i << j << k << std::endl;
                     }
                 }
             }();
@@ -116,10 +119,4 @@ int main()
     break_outer::with_goto();
     break_outer::with_flag();
     break_outer::with_lambda();
-
-    std::vector<std::string> a{"a", "b", "c"};
-    for (auto s : a)
-    {
-        std::cout << s << std::endl;
-    }
 }

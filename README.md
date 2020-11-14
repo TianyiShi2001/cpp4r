@@ -2,6 +2,8 @@
 
 Navigate to https://tianyishi2001.github.io/cpp4r to read online. Alternatively, you can download the [PDF](https://tianyishi2001.github.io/cpp4r/cpp4r.pdf) or [epub](https://tianyishi2001.github.io/cpp4r/cpp4r.epub) formats.
 
+The actual book is being developed on the [`docs` branch](https://github.com/TianyiShi2001/cpp4r/tree/docs), and the `main` branch contains only the C++ code.
+
 
 # About this Book
 
