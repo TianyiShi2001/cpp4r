@@ -15,7 +15,7 @@ int main()
 
 Write the above code in `hello.cpp`, then you can compile it with `g++ hello.cpp -o hello` and run `./hello` (you can replace `g++` with `clang++` or any other compiler).
 
-A couple of thing to note here:
+A couple of things to note here:
 
 Every C++ executable (as opposed to library) must have a `main()` function that returns `int`. Returning `0` signifies that the program terminates without errors. The final `return 0;` statement can be omitted in the `main()` function.
 
@@ -67,7 +67,6 @@ While the equivalence between the first column and the second column always hold
 While the relationships described in the table are always true, C++'s integer types are much more complex. The types above are fixed width integer types, and there are additional integer types whose width is dependent on the implementation. These include C-compatible ones (i.e. `char`, `short`, `int`, `long`, `long long`), and other C++ artifects such as `int_fast16_t` and `int_least32_t`. You can learn about them at [cppreference](https://en.cppreference.com/w/cpp/types/integer).
 
 For floating numbers, `f32` and `f64` correspond to `float` and `double`, respectively (stand for single-precision and double-precision floating point numbers).
-
 
 Like in Rust, creating a variable requires two steps, declaration and initialization. In C++, there are usually more than one syntax to do any task, and these two basic operations are no exception.
 
@@ -193,7 +192,7 @@ If you have experience in Javascript or Java, most of C++'s control flow syntax 
 
 ### `if...else`
 
-Like Rust, C++ offers `if` and `else` keywords to work with conditionals. Unlike Rust, C++ is not expression-oriented, so you cannot write:
+Like Rust, C++ offers `if` and `else` keywords to work with conditionals. Unlike Rust, C++ is not expression-oriented, so you *cannot* write:
 
 ```c++
 int a = if (true) { 5 } else { 10 };
@@ -260,7 +259,30 @@ for (int i = 0; i < 2; i++)
 
 C++11 introduced the range-based `for` statement, which is also known as a `for...in` loop in most other languages (Rust, Swift, Python, Ruby, ...). The syntax itself is easy but knowing the relationship between the element and the iterable can be tricky. Fortuantely, we are Rustaceans, so an easy way for me to illustrate and for you to understand is to write a few equivalent examples in Rust and C++.
 
-#### Scenario 1: As Reference (Borrowing)
+#### Scenario 1: Copying (Cloning)
+
+```rust
+// Rust
+let v = vec!["a".to_string(), "b".to_string(), "c".to_string()];
+for e.clone() in &v {
+    println!("{}", e);
+}
+```
+
+```c++
+// C++
+#include <iostream>
+#include <vector>
+std::vector<std::string> a{"a", "b", "c"};
+for (auto s : a) // s has type `std::string`
+{
+    std::cout << s << std::endl;
+}
+```
+
+Note how Rust makes it crystal clear that copying during iteration and using `String` for instead of `&str` for static strings are anti-patterns and how C++ makes it easy to write such inefficient code.
+
+#### Scenario 2: As Reference (Borrowing)
 
 ```rust
 // Rust
@@ -281,7 +303,7 @@ for (auto& num : a)
 }
 ```
 
-#### Scenario 2: Mutation
+#### Scenario 3: Mutation
 
 ```rust
 // Rust
@@ -307,28 +329,6 @@ assert(a == (std::vector<int>{2, 3, 4, 5, 6}));
 Note the parentheses surrounding the second argument of `assert`, without which we would get an error. This is because `assert` is a so called `#define` macro, which simply parses its arguments as comma-separated identifiers and does text replacement. Since `std::vector<int>{2, 3, 4, 5, 6}` contains commas, it has to be escaped with parentheses.[^assert] This macro is actually defined in `assert.h` which is part of C's std, and its more or less copied verbatim into C++'s `cassert`. Theoretically I think it is possible to implement C++'s own `assert` or `#define` that removes the need for adding parentheses here and there. However, the C++ committee never cares about ergonomics.
 
 [^assert]: Related to this stackoverflow question: https://stackoverflow.com/questions/38030048
-
-#### Scenario 3: Copying (Cloning)
-
-```rust
-let v = vec!["a".to_string(), "b".to_string(), "c".to_string()];
-for e.clone() in &v {
-    println!("{}", e);
-}
-```
-
-```c++
-// C++
-#include <iostream>
-#include <vector>
-std::vector<std::string> a{"a", "b", "c"};
-for (auto s : a) // s has type `std::string`
-{
-    std::cout << s << std::endl;
-}
-```
-
-Note how Rust makes it crystal clear that copying during iteration and using `String` for instead of `&str` for static strings are an anti-pattern and how C++ makes it easy to write such inefficient code.
 
 <!-- ####
 
@@ -382,7 +382,7 @@ the_end:
 }
 ```
 
-Using `goto` sounds like I am joking. I'm not. People really suggests doing this[^goto-break]. It's a consensus that `goto` statements are error-prone, but there really aren't better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.
+Using `goto` sounds like I am joking. I'm not. People really suggest doing this[^goto-break]. It's a consensus that `goto` statements are error-prone, but there really aren't better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.
 
 Alternatively you can use a flag, which is more verbose, and I think this is even less readable:
 

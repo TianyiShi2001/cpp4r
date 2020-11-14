@@ -16,7 +16,7 @@ I am neither a pro in Rust nor in C++. It is possible that some of my conceptual
 
 `r if (knitr::is_html_output()) '
 
-# Reading This Book (HTML) {-}
+# Reading This Book {-}
 
 - use left and right arrow keys to navigate to the previous/next page
 - click the "font" (big "A") button on the top-left and change to a serif font if you happen to hate sans-serif fonts as I do.
