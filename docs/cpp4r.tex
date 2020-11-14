@@ -453,7 +453,7 @@ and when you deference, you use \texttt{*}. Just remembering that \texttt{*} is 
 \end{Highlighting}
 \end{Shaded}
 
-In C++, this is what you would do to make a pointer:
+In C++, this is how you make a pointer:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -739,14 +739,14 @@ C++ doesn't support this natively, so people are using \texttt{goto} to achieve 
 \NormalTok{        \{}
             \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{1}\NormalTok{)}
 \NormalTok{            \{}
-                \ControlFlowTok{goto}\NormalTok{ the\_end;}
+                \ControlFlowTok{goto}\NormalTok{ for\_j\_end;}
 \NormalTok{            \}}
             \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} i \textless{}\textless{} j \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \NormalTok{        \}}
 \NormalTok{    \}}
-\NormalTok{the\_end:}
-\NormalTok{\{}
-\NormalTok{\}}
+\NormalTok{    for\_j\_end:}
+\NormalTok{    \{}
+\NormalTok{    \}}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -787,7 +787,7 @@ Alternatively you can use a flag, which is more verbose, and I think this is eve
 \end{Highlighting}
 \end{Shaded}
 
-There is another cleaner way, using the lambda trick (but why the hell must I use a lamba for such a basic task???):
+There is another cleaner way, using the lambda trick (but why the hell should I use a lamba for such a basic task???):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -850,6 +850,68 @@ is equivalent to:
 \NormalTok{    printf(}\StringTok{"It\textquotesingle{}s weekday.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
     \ControlFlowTok{break}\NormalTok{;}
 \NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+(I'll start to omit headers from now on.)
+
+Note the \texttt{break} statement at the end of each \texttt{case}, without which the \texttt{default} branch will always be triggered, which is clearly not you meant to do. Oh, if the proper usage requires that \texttt{break;} needs to be appended to every case, why isn't the C++ language designed so that the \texttt{break}s happen implicitly\footnote{We're not the only ones to spot this problem; see this \href{https://stackoverflow.com/questions/252489/why-was-the-switch-statement-designed-to-need-a-break}{StackOverflow question}. But if this is merely a design mistake in C and is inherited by C++, why don't Java and Javascript take the opportunity to break from this ugly semantics? (Stockholm syndrom, I know)}? Are there any \texttt{switch}- or \texttt{match}-like statements in other languages uglier than this? (Sorry there really is, that's \href{https://linuxize.com/post/bash-case-statement/}{bash's \texttt{case} statement}.)
+
+You can group several values into a single branch:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ d = }\DecValTok{5}\NormalTok{;}
+\ControlFlowTok{switch}\NormalTok{ (d)}
+\NormalTok{\{}
+\ControlFlowTok{case} \DecValTok{0}\NormalTok{:}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Sunday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+    \ControlFlowTok{break}\NormalTok{;}
+\ControlFlowTok{case} \DecValTok{6}\NormalTok{:}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Saturday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+    \ControlFlowTok{break}\NormalTok{;}
+\ControlFlowTok{case} \DecValTok{1}\NormalTok{:}
+\ControlFlowTok{case} \DecValTok{2}\NormalTok{:}
+\ControlFlowTok{case} \DecValTok{3}\NormalTok{:}
+\ControlFlowTok{case} \DecValTok{4}\NormalTok{:}
+\ControlFlowTok{case} \DecValTok{5}\NormalTok{:}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s weekday.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+    \ControlFlowTok{break}\NormalTok{;}
+\ControlFlowTok{default}\NormalTok{:}
+\NormalTok{    printf(}\StringTok{"Not a valid day of week!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+    \ControlFlowTok{break}\NormalTok{;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+This is all about \texttt{switch} in C++. Forget everything about the fancy pattern matching in Rust!
+
+\hypertarget{exercise}{%
+\section*{Exercise}\label{exercise}}
+\addcontentsline{toc}{section}{Exercise}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Pointers and references.}
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ x = }\DecValTok{5}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{ y = }\DecValTok{10}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{* px = \&x;}
+\DataTypeTok{int}\NormalTok{* py = \&y;}
+\NormalTok{px = py;}
+\CommentTok{// what are the values of x, y, *px and *py now?}
+
+\DataTypeTok{int}\NormalTok{ i = }\DecValTok{5}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{ j = }\DecValTok{10}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{\& ri = i;}
+\DataTypeTok{int}\NormalTok{\& rj = j;}
+\NormalTok{ri = rj;}
+\CommentTok{// what are the values of i, j, ri and rj now?}
 \end{Highlighting}
 \end{Shaded}
 

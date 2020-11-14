@@ -247,7 +247,7 @@ let   a:  i32 = *p_a;
 let   a:  i32 = *&*&*&a
 ```
 
-In C++, this is what you would do to make a pointer:
+In C++, this is how you make a pointer:
 
 ```c++
 int    a =  5;
@@ -505,14 +505,14 @@ for (int i = 0; i < 3; ++i)
         {
             if (i == 1)
             {
-                goto the_end;
+                goto for_j_end;
             }
             std::cout << i << j << k << std::endl;
         }
     }
-the_end:
-{
-}
+    for_j_end:
+    {
+    }
 }
 ```
 
@@ -550,7 +550,7 @@ for (int i = 0; i < 3; ++i)
 }
 ```
 
-There is another cleaner way, using the lambda trick (but why the hell must I use a lamba for such a basic task???):
+There is another cleaner way, using the lambda trick (but why the hell should I use a lamba for such a basic task???):
 
 ```c++
 printf("Break outer loop using lambda:\n");
@@ -609,4 +609,57 @@ default:
     printf("It's weekday.\n");
     break;
 }
+```
+
+(I'll start to omit headers from now on.)
+
+Note the `break` statement at the end of each `case`, without which the `default` branch will always be triggered, which is clearly not you meant to do. Oh, if the proper usage requires that `break;` needs to be appended to every case, why isn't the C++ language designed so that the `break`s happen implicitly[^fuck-switch]? Are there any `switch`- or `match`-like statements in other languages uglier than this? (Sorry there really is, that's [bash's `case` statement](https://linuxize.com/post/bash-case-statement/).)
+
+[^fuck-switch]: We're not the only ones to spot this problem; see this [StackOverflow question](https://stackoverflow.com/questions/252489/why-was-the-switch-statement-designed-to-need-a-break). But if this is merely a design mistake in C and is inherited by C++, why don't Java and Javascript take the opportunity to break from this ugly semantics? (Stockholm syndrom, I know)
+
+You can group several values into a single branch:
+
+```c++
+int d = 5;
+switch (d)
+{
+case 0:
+    printf("It's Sunday!\n");
+    break;
+case 6:
+    printf("It's Saturday!\n");
+    break;
+case 1:
+case 2:
+case 3:
+case 4:
+case 5:
+    printf("It's weekday.\n");
+    break;
+default:
+    printf("Not a valid day of week!\n");
+    break;
+}
+```
+
+This is all about `switch` in C++. Forget everything about the fancy pattern matching in Rust!
+
+## Exercise {-}
+
+1. **Pointers and references.**
+
+```c++
+int x = 5;
+int y = 10;
+int* px = &x;
+int* py = &y;
+px = py;
+// what are the values of x, y, *px and *py now?
+
+int i = 5;
+int j = 10;
+int& ri = i;
+int& rj = j;
+ri = rj;
+// what are the values of i, j, ri and rj now?
 ```
