@@ -13,3 +13,11 @@ While there is a project called [r4cppp](https://github.com/nrc/r4cppp) that int
 
 - **Typos and grammar mistakes**. English is not my native language, so I make mistakes often. If you find one I would be grateful if you could submit an issue or PR to correct it.
 - **Conceptual mistakes on Rust or C++**. I'm not a professional programmer
+
+# Building The Book
+
+You should be familiar with [Bookdown](https://bookdown.org/). The book can be easily build using RStudio. Since it's a bit complicated for people who don't use R and RStudio, I recommend just reading it online or download the PDF. You're free to copy the markdown files and render them with other tools. However, note that these markdown files are not regualr ones. They are Rmarkdown files, which are basically pandoc markdown + R integration.
+
+If you want to build the book in RStudio, there are some prerequisites:
+
+- The Font 'Source Han Serif' is used for CJK characters in LaTeX output. This font can be downloaded from https://github.com/adobe-fonts/source-han-serif
