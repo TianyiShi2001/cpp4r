@@ -158,7 +158,7 @@ assert(m == 5); // not `*m` !
 ```
 
 Note that you do not (and cannot) use the deference operator (`*`) on a reference. In addition, a reference cannot be re-assigned to point to another value. Apart from these two rules, references are effectively the same as pointers.
-Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be use to mutate the referent.
+Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be used to mutate the referent.
 
 ```c++
 #include <iostream>
