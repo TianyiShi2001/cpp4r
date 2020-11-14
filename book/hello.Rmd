@@ -149,13 +149,13 @@ What about constant strings? Well, like Rust, you can't use the dynamically allo
 ```rust
 // Rust
 const NAME: String = "Hideyo".to_string(); // not allowed!
-const NAME: &'static str = "Hideyo";
+const NAME: &'static str = "Hideyo";       // good
 ```
 
 ```c++
 //C++
 constexpr std::string NAME = "Hideyo"; // not allowed!
-constexpr char NAME[] = "Hideyo";
+constexpr char NAME[] = "Hideyo";      // good
 ```
 
 So you have to use an array of characters. Well, it's technically closer to `const NAME: &[u8] = b"Hideyo";`. Then, if you need to use the `std::string`, you need explicit conversion:
@@ -270,15 +270,25 @@ You add `&` to RHS, but you add `*` to LHS. Weird. What's worse, despite the fac
 
 But wait, how did people learn this weird convention in the first place? On [cppreference](https://en.cppreference.com/w/cpp/language/pointer), and in Bjarne Stroustrup's *A Tour of C++*, the `int* p_a = &5` style is always used, so just...why? Why are people sticking to the anti-standard?
 
+Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others' code.
+
 Since pointers are a heritage from C, it is not surprising that the *creative* C++ designers invented yet another similar syntax for achieving almost the same task: references. You create and read a reference like this:
 
 ```c++
 int l = 5;
-int &m = l;
+int& m = l;
 assert(m == 5); // not `*m` !
 ```
 
-Note that you do not (and cannot) use the deference operator (`*`) on a reference. In addition, a reference cannot be re-assigned to point to another value. Apart from these two rules, references are effectively the same as pointers.
+Note that you can directly create a pointer, but not a reference to a literal, that is to say:
+
+```c++
+int* i = &5; // is valid
+int& j = 5;  // is not allowed
+```
+
+You do not need to (and cannot) use the deference operator (`*`) on a reference to access the value of the referent. In addition, a reference cannot be re-assigned to refer to another value. Apart from these two rules, references are effectively the same as pointers. It can be helpful to see a reference as an *alias* to a *named variable*. Indeed, a reference shares the same memory address as its referent.
+
 Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be used to mutate the referent.
 
 ```c++

@@ -111,12 +111,6 @@
 \usepackage{fontspec}
 \usepackage[slantfont, boldfont]{xeCJK}
 
-% % 设置英文字体
-% \setmainfont{Microsoft YaHei}
-% \setsansfont{Comic Sans MS}
-% \setmonofont{Courier New}
-
-% 设置中文字体
 \setCJKmainfont{Source Han Serif}
 \setCJKmonofont{Source Han Serif}
 \setCJKsansfont{YouYuan}
@@ -154,6 +148,8 @@ While there is a project called \href{https://github.com/nrc/r4cppp}{r4cppp} tha
 \hypertarget{prerequisites}{%
 \chapter*{Prerequisites}\label{prerequisites}}
 \addcontentsline{toc}{chapter}{Prerequisites}
+
+I'm assuming you're an intermediate-level Rustacean. You should understand the majority of the concepts in \href{https://doc.rust-lang.org/book/}{The Book} and also the basics of raw pointers.
 
 You'll need a C++ compiler. I recommend using \texttt{clang++} on Linux \& MacOS because it generally gives better error message than \texttt{g++}. On Windows you should use \texttt{msvc}.
 
@@ -347,7 +343,7 @@ What about constant strings? Well, like Rust, you can't use the dynamically allo
 \begin{Highlighting}[]
 \CommentTok{// Rust}
 \KeywordTok{const}\NormalTok{ NAME}\OperatorTok{:} \DataTypeTok{String} \OperatorTok{=} \StringTok{"Hideyo"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{;} \CommentTok{// not allowed!}
-\KeywordTok{const}\NormalTok{ NAME}\OperatorTok{:} \OperatorTok{\&}\OtherTok{\textquotesingle{}static} \DataTypeTok{str} \OperatorTok{=} \StringTok{"Hideyo"}\OperatorTok{;}
+\KeywordTok{const}\NormalTok{ NAME}\OperatorTok{:} \OperatorTok{\&}\OtherTok{\textquotesingle{}static} \DataTypeTok{str} \OperatorTok{=} \StringTok{"Hideyo"}\OperatorTok{;}       \CommentTok{// good}
 \end{Highlighting}
 \end{Shaded}
 
@@ -355,7 +351,7 @@ What about constant strings? Well, like Rust, you can't use the dynamically allo
 \begin{Highlighting}[]
 \CommentTok{//C++}
 \KeywordTok{constexpr} \BuiltInTok{std::}\NormalTok{string NAME = }\StringTok{"Hideyo"}\NormalTok{; }\CommentTok{// not allowed!}
-\KeywordTok{constexpr} \DataTypeTok{char}\NormalTok{ NAME[] = }\StringTok{"Hideyo"}\NormalTok{;}
+\KeywordTok{constexpr} \DataTypeTok{char}\NormalTok{ NAME[] = }\StringTok{"Hideyo"}\NormalTok{;      }\CommentTok{// good}
 \end{Highlighting}
 \end{Shaded}
 
@@ -482,17 +478,29 @@ You add \texttt{\&} to RHS, but you add \texttt{*} to LHS. Weird. What's worse, 
 
 But wait, how did people learn this weird convention in the first place? On \href{https://en.cppreference.com/w/cpp/language/pointer}{cppreference}, and in Bjarne Stroustrup's \emph{A Tour of C++}, the \texttt{int*\ p\_a\ =\ \&5} style is always used, so just\ldots why? Why are people sticking to the anti-standard?
 
+Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others' code.
+
 Since pointers are a heritage from C, it is not surprising that the \emph{creative} C++ designers invented yet another similar syntax for achieving almost the same task: references. You create and read a reference like this:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \DataTypeTok{int}\NormalTok{ l = }\DecValTok{5}\NormalTok{;}
-\DataTypeTok{int}\NormalTok{ \&m = l;}
+\DataTypeTok{int}\NormalTok{\& m = l;}
 \OtherTok{assert}\NormalTok{(m == }\DecValTok{5}\NormalTok{); }\CommentTok{// not \textasciigrave{}*m\textasciigrave{} !}
 \end{Highlighting}
 \end{Shaded}
 
-Note that you do not (and cannot) use the deference operator (\texttt{*}) on a reference. In addition, a reference cannot be re-assigned to point to another value. Apart from these two rules, references are effectively the same as pointers.
+Note that you can directly create a pointer, but not a reference to a literal, that is to say:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{* i = \&}\DecValTok{5}\NormalTok{; }\CommentTok{// is valid}
+\DataTypeTok{int}\NormalTok{\& j = }\DecValTok{5}\NormalTok{;  }\CommentTok{// is not allowed}
+\end{Highlighting}
+\end{Shaded}
+
+You do not need to (and cannot) use the deference operator (\texttt{*}) on a reference to access the value of the referent. In addition, a reference cannot be re-assigned to refer to another value. Apart from these two rules, references are effectively the same as pointers. It can be helpful to see a reference as an \emph{alias} to a \emph{named variable}. Indeed, a reference shares the same memory address as its referent.
+
 Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be used to mutate the referent.
 
 \begin{Shaded}

@@ -18,8 +18,9 @@ I am neither a pro in Rust nor in C++. It is possible that some of my conceptual
 
 # Reading This Book {-}
 
+- **If you find a typo, error, or anything you think can be improved, click the "edit" icon and you will be redirected to the source markdown file of this page. Then you can easily edit and submit a PR.**
 - use left and right arrow keys to navigate to the previous/next page
-- click the "font" (big "A") button on the top-left and change to a serif font if you happen to hate sans-serif fonts as I do.
+- click the "font" icon on the top-left and change to a serif font if you happen to hate sans-serif fonts as I do.
 - If you believe that serious stuff must be rendered by LaTeX as I do, there is a LaTex-rendered PDF for you to download (click the download button on the top)
 - If you love to read on a Kindle, there is also an epub output (click the download button on the top).
 '`
@@ -31,5 +32,7 @@ I'm a biochemistry student wishing to specialize in computational biology, and I
 While there is a project called [r4cppp](https://github.com/nrc/r4cppp) that introduces Rust to C++ programmers, I haven't found any cpp4r, so I started this one. I'm not an expert in Rust and C++ and I'm writing this book while learning them, so it'll be more like a personal notebook than a perfessional guide. I'll try to make it readable, though.
 
 # Prerequisites {-}
+
+I'm assuming you're an intermediate-level Rustacean. You should understand the majority of the concepts in [The Book](https://doc.rust-lang.org/book/) and also the basics of raw pointers.
 
 You'll need a C++ compiler. I recommend using `clang++` on Linux & MacOS because it generally gives better error message than `g++`. On Windows you should use `msvc`.

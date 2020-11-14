@@ -189,31 +189,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="if...else" class="section level3" number="1.6.1">
 <h3><span class="header-section-number">1.6.1</span> <code>if...else</code></h3>
 <p>Like Rust, C++ offers <code>if</code> and <code>else</code> keywords to work with conditionals. Unlike Rust, C++ is not expression-oriented, so you <em>cannot</em> write:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="control-flow.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="cf">if</span> (<span class="kw">true</span>) { <span class="dv">5</span> } <span class="cf">else</span> { <span class="dv">10</span> };</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="control-flow.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="cf">if</span> (<span class="kw">true</span>) { <span class="dv">5</span> } <span class="cf">else</span> { <span class="dv">10</span> };</span></code></pre></div>
 <p>But this kind of conditional assignment is a very common pattern, so C++ invented yet another syntax specifically designed for this single task: the ternary operator. So, instead of writing:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="control-flow.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a;</span>
-<span id="cb26-2"><a href="control-flow.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">true</span>) { a = <span class="dv">5</span>; } <span class="cf">else</span> { a = <span class="dv">10</span>; };</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="control-flow.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a;</span>
+<span id="cb27-2"><a href="control-flow.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="kw">true</span>) { a = <span class="dv">5</span>; } <span class="cf">else</span> { a = <span class="dv">10</span>; };</span></code></pre></div>
 <p>you could write:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="control-flow.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="kw">true</span> ? <span class="dv">5</span> : <span class="dv">10</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="control-flow.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="kw">true</span> ? <span class="dv">5</span> : <span class="dv">10</span>;</span></code></pre></div>
 </div>
 <div id="while-loop" class="section level3" number="1.6.2">
 <h3><span class="header-section-number">1.6.2</span> <code>while</code> Loop</h3>
 <p>The <code>while</code> loop in C++ has nothing different from Rust, just remember to wrap the test expression with parentheses.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="control-flow.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb28-2"><a href="control-flow.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> i = <span class="dv">10</span>;</span>
-<span id="cb28-3"><a href="control-flow.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (i &gt; <span class="dv">0</span>)</span>
-<span id="cb28-4"><a href="control-flow.html#cb28-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb28-5"><a href="control-flow.html#cb28-5" aria-hidden="true" tabindex="-1"></a>    i--;</span>
-<span id="cb28-6"><a href="control-flow.html#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i == <span class="dv">8</span>)</span>
-<span id="cb28-7"><a href="control-flow.html#cb28-7" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb28-8"><a href="control-flow.html#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span>;</span>
-<span id="cb28-9"><a href="control-flow.html#cb28-9" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb28-10"><a href="control-flow.html#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i == <span class="dv">5</span>)</span>
-<span id="cb28-11"><a href="control-flow.html#cb28-11" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb28-12"><a href="control-flow.html#cb28-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span>;</span>
-<span id="cb28-13"><a href="control-flow.html#cb28-13" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb28-14"><a href="control-flow.html#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb28-15"><a href="control-flow.html#cb28-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="control-flow.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb29-2"><a href="control-flow.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> i = <span class="dv">10</span>;</span>
+<span id="cb29-3"><a href="control-flow.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (i &gt; <span class="dv">0</span>)</span>
+<span id="cb29-4"><a href="control-flow.html#cb29-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb29-5"><a href="control-flow.html#cb29-5" aria-hidden="true" tabindex="-1"></a>    i--;</span>
+<span id="cb29-6"><a href="control-flow.html#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i == <span class="dv">8</span>)</span>
+<span id="cb29-7"><a href="control-flow.html#cb29-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb29-8"><a href="control-flow.html#cb29-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span>;</span>
+<span id="cb29-9"><a href="control-flow.html#cb29-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-10"><a href="control-flow.html#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i == <span class="dv">5</span>)</span>
+<span id="cb29-11"><a href="control-flow.html#cb29-11" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb29-12"><a href="control-flow.html#cb29-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span>;</span>
+<span id="cb29-13"><a href="control-flow.html#cb29-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-14"><a href="control-flow.html#cb29-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb29-15"><a href="control-flow.html#cb29-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="for-loop" class="section level3" number="1.6.3">
 <h3><span class="header-section-number">1.6.3</span> <code>for</code> Loop</h3>
@@ -223,66 +223,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     // do something
 }</code></pre>
 <p>For example:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb30-1"><a href="control-flow.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb30-2"><a href="control-flow.html#cb30-2" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;|i|j|</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb30-3"><a href="control-flow.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">2</span>; i++)</span>
-<span id="cb30-4"><a href="control-flow.html#cb30-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb30-5"><a href="control-flow.html#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; <span class="dv">3</span>; j++)</span>
-<span id="cb30-6"><a href="control-flow.html#cb30-6" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb30-7"><a href="control-flow.html#cb30-7" aria-hidden="true" tabindex="-1"></a>        printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">|</span><span class="sc">%d</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, i, j);</span>
-<span id="cb30-8"><a href="control-flow.html#cb30-8" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb30-9"><a href="control-flow.html#cb30-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb31-1"><a href="control-flow.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb31-2"><a href="control-flow.html#cb31-2" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;|i|j|</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb31-3"><a href="control-flow.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">2</span>; i++)</span>
+<span id="cb31-4"><a href="control-flow.html#cb31-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-5"><a href="control-flow.html#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; <span class="dv">3</span>; j++)</span>
+<span id="cb31-6"><a href="control-flow.html#cb31-6" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb31-7"><a href="control-flow.html#cb31-7" aria-hidden="true" tabindex="-1"></a>        printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">|</span><span class="sc">%d</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, i, j);</span>
+<span id="cb31-8"><a href="control-flow.html#cb31-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb31-9"><a href="control-flow.html#cb31-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>C++11 introduced the range-based <code>for</code> statement, which is also known as a <code>for...in</code> loop in most other languages (Rust, Swift, Python, Ruby, …). The syntax itself is easy but knowing the relationship between the element and the iterable can be tricky. Fortuantely, we are Rustaceans, so an easy way for me to illustrate and for you to understand is to write a few equivalent examples in Rust and C++.</p>
 <div id="scenario-1-copying-cloning" class="section level4" number="1.6.3.1">
 <h4><span class="header-section-number">1.6.3.1</span> Scenario 1: Copying (Cloning)</h4>
-<div class="sourceCode" id="cb31"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb31-1"><a href="control-flow.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
-<span id="cb31-2"><a href="control-flow.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="st">&quot;a&quot;</span><span class="op">.</span>to_string()<span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">.</span>to_string()<span class="op">,</span> <span class="st">&quot;c&quot;</span><span class="op">.</span>to_string()]<span class="op">;</span></span>
-<span id="cb31-3"><a href="control-flow.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e<span class="op">.</span>clone() <span class="kw">in</span> <span class="op">&amp;</span>v <span class="op">{</span></span>
-<span id="cb31-4"><a href="control-flow.html#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> e)<span class="op">;</span></span>
-<span id="cb31-5"><a href="control-flow.html#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb32-1"><a href="control-flow.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
-<span id="cb32-2"><a href="control-flow.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb32-3"><a href="control-flow.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb32-4"><a href="control-flow.html#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="bu">std::</span>string&gt; a{<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>};</span>
-<span id="cb32-5"><a href="control-flow.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span> s : a) <span class="co">// s has type `std::string`</span></span>
-<span id="cb32-6"><a href="control-flow.html#cb32-6" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb32-7"><a href="control-flow.html#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; s &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb32-8"><a href="control-flow.html#cb32-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb32-1"><a href="control-flow.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
+<span id="cb32-2"><a href="control-flow.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="st">&quot;a&quot;</span><span class="op">.</span>to_string()<span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">.</span>to_string()<span class="op">,</span> <span class="st">&quot;c&quot;</span><span class="op">.</span>to_string()]<span class="op">;</span></span>
+<span id="cb32-3"><a href="control-flow.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e<span class="op">.</span>clone() <span class="kw">in</span> <span class="op">&amp;</span>v <span class="op">{</span></span>
+<span id="cb32-4"><a href="control-flow.html#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> e)<span class="op">;</span></span>
+<span id="cb32-5"><a href="control-flow.html#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb33-1"><a href="control-flow.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
+<span id="cb33-2"><a href="control-flow.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb33-3"><a href="control-flow.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb33-4"><a href="control-flow.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="bu">std::</span>string&gt; a{<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>};</span>
+<span id="cb33-5"><a href="control-flow.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span> s : a) <span class="co">// s has type `std::string`</span></span>
+<span id="cb33-6"><a href="control-flow.html#cb33-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb33-7"><a href="control-flow.html#cb33-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; s &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb33-8"><a href="control-flow.html#cb33-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Note how Rust makes it crystal clear that copying during iteration and using <code>String</code> for instead of <code>&amp;str</code> for static strings are anti-patterns and how C++ makes it easy to write such inefficient code.</p>
 </div>
 <div id="scenario-2-as-reference-borrowing" class="section level4" number="1.6.3.2">
 <h4><span class="header-section-number">1.6.3.2</span> Scenario 2: As Reference (Borrowing)</h4>
-<div class="sourceCode" id="cb33"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb33-1"><a href="control-flow.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
-<span id="cb33-2"><a href="control-flow.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
-<span id="cb33-3"><a href="control-flow.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e <span class="kw">in</span> <span class="op">&amp;</span>v <span class="op">{</span></span>
-<span id="cb33-4"><a href="control-flow.html#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> <span class="op">*</span>e)<span class="op">;</span></span>
-<span id="cb33-5"><a href="control-flow.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb34"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb34-1"><a href="control-flow.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
-<span id="cb34-2"><a href="control-flow.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb34-3"><a href="control-flow.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb34-4"><a href="control-flow.html#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; a{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>};</span>
-<span id="cb34-5"><a href="control-flow.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span>&amp; num : a)</span>
-<span id="cb34-6"><a href="control-flow.html#cb34-6" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb34-7"><a href="control-flow.html#cb34-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span>, num); <span class="co">// no asterisk!</span></span>
-<span id="cb34-8"><a href="control-flow.html#cb34-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb34-1"><a href="control-flow.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
+<span id="cb34-2"><a href="control-flow.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb34-3"><a href="control-flow.html#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e <span class="kw">in</span> <span class="op">&amp;</span>v <span class="op">{</span></span>
+<span id="cb34-4"><a href="control-flow.html#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> <span class="op">*</span>e)<span class="op">;</span></span>
+<span id="cb34-5"><a href="control-flow.html#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb35-1"><a href="control-flow.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
+<span id="cb35-2"><a href="control-flow.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb35-3"><a href="control-flow.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb35-4"><a href="control-flow.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; a{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>};</span>
+<span id="cb35-5"><a href="control-flow.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span>&amp; num : a)</span>
+<span id="cb35-6"><a href="control-flow.html#cb35-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb35-7"><a href="control-flow.html#cb35-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span>, num); <span class="co">// no asterisk!</span></span>
+<span id="cb35-8"><a href="control-flow.html#cb35-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div id="scenario-3-mutation" class="section level4" number="1.6.3.3">
 <h4><span class="header-section-number">1.6.3.3</span> Scenario 3: Mutation</h4>
-<div class="sourceCode" id="cb35"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb35-1"><a href="control-flow.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
-<span id="cb35-2"><a href="control-flow.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
-<span id="cb35-3"><a href="control-flow.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e <span class="kw">in</span> <span class="op">&amp;</span><span class="kw">mut</span> v <span class="op">{</span></span>
-<span id="cb35-4"><a href="control-flow.html#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>e <span class="op">=</span> e <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb35-5"><a href="control-flow.html#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb35-6"><a href="control-flow.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="pp">assert_eq!</span>(v<span class="op">,</span> <span class="pp">vec!</span>[<span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">6</span>])<span class="op">;</span></span></code></pre></div>
-<div class="sourceCode" id="cb36"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb36-1"><a href="control-flow.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
-<span id="cb36-2"><a href="control-flow.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb36-3"><a href="control-flow.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span></span>
-<span id="cb36-4"><a href="control-flow.html#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; a{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>};</span>
-<span id="cb36-5"><a href="control-flow.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span> &amp;num : a)</span>
-<span id="cb36-6"><a href="control-flow.html#cb36-6" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb36-7"><a href="control-flow.html#cb36-7" aria-hidden="true" tabindex="-1"></a>    num++;</span>
-<span id="cb36-8"><a href="control-flow.html#cb36-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb36-9"><a href="control-flow.html#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(a == (<span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt;{<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>}));</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb36-1"><a href="control-flow.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
+<span id="cb36-2"><a href="control-flow.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb36-3"><a href="control-flow.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e <span class="kw">in</span> <span class="op">&amp;</span><span class="kw">mut</span> v <span class="op">{</span></span>
+<span id="cb36-4"><a href="control-flow.html#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>e <span class="op">=</span> e <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb36-5"><a href="control-flow.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb36-6"><a href="control-flow.html#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="pp">assert_eq!</span>(v<span class="op">,</span> <span class="pp">vec!</span>[<span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">6</span>])<span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb37-1"><a href="control-flow.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
+<span id="cb37-2"><a href="control-flow.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb37-3"><a href="control-flow.html#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span></span>
+<span id="cb37-4"><a href="control-flow.html#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; a{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>};</span>
+<span id="cb37-5"><a href="control-flow.html#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span> &amp;num : a)</span>
+<span id="cb37-6"><a href="control-flow.html#cb37-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb37-7"><a href="control-flow.html#cb37-7" aria-hidden="true" tabindex="-1"></a>    num++;</span>
+<span id="cb37-8"><a href="control-flow.html#cb37-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb37-9"><a href="control-flow.html#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(a == (<span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt;{<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>}));</span></code></pre></div>
 <p>Note the parentheses surrounding the second argument of <code>assert</code>, without which we would get an error. This is because <code>assert</code> is a so called <code>#define</code> macro, which simply parses its arguments as comma-separated identifiers and does text replacement. Since <code>std::vector&lt;int&gt;{2, 3, 4, 5, 6}</code> contains commas, it has to be escaped with parentheses.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> This macro is actually defined in <code>assert.h</code> which is part of C’s std, and its more or less copied verbatim into C++’s <code>cassert</code>. Theoretically I think it is possible to implement C++’s own <code>assert</code> or <code>#define</code> that removes the need for adding parentheses here and there. However, the C++ committee never cares about ergonomics.</p>
 <!-- ####
 
@@ -297,43 +297,20 @@ for e in v {
 <div id="goto-statement-and-breaking-outer-loops" class="section level3" number="1.6.4">
 <h3><span class="header-section-number">1.6.4</span> <code>goto</code> Statement and Breaking outer Loops</h3>
 <p>Rust, like Java and Python, allows you to break an outer loop from an inner loop:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb37-1"><a href="control-flow.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> i <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span><span class="dv">3</span> <span class="op">{</span></span>
-<span id="cb37-2"><a href="control-flow.html#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">&#39;for_j</span><span class="op">:</span> <span class="kw">for</span> j <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span><span class="dv">3</span> <span class="op">{</span></span>
-<span id="cb37-3"><a href="control-flow.html#cb37-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">for</span> k <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span><span class="dv">3</span> <span class="op">{</span></span>
-<span id="cb37-4"><a href="control-flow.html#cb37-4" aria-hidden="true" tabindex="-1"></a>            <span class="kw">if</span> i <span class="op">==</span> <span class="dv">1</span> <span class="op">{</span></span>
-<span id="cb37-5"><a href="control-flow.html#cb37-5" aria-hidden="true" tabindex="-1"></a>                <span class="kw">break</span> <span class="ot">&#39;for_j</span><span class="op">;</span></span>
-<span id="cb37-6"><a href="control-flow.html#cb37-6" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
-<span id="cb37-7"><a href="control-flow.html#cb37-7" aria-hidden="true" tabindex="-1"></a>            <span class="pp">println!</span>(<span class="st">&quot;{} {} {}&quot;</span><span class="op">,</span> i<span class="op">,</span> j<span class="op">,</span> k)<span class="op">;</span></span>
-<span id="cb37-8"><a href="control-flow.html#cb37-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb37-9"><a href="control-flow.html#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb37-10"><a href="control-flow.html#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb38-1"><a href="control-flow.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> i <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span><span class="dv">3</span> <span class="op">{</span></span>
+<span id="cb38-2"><a href="control-flow.html#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="ot">&#39;for_j</span><span class="op">:</span> <span class="kw">for</span> j <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span><span class="dv">3</span> <span class="op">{</span></span>
+<span id="cb38-3"><a href="control-flow.html#cb38-3" aria-hidden="true" tabindex="-1"></a>        <span class="kw">for</span> k <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span><span class="dv">3</span> <span class="op">{</span></span>
+<span id="cb38-4"><a href="control-flow.html#cb38-4" aria-hidden="true" tabindex="-1"></a>            <span class="kw">if</span> i <span class="op">==</span> <span class="dv">1</span> <span class="op">{</span></span>
+<span id="cb38-5"><a href="control-flow.html#cb38-5" aria-hidden="true" tabindex="-1"></a>                <span class="kw">break</span> <span class="ot">&#39;for_j</span><span class="op">;</span></span>
+<span id="cb38-6"><a href="control-flow.html#cb38-6" aria-hidden="true" tabindex="-1"></a>            <span class="op">}</span></span>
+<span id="cb38-7"><a href="control-flow.html#cb38-7" aria-hidden="true" tabindex="-1"></a>            <span class="pp">println!</span>(<span class="st">&quot;{} {} {}&quot;</span><span class="op">,</span> i<span class="op">,</span> j<span class="op">,</span> k)<span class="op">;</span></span>
+<span id="cb38-8"><a href="control-flow.html#cb38-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb38-9"><a href="control-flow.html#cb38-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb38-10"><a href="control-flow.html#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>C++ doesn’t support this natively, so people are using <code>goto</code> to achieve this:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb38-1"><a href="control-flow.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb38-2"><a href="control-flow.html#cb38-2" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using goto:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb38-3"><a href="control-flow.html#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;ijk &quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb38-4"><a href="control-flow.html#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
-<span id="cb38-5"><a href="control-flow.html#cb38-5" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb38-6"><a href="control-flow.html#cb38-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-7"><a href="control-flow.html#cb38-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; <span class="dv">3</span>; ++j)</span>
-<span id="cb38-8"><a href="control-flow.html#cb38-8" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb38-9"><a href="control-flow.html#cb38-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; <span class="dv">3</span>; ++k)</span>
-<span id="cb38-10"><a href="control-flow.html#cb38-10" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb38-11"><a href="control-flow.html#cb38-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (i == <span class="dv">1</span>)</span>
-<span id="cb38-12"><a href="control-flow.html#cb38-12" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb38-13"><a href="control-flow.html#cb38-13" aria-hidden="true" tabindex="-1"></a>                <span class="cf">goto</span> the_end;</span>
-<span id="cb38-14"><a href="control-flow.html#cb38-14" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb38-15"><a href="control-flow.html#cb38-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb38-16"><a href="control-flow.html#cb38-16" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb38-17"><a href="control-flow.html#cb38-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb38-18"><a href="control-flow.html#cb38-18" aria-hidden="true" tabindex="-1"></a>the_end:</span>
-<span id="cb38-19"><a href="control-flow.html#cb38-19" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb38-20"><a href="control-flow.html#cb38-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb38-21"><a href="control-flow.html#cb38-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Using <code>goto</code> sounds like I am joking. I’m not. People really suggest doing this<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. It’s a consensus that <code>goto</code> statements are error-prone, but there really aren’t better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.</p>
-<p>Alternatively you can use a flag, which is more verbose, and I think this is even less readable:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="control-flow.html#cb39-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using flag:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb39-2"><a href="control-flow.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;ijk &quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb39-3"><a href="control-flow.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> i_is_1{<span class="kw">false</span>};</span>
+<div class="sourceCode" id="cb39"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb39-1"><a href="control-flow.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb39-2"><a href="control-flow.html#cb39-2" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using goto:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb39-3"><a href="control-flow.html#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;ijk &quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
 <span id="cb39-4"><a href="control-flow.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
 <span id="cb39-5"><a href="control-flow.html#cb39-5" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb39-6"><a href="control-flow.html#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
@@ -343,67 +320,90 @@ for e in v {
 <span id="cb39-10"><a href="control-flow.html#cb39-10" aria-hidden="true" tabindex="-1"></a>        {</span>
 <span id="cb39-11"><a href="control-flow.html#cb39-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (i == <span class="dv">1</span>)</span>
 <span id="cb39-12"><a href="control-flow.html#cb39-12" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb39-13"><a href="control-flow.html#cb39-13" aria-hidden="true" tabindex="-1"></a>                i_is_1 = <span class="kw">true</span>;</span>
-<span id="cb39-14"><a href="control-flow.html#cb39-14" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span>;</span>
-<span id="cb39-15"><a href="control-flow.html#cb39-15" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb39-16"><a href="control-flow.html#cb39-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span></span>
-<span id="cb39-17"><a href="control-flow.html#cb39-17" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb39-18"><a href="control-flow.html#cb39-18" aria-hidden="true" tabindex="-1"></a>                i_is_1 = <span class="kw">false</span>;</span>
-<span id="cb39-19"><a href="control-flow.html#cb39-19" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb39-20"><a href="control-flow.html#cb39-20" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb39-21"><a href="control-flow.html#cb39-21" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb39-22"><a href="control-flow.html#cb39-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (i_is_1)</span>
-<span id="cb39-23"><a href="control-flow.html#cb39-23" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb39-24"><a href="control-flow.html#cb39-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span>;</span>
-<span id="cb39-25"><a href="control-flow.html#cb39-25" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb39-26"><a href="control-flow.html#cb39-26" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb39-27"><a href="control-flow.html#cb39-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>There is another cleaner way, using the lambda trick (but why the hell must I use a lamba for such a basic task???):</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="control-flow.html#cb40-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using lambda:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb39-13"><a href="control-flow.html#cb39-13" aria-hidden="true" tabindex="-1"></a>                <span class="cf">goto</span> the_end;</span>
+<span id="cb39-14"><a href="control-flow.html#cb39-14" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb39-15"><a href="control-flow.html#cb39-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb39-16"><a href="control-flow.html#cb39-16" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb39-17"><a href="control-flow.html#cb39-17" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb39-18"><a href="control-flow.html#cb39-18" aria-hidden="true" tabindex="-1"></a>the_end:</span>
+<span id="cb39-19"><a href="control-flow.html#cb39-19" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb39-20"><a href="control-flow.html#cb39-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-21"><a href="control-flow.html#cb39-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Using <code>goto</code> sounds like I am joking. I’m not. People really suggest doing this<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>. It’s a consensus that <code>goto</code> statements are error-prone, but there really aren’t better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.</p>
+<p>Alternatively you can use a flag, which is more verbose, and I think this is even less readable:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb40-1"><a href="control-flow.html#cb40-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using flag:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
 <span id="cb40-2"><a href="control-flow.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;ijk &quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb40-3"><a href="control-flow.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
-<span id="cb40-4"><a href="control-flow.html#cb40-4" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb40-5"><a href="control-flow.html#cb40-5" aria-hidden="true" tabindex="-1"></a>    [&amp;] {</span>
-<span id="cb40-6"><a href="control-flow.html#cb40-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; <span class="dv">3</span>; ++j)</span>
-<span id="cb40-7"><a href="control-flow.html#cb40-7" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb40-8"><a href="control-flow.html#cb40-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; <span class="dv">3</span>; ++k)</span>
-<span id="cb40-9"><a href="control-flow.html#cb40-9" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb40-10"><a href="control-flow.html#cb40-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (i == <span class="dv">1</span>)</span>
-<span id="cb40-11"><a href="control-flow.html#cb40-11" aria-hidden="true" tabindex="-1"></a>                {</span>
-<span id="cb40-12"><a href="control-flow.html#cb40-12" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span>;</span>
-<span id="cb40-13"><a href="control-flow.html#cb40-13" aria-hidden="true" tabindex="-1"></a>                }</span>
-<span id="cb40-14"><a href="control-flow.html#cb40-14" aria-hidden="true" tabindex="-1"></a>                <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb40-3"><a href="control-flow.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> i_is_1{<span class="kw">false</span>};</span>
+<span id="cb40-4"><a href="control-flow.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
+<span id="cb40-5"><a href="control-flow.html#cb40-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb40-6"><a href="control-flow.html#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="control-flow.html#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; <span class="dv">3</span>; ++j)</span>
+<span id="cb40-8"><a href="control-flow.html#cb40-8" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb40-9"><a href="control-flow.html#cb40-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; <span class="dv">3</span>; ++k)</span>
+<span id="cb40-10"><a href="control-flow.html#cb40-10" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb40-11"><a href="control-flow.html#cb40-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (i == <span class="dv">1</span>)</span>
+<span id="cb40-12"><a href="control-flow.html#cb40-12" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb40-13"><a href="control-flow.html#cb40-13" aria-hidden="true" tabindex="-1"></a>                i_is_1 = <span class="kw">true</span>;</span>
+<span id="cb40-14"><a href="control-flow.html#cb40-14" aria-hidden="true" tabindex="-1"></a>                <span class="cf">break</span>;</span>
 <span id="cb40-15"><a href="control-flow.html#cb40-15" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb40-16"><a href="control-flow.html#cb40-16" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb40-17"><a href="control-flow.html#cb40-17" aria-hidden="true" tabindex="-1"></a>    }();</span>
-<span id="cb40-18"><a href="control-flow.html#cb40-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb40-16"><a href="control-flow.html#cb40-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span></span>
+<span id="cb40-17"><a href="control-flow.html#cb40-17" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb40-18"><a href="control-flow.html#cb40-18" aria-hidden="true" tabindex="-1"></a>                i_is_1 = <span class="kw">false</span>;</span>
+<span id="cb40-19"><a href="control-flow.html#cb40-19" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb40-20"><a href="control-flow.html#cb40-20" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb40-21"><a href="control-flow.html#cb40-21" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb40-22"><a href="control-flow.html#cb40-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (i_is_1)</span>
+<span id="cb40-23"><a href="control-flow.html#cb40-23" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb40-24"><a href="control-flow.html#cb40-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span>;</span>
+<span id="cb40-25"><a href="control-flow.html#cb40-25" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb40-26"><a href="control-flow.html#cb40-26" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb40-27"><a href="control-flow.html#cb40-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>There is another cleaner way, using the lambda trick (but why the hell must I use a lamba for such a basic task???):</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="control-flow.html#cb41-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using lambda:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb41-2"><a href="control-flow.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;ijk &quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb41-3"><a href="control-flow.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
+<span id="cb41-4"><a href="control-flow.html#cb41-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb41-5"><a href="control-flow.html#cb41-5" aria-hidden="true" tabindex="-1"></a>    [&amp;] {</span>
+<span id="cb41-6"><a href="control-flow.html#cb41-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; <span class="dv">3</span>; ++j)</span>
+<span id="cb41-7"><a href="control-flow.html#cb41-7" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb41-8"><a href="control-flow.html#cb41-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; <span class="dv">3</span>; ++k)</span>
+<span id="cb41-9"><a href="control-flow.html#cb41-9" aria-hidden="true" tabindex="-1"></a>            {</span>
+<span id="cb41-10"><a href="control-flow.html#cb41-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (i == <span class="dv">1</span>)</span>
+<span id="cb41-11"><a href="control-flow.html#cb41-11" aria-hidden="true" tabindex="-1"></a>                {</span>
+<span id="cb41-12"><a href="control-flow.html#cb41-12" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span>;</span>
+<span id="cb41-13"><a href="control-flow.html#cb41-13" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb41-14"><a href="control-flow.html#cb41-14" aria-hidden="true" tabindex="-1"></a>                <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb41-15"><a href="control-flow.html#cb41-15" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb41-16"><a href="control-flow.html#cb41-16" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb41-17"><a href="control-flow.html#cb41-17" aria-hidden="true" tabindex="-1"></a>    }();</span>
+<span id="cb41-18"><a href="control-flow.html#cb41-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>I’ll get back to lamdas later. For now just accept that they are roughly equivalent to Rust’s closures.</p>
 </div>
 <div id="switch" class="section level3" number="1.6.5">
 <h3><span class="header-section-number">1.6.5</span> <code>switch</code></h3>
 <p>C++’s <code>switch</code> is essentially a shortcut for a series of <code>if...else if...else if...else</code> statements. Well, often they are actually more <em>verbose</em> than the <code>if...else</code> chain.</p>
 <p>The following C++ code</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb41-1"><a href="control-flow.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> d = <span class="dv">5</span>;</span>
-<span id="cb41-2"><a href="control-flow.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (d == <span class="dv">0</span>) {</span>
-<span id="cb41-3"><a href="control-flow.html#cb41-3" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s Sunday!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb41-4"><a href="control-flow.html#cb41-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (d == <span class="dv">6</span>) {</span>
-<span id="cb41-5"><a href="control-flow.html#cb41-5" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s Saturday!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb41-6"><a href="control-flow.html#cb41-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb41-7"><a href="control-flow.html#cb41-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s weekday.</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb41-8"><a href="control-flow.html#cb41-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="control-flow.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> d = <span class="dv">5</span>;</span>
+<span id="cb42-2"><a href="control-flow.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (d == <span class="dv">0</span>) {</span>
+<span id="cb42-3"><a href="control-flow.html#cb42-3" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s Sunday!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb42-4"><a href="control-flow.html#cb42-4" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> <span class="cf">if</span> (d == <span class="dv">6</span>) {</span>
+<span id="cb42-5"><a href="control-flow.html#cb42-5" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s Saturday!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb42-6"><a href="control-flow.html#cb42-6" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb42-7"><a href="control-flow.html#cb42-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s weekday.</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb42-8"><a href="control-flow.html#cb42-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>is equivalent to:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb42-1"><a href="control-flow.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> (d)</span>
-<span id="cb42-2"><a href="control-flow.html#cb42-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb42-3"><a href="control-flow.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="dv">0</span>:</span>
-<span id="cb42-4"><a href="control-flow.html#cb42-4" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s Sunday!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb42-5"><a href="control-flow.html#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span>;</span>
-<span id="cb42-6"><a href="control-flow.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="dv">6</span>:</span>
-<span id="cb42-7"><a href="control-flow.html#cb42-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s Saturday!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb42-8"><a href="control-flow.html#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span>;</span>
-<span id="cb42-9"><a href="control-flow.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="cf">default</span>:</span>
-<span id="cb42-10"><a href="control-flow.html#cb42-10" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s weekday.</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb42-11"><a href="control-flow.html#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span>;</span>
-<span id="cb42-12"><a href="control-flow.html#cb42-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="control-flow.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="cf">switch</span> (d)</span>
+<span id="cb43-2"><a href="control-flow.html#cb43-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb43-3"><a href="control-flow.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="dv">0</span>:</span>
+<span id="cb43-4"><a href="control-flow.html#cb43-4" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s Sunday!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb43-5"><a href="control-flow.html#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span>;</span>
+<span id="cb43-6"><a href="control-flow.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="dv">6</span>:</span>
+<span id="cb43-7"><a href="control-flow.html#cb43-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s Saturday!</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb43-8"><a href="control-flow.html#cb43-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span>;</span>
+<span id="cb43-9"><a href="control-flow.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="cf">default</span>:</span>
+<span id="cb43-10"><a href="control-flow.html#cb43-10" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;It&#39;s weekday.</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb43-11"><a href="control-flow.html#cb43-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span>;</span>
+<span id="cb43-12"><a href="control-flow.html#cb43-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 
 </div>
 </div>
@@ -460,8 +460,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/tianyishi2001/cpp4r/tree/docs/book/hello.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,

@@ -204,26 +204,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>You add <code>&amp;</code> to RHS, but you add <code>*</code> to LHS. Weird. What’s worse, despite the fact that the variable name really is <code>p_a</code>, not <code>*p_a</code>, and the type really is <code>int*</code>, most people and formatters prepend the asterisk before the variable name, which looks like you’re declaring an <code>int</code> which is clearly not true. So why are people doing that? There are some discussion on <a href="https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type">StackOverflow</a>.</p>
 <!-- To be consistent with this weird convention, tools will also name pointer types as `` `T *` `` (with a space in between), not `` `T*` ``. -->
 <p>But wait, how did people learn this weird convention in the first place? On <a href="https://en.cppreference.com/w/cpp/language/pointer">cppreference</a>, and in Bjarne Stroustrup’s <em>A Tour of C++</em>, the <code>int* p_a = &amp;5</code> style is always used, so just…why? Why are people sticking to the anti-standard?</p>
+<p>Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others’ code.</p>
 <p>Since pointers are a heritage from C, it is not surprising that the <em>creative</em> C++ designers invented yet another similar syntax for achieving almost the same task: references. You create and read a reference like this:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="pointers-and-references.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> l = <span class="dv">5</span>;</span>
-<span id="cb22-2"><a href="pointers-and-references.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> &amp;m = l;</span>
+<span id="cb22-2"><a href="pointers-and-references.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>&amp; m = l;</span>
 <span id="cb22-3"><a href="pointers-and-references.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(m == <span class="dv">5</span>); <span class="co">// not `*m` !</span></span></code></pre></div>
-<p>Note that you do not (and cannot) use the deference operator (<code>*</code>) on a reference. In addition, a reference cannot be re-assigned to point to another value. Apart from these two rules, references are effectively the same as pointers.
-Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be used to mutate the referent.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="pointers-and-references.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb23-2"><a href="pointers-and-references.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main()</span>
-<span id="cb23-3"><a href="pointers-and-references.html#cb23-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb23-4"><a href="pointers-and-references.html#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a{<span class="dv">5</span>};</span>
-<span id="cb23-5"><a href="pointers-and-references.html#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> &amp;r_a = a;  <span class="co">// create a reference</span></span>
-<span id="cb23-6"><a href="pointers-and-references.html#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> *p_a = &amp;a; <span class="co">// create a pointer</span></span>
-<span id="cb23-7"><a href="pointers-and-references.html#cb23-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;| a|r_a|*p_a|     p_a      |</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb23-8"><a href="pointers-and-references.html#cb23-8" aria-hidden="true" tabindex="-1"></a>    a = <span class="dv">10</span>; <span class="co">// mutate the value</span></span>
-<span id="cb23-9"><a href="pointers-and-references.html#cb23-9" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
-<span id="cb23-10"><a href="pointers-and-references.html#cb23-10" aria-hidden="true" tabindex="-1"></a>    r_a = <span class="dv">15</span>; <span class="co">// mutate via reference; no asterisk!</span></span>
-<span id="cb23-11"><a href="pointers-and-references.html#cb23-11" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
-<span id="cb23-12"><a href="pointers-and-references.html#cb23-12" aria-hidden="true" tabindex="-1"></a>    *p_a = <span class="dv">20</span>; <span class="co">// mutate via pointer</span></span>
-<span id="cb23-13"><a href="pointers-and-references.html#cb23-13" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
-<span id="cb23-14"><a href="pointers-and-references.html#cb23-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Note that you can directly create a pointer, but not a reference to a literal, that is to say:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="pointers-and-references.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>* i = &amp;<span class="dv">5</span>; <span class="co">// is valid</span></span>
+<span id="cb23-2"><a href="pointers-and-references.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>&amp; j = <span class="dv">5</span>;  <span class="co">// is not allowed</span></span></code></pre></div>
+<p>You do not need to (and cannot) use the deference operator (<code>*</code>) on a reference to access the value of the referent. In addition, a reference cannot be re-assigned to refer to another value. Apart from these two rules, references are effectively the same as pointers. It can be helpful to see a reference as an <em>alias</em> to a <em>named variable</em>. Indeed, a reference shares the same memory address as its referent.</p>
+<p>Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be used to mutate the referent.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="pointers-and-references.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb24-2"><a href="pointers-and-references.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main()</span>
+<span id="cb24-3"><a href="pointers-and-references.html#cb24-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb24-4"><a href="pointers-and-references.html#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a{<span class="dv">5</span>};</span>
+<span id="cb24-5"><a href="pointers-and-references.html#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> &amp;r_a = a;  <span class="co">// create a reference</span></span>
+<span id="cb24-6"><a href="pointers-and-references.html#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> *p_a = &amp;a; <span class="co">// create a pointer</span></span>
+<span id="cb24-7"><a href="pointers-and-references.html#cb24-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;| a|r_a|*p_a|     p_a      |</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb24-8"><a href="pointers-and-references.html#cb24-8" aria-hidden="true" tabindex="-1"></a>    a = <span class="dv">10</span>; <span class="co">// mutate the value</span></span>
+<span id="cb24-9"><a href="pointers-and-references.html#cb24-9" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
+<span id="cb24-10"><a href="pointers-and-references.html#cb24-10" aria-hidden="true" tabindex="-1"></a>    r_a = <span class="dv">15</span>; <span class="co">// mutate via reference; no asterisk!</span></span>
+<span id="cb24-11"><a href="pointers-and-references.html#cb24-11" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
+<span id="cb24-12"><a href="pointers-and-references.html#cb24-12" aria-hidden="true" tabindex="-1"></a>    *p_a = <span class="dv">20</span>; <span class="co">// mutate via pointer</span></span>
+<span id="cb24-13"><a href="pointers-and-references.html#cb24-13" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
+<span id="cb24-14"><a href="pointers-and-references.html#cb24-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>| a|r_a|*p_a|     p_a      |
 |10| 10|  10|0x7ffe09e40404|
 |15| 15|  15|0x7ffe09e40404|
@@ -266,8 +270,8 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": null,
-"text": null
+"link": "https://github.com/tianyishi2001/cpp4r/tree/docs/book/hello.Rmd",
+"text": "Edit"
 },
 "history": {
 "link": null,

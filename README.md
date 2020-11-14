@@ -21,3 +21,6 @@ You should be familiar with [Bookdown](https://bookdown.org/). The book can be e
 If you want to build the book in RStudio, there are some prerequisites:
 
 - The Font 'Source Han Serif' is used for CJK characters in LaTeX output. This font can be downloaded from https://github.com/adobe-fonts/source-han-serif
+
+| C++ | Rust | Rust (pedantic) |
+| --- | ---- | --------------- |
