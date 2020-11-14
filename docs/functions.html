@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Reading This Book | C++ for Rustaceans</title>
-  <meta name="description" content="Reading This Book | C++ for Rustaceans" />
+  <title>1.4 Functions | C++ for Rustaceans</title>
+  <meta name="description" content="1.4 Functions | C++ for Rustaceans" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Reading This Book | C++ for Rustaceans" />
+  <meta property="og:title" content="1.4 Functions | C++ for Rustaceans" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Reading This Book | C++ for Rustaceans" />
+  <meta property="og:description" content="1.4 Functions | C++ for Rustaceans" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Reading This Book | C++ for Rustaceans" />
+  <meta name="twitter:title" content="1.4 Functions | C++ for Rustaceans" />
   
-  <meta name="twitter:description" content="Reading This Book | C++ for Rustaceans" />
+  <meta name="twitter:description" content="1.4 Functions | C++ for Rustaceans" />
   
 
 <meta name="author" content="Tianyi Shi" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="about-this-book.html"/>
+<link rel="prev" href="variables.html"/>
+<link rel="next" href="pointers-and-references.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -182,22 +182,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reading-this-book" class="section level1 unnumbered">
-<h1>Reading This Book</h1>
-<ul>
-<li>use left and right arrow keys to navigate to the previous/next page</li>
-<li>click the “font” (big “A”) button on the top-left and change to a serif font if you happen to hate sans-serif fonts as I do.</li>
-<li>If you believe that serious stuff must be rendered by LaTeX as I do, there is a LaTex-rendered PDF for you to download (click the download button on the top)</li>
-<li>If you love to read on a Kindle, there is also an epub output (click the download button on the top).</li>
-</ul>
+<div id="functions" class="section level2" number="1.4">
+<h2><span class="header-section-number">1.4</span> Functions</h2>
+<p>Functions are declared and defined in the following way:</p>
+<pre><code>&lt;return_type&gt; &lt;function_name&gt;(&lt;params&gt;) {
+    // do something
+    return something;
+}</code></pre>
+<p>For example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="functions.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb16-2"><a href="functions.html#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="functions.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> square(<span class="dt">float</span> a)</span>
+<span id="cb16-4"><a href="functions.html#cb16-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-5"><a href="functions.html#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a * a;</span>
+<span id="cb16-6"><a href="functions.html#cb16-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-7"><a href="functions.html#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="functions.html#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main()</span>
+<span id="cb16-9"><a href="functions.html#cb16-9" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb16-10"><a href="functions.html#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> x = <span class="fl">2.5</span>;</span>
+<span id="cb16-11"><a href="functions.html#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;square of &quot;</span> &lt;&lt; x &lt;&lt; <span class="st">&quot;is&quot;</span> &lt;&lt; square(x) &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb16-12"><a href="functions.html#cb16-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Note that a function must be <em>declared</em> before it can be used. This means the following won’t work:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb17-1"><a href="functions.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb17-2"><a href="functions.html#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="functions.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">// float square(float);</span></span>
+<span id="cb17-4"><a href="functions.html#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="functions.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main()</span>
+<span id="cb17-6"><a href="functions.html#cb17-6" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb17-7"><a href="functions.html#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">float</span> x = <span class="fl">2.5</span>;</span>
+<span id="cb17-8"><a href="functions.html#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;square of &quot;</span> &lt;&lt; x &lt;&lt; <span class="st">&quot;is&quot;</span> &lt;&lt; square(x) &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb17-9"><a href="functions.html#cb17-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-10"><a href="functions.html#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="functions.html#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="functions.html#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> square(<span class="dt">float</span> a)</span>
+<span id="cb17-13"><a href="functions.html#cb17-13" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb17-14"><a href="functions.html#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a * a;</span>
+<span id="cb17-15"><a href="functions.html#cb17-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>However, by uncommenting the third line, it works. When you use a function, the compiler must know the signature, but not necessarily the <em>definition</em> of the function. This is why in C++ (and in C) people split their funtions into signatures which go into header files, and definitions which go into <code>.cpp</code> files. This practice, coupled with C’s macro system (inherited by C++), leads to many pitfalls and confusing situations.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> In particular, it can be difficult to just find the definition of a function without a decent and properly configured IDE. I’ll get back to header files later. For now we’ll be working with single-file programs without splitting declaration and definitions.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><a href="https://softwareengineering.stackexchange.com/questions/180904/are-header-files-actually-good" class="uri">https://softwareengineering.stackexchange.com/questions/180904/are-header-files-actually-good</a><a href="functions.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="about-this-book.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="variables.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pointers-and-references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

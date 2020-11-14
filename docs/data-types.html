@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Reading This Book | C++ for Rustaceans</title>
-  <meta name="description" content="Reading This Book | C++ for Rustaceans" />
+  <title>1.2 Data Types | C++ for Rustaceans</title>
+  <meta name="description" content="1.2 Data Types | C++ for Rustaceans" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Reading This Book | C++ for Rustaceans" />
+  <meta property="og:title" content="1.2 Data Types | C++ for Rustaceans" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Reading This Book | C++ for Rustaceans" />
+  <meta property="og:description" content="1.2 Data Types | C++ for Rustaceans" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Reading This Book | C++ for Rustaceans" />
+  <meta name="twitter:title" content="1.2 Data Types | C++ for Rustaceans" />
   
-  <meta name="twitter:description" content="Reading This Book | C++ for Rustaceans" />
+  <meta name="twitter:description" content="1.2 Data Types | C++ for Rustaceans" />
   
 
 <meta name="author" content="Tianyi Shi" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="about-this-book.html"/>
+<link rel="prev" href="hello-world.html"/>
+<link rel="next" href="variables.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -182,22 +182,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reading-this-book" class="section level1 unnumbered">
-<h1>Reading This Book</h1>
-<ul>
-<li>use left and right arrow keys to navigate to the previous/next page</li>
-<li>click the “font” (big “A”) button on the top-left and change to a serif font if you happen to hate sans-serif fonts as I do.</li>
-<li>If you believe that serious stuff must be rendered by LaTeX as I do, there is a LaTex-rendered PDF for you to download (click the download button on the top)</li>
-<li>If you love to read on a Kindle, there is also an epub output (click the download button on the top).</li>
-</ul>
+<div id="data-types" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Data Types</h2>
+<div id="integer-types" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Integer Types</h3>
+<p>The following table summarises the relationship between Rust’s and C++’s integer data types:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Rust</th>
+<th align="center">C++</th>
+<th align="center">C &amp; C++</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><code>i8</code></td>
+<td align="center"><code>int8_t</code></td>
+<td align="center"><code>char</code></td>
+</tr>
+<tr class="even">
+<td align="center"><code>i16</code></td>
+<td align="center"><code>int16_t</code></td>
+<td align="center"><code>short</code></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>i32</code></td>
+<td align="center"><code>int32_t</code></td>
+<td align="center"><code>int</code></td>
+</tr>
+<tr class="even">
+<td align="center"><code>i64</code></td>
+<td align="center"><code>int64_t</code></td>
+<td align="center"><code>long</code></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>i128</code></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"><code>u8</code></td>
+<td align="center"><code>uint8_t</code></td>
+<td align="center"><code>unsigned char</code></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>u16</code></td>
+<td align="center"><code>uint16_t</code></td>
+<td align="center"><code>unsigned short</code></td>
+</tr>
+<tr class="even">
+<td align="center"><code>u32</code></td>
+<td align="center"><code>uint32_t</code></td>
+<td align="center"><code>unsigned int</code></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>u64</code></td>
+<td align="center"><code>uint64_t</code></td>
+<td align="center"><code>unsigned long</code></td>
+</tr>
+<tr class="even">
+<td align="center"><code>u128</code></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"><code>isize</code></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"><code>usize</code></td>
+<td align="center"><code>size_t</code></td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<p>While the equivalence between the first column and the second column always holds true, the third column depends on the platform and here I’m assuming you’re on a modern, 64-bit system.</p>
+<p>While the relationships described in the table are always true, C++’s integer types are much more complex. The types above are fixed width integer types, and there are additional integer types whose width is dependent on the implementation. These include C-compatible ones (i.e. <code>char</code>, <code>short</code>, <code>int</code>, <code>long</code>, <code>long long</code>), and other C++ artifects such as <code>int_fast16_t</code> and <code>int_least32_t</code>. You can learn about them at <a href="https://en.cppreference.com/w/cpp/types/integer">cppreference</a>.</p>
+</div>
+<div id="floating-point-numbers" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Floating Point Numbers</h3>
+<p>For floating numbers, <code>f32</code> and <code>f64</code> correspond to <code>float</code> and <code>double</code>, respectively (stand for single-precision and double-precision floating point numbers).</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="about-this-book.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="hello-world.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="variables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

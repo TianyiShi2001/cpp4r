@@ -2,7 +2,12 @@ fig:equal
 fig:braces
 hello-c
 hello-world
-hello-data-types-and-variables
+data-types
+integer-types
+floating-point-numbers
+variables
+mutability
+functions
 pointers-and-references
 control-flow
 if...else
@@ -12,3 +17,4 @@ scenario-1-copying-cloning
 scenario-2-as-reference-borrowing
 scenario-3-mutation
 goto-statement-and-breaking-outer-loops
+switch

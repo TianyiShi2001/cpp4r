@@ -43,7 +43,9 @@ namespace std {
 
 `printf` isn't placed inside `std` because it is a heritage from C. Many other C functions are also available in C++, and they can be distinguished by the absence of the `std::` prefix.
 
-## Hello Data Types and Variables
+## Data Types
+
+### Integer Types
 
 The following table summarises the relationship between Rust's and C++'s integer data types:
 
@@ -66,7 +68,11 @@ While the equivalence between the first column and the second column always hold
 
 While the relationships described in the table are always true, C++'s integer types are much more complex. The types above are fixed width integer types, and there are additional integer types whose width is dependent on the implementation. These include C-compatible ones (i.e. `char`, `short`, `int`, `long`, `long long`), and other C++ artifects such as `int_fast16_t` and `int_least32_t`. You can learn about them at [cppreference](https://en.cppreference.com/w/cpp/types/integer).
 
+### Floating Point Numbers
+
 For floating numbers, `f32` and `f64` correspond to `float` and `double`, respectively (stand for single-precision and double-precision floating point numbers).
+
+## Variables
 
 Like in Rust, creating a variable requires two steps, declaration and initialization. In C++, there are usually more than one syntax to do any task, and these two basic operations are no exception.
 
@@ -107,11 +113,126 @@ a{5}
 knitr::include_graphics("img/equal.png")
 ```
 
+### Mutability
+
+Variables are mutable by default. If you want to create an immutable variable, use the `const` keyword.
+
+```rust
+// Rust
+let a = 5;
+let mut b = 10;
+```
+
+is equivalent to
+
+```c++
+//C++
+const auto a = 5;
+auto b = 10;
+```
+
+If `const` is used to create an immutable variable, how to create a real "constant" that's evaluated at compile time? The answer is `consexpr`.
+
+```rust
+// Rust
+const LIGHT_SPEED: f64 = 2.99792458e8;
+```
+
+is equivalent to
+
+```c++
+constexpr double LIGHT_SPEED = 2.99792458e8;
+```
+
+What about constant strings? Well, like Rust, you can't use the dynamically allocated `std::string`.
+
+```rust
+// Rust
+const NAME: String = "Hideyo".to_string(); // not allowed!
+const NAME: &'static str = "Hideyo";
+```
+
+```c++
+//C++
+constexpr std::string NAME = "Hideyo"; // not allowed!
+constexpr char NAME[] = "Hideyo";
+```
+
+So you have to use an array of characters. Well, it's technically closer to `const NAME: &[u8] = b"Hideyo";`. Then, if you need to use the `std::string`, you need explicit conversion:
+
+```c++
+#include <iostream>
+
+constexpr char NAME[] = "Hideyo";
+constexpr char NAME_UTF8[] = "英世";
+
+int main()
+{
+    const std::string NAME_STRING(NAME);
+    const std::string NAME_UTF8_STRING(NAME_UTF8);
+    // thank god UTF8 works! If you were in C you would have a hard time.
+    std::cout << NAME_UTF8_STRING << " " << NAME_STRING << std::endl;
+}
+```
+
+
+## Functions
+
+Functions are declared and defined in the following way:
+
+```
+<return_type> <function_name>(<params>) {
+    // do something
+    return something;
+}
+```
+
+For example:
+
+```c++
+#include <iostream>
+
+float square(float a)
+{
+    return a * a;
+}
+
+int main()
+{
+    float x = 2.5;
+    std::cout << "square of " << x << "is" << square(x) << std::endl;
+}
+```
+
+Note that a function must be *declared* before it can be used. This means the following won't work:
+
+```c++
+#include <iostream>
+
+// float square(float);
+
+int main()
+{
+    float x = 2.5;
+    std::cout << "square of " << x << "is" << square(x) << std::endl;
+}
+
+
+float square(float a)
+{
+    return a * a;
+}
+```
+
+However, by uncommenting the third line, it works. When you use a function, the compiler must know the signature, but not necessarily the *definition* of the function. This is why in C++ (and in C) people split their funtions into signatures which go into header files, and definitions which go into `.cpp` files. This practice, coupled with C's macro system (inherited by C++), leads to many pitfalls and confusing situations.[^header-bad] In particular, it can be difficult to just find the definition of a function without a decent and properly configured IDE. I'll get back to header files later. For now we'll be working with single-file programs without splitting declaration and definitions.
+
+[^header-bad]: https://softwareengineering.stackexchange.com/questions/180904/are-header-files-actually-good
+
 ## Pointers and References
 
 Syntaxes related to pointers and references in C++ are...interesing.
 
-In rust, when you take a reference to a type `T`, the type of the reference is `&T`. The syntax can't be more natual: you add `&` to both LHS and RHS:
+In Rust, when you take a reference to a type `T`, the type of the reference is `&T`. The syntax can't be more natual: you add `&` to both LHS and RHS:
 
 ```rust
 let   a:  i32 =  5;
@@ -216,9 +337,11 @@ int a = true ? 5 : 10;
 The `while` loop in C++ has nothing different from Rust, just remember to wrap the test expression with parentheses.
 
 ```c++
+#include <iostream>
 int i = 10;
 while (i > 0)
 {
+    i--;
     if (i == 8)
     {
         continue;
@@ -227,7 +350,7 @@ while (i > 0)
     {
         break;
     }
-    i--;
+    std::cout << i << std::endl;
 }
 ```
 
@@ -251,7 +374,7 @@ for (int i = 0; i < 2; i++)
 {
     for (int j = 0; j < 3; j++)
     {
-        printf("|%d|%d|", i, j);
+        printf("|%d|%d|\n", i, j);
     }
 }
 ```
@@ -444,3 +567,36 @@ I'll get back to lamdas later. For now just accept that they are roughly equival
 
 [^goto-break]: https://stackoverflow.com/questions/1257744/can-i-use-break-to-exit-multiple-nested-for-loops
 
+### `switch`
+
+C++'s `switch` is essentially a shortcut for a series of `if...else if...else if...else` statements. Well, often they are actually more *verbose* than the `if...else` chain.
+
+The following C++ code
+
+```c++
+int d = 5;
+if (d == 0) {
+    printf("It's Sunday!\n");
+} else if (d == 6) {
+    printf("It's Saturday!\n");
+} else {
+    printf("It's weekday.\n");
+}
+```
+
+is equivalent to:
+
+```c++
+switch (d)
+{
+case 0:
+    printf("It's Sunday!\n");
+    break;
+case 6:
+    printf("It's Saturday!\n");
+    break;
+default:
+    printf("It's weekday.\n");
+    break;
+}
+```

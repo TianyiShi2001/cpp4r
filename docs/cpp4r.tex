@@ -198,8 +198,11 @@ Now you might begin to wonder, why isn't \texttt{std::cout} called \texttt{std::
 
 \texttt{printf} isn't placed inside \texttt{std} because it is a heritage from C. Many other C functions are also available in C++, and they can be distinguished by the absence of the \texttt{std::} prefix.
 
-\hypertarget{hello-data-types-and-variables}{%
-\section{Hello Data Types and Variables}\label{hello-data-types-and-variables}}
+\hypertarget{data-types}{%
+\section{Data Types}\label{data-types}}
+
+\hypertarget{integer-types}{%
+\subsection{Integer Types}\label{integer-types}}
 
 The following table summarises the relationship between Rust's and C++'s integer data types:
 
@@ -227,7 +230,13 @@ While the equivalence between the first column and the second column always hold
 
 While the relationships described in the table are always true, C++'s integer types are much more complex. The types above are fixed width integer types, and there are additional integer types whose width is dependent on the implementation. These include C-compatible ones (i.e.~\texttt{char}, \texttt{short}, \texttt{int}, \texttt{long}, \texttt{long\ long}), and other C++ artifects such as \texttt{int\_fast16\_t} and \texttt{int\_least32\_t}. You can learn about them at \href{https://en.cppreference.com/w/cpp/types/integer}{cppreference}.
 
+\hypertarget{floating-point-numbers}{%
+\subsection{Floating Point Numbers}\label{floating-point-numbers}}
+
 For floating numbers, \texttt{f32} and \texttt{f64} correspond to \texttt{float} and \texttt{double}, respectively (stand for single-precision and double-precision floating point numbers).
+
+\hypertarget{variables}{%
+\section{Variables}\label{variables}}
 
 Like in Rust, creating a variable requires two steps, declaration and initialization. In C++, there are usually more than one syntax to do any task, and these two basic operations are no exception.
 
@@ -280,12 +289,144 @@ If you try \texttt{int\ a\{5.5\};} with this syntax, the compiler will give an e
 \caption{\label{fig:braces}When implicit conversion occurs, a decent modern C++ compiler will give a warning.}
 \end{figure}
 
+\hypertarget{mutability}{%
+\subsection{Mutability}\label{mutability}}
+
+Variables are mutable by default. If you want to create an immutable variable, use the \texttt{const} keyword.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Rust}
+\KeywordTok{let}\NormalTok{ a }\OperatorTok{=} \DecValTok{5}\OperatorTok{;}
+\KeywordTok{let} \KeywordTok{mut}\NormalTok{ b }\OperatorTok{=} \DecValTok{10}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+is equivalent to
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{//C++}
+\AttributeTok{const} \KeywordTok{auto}\NormalTok{ a = }\DecValTok{5}\NormalTok{;}
+\KeywordTok{auto}\NormalTok{ b = }\DecValTok{10}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+If \texttt{const} is used to create an immutable variable, how to create a real ``constant'' that's evaluated at compile time? The answer is \texttt{consexpr}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Rust}
+\KeywordTok{const}\NormalTok{ LIGHT\_SPEED}\OperatorTok{:} \DataTypeTok{f64} \OperatorTok{=} \DecValTok{2.99792458e8}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+is equivalent to
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{constexpr} \DataTypeTok{double}\NormalTok{ LIGHT\_SPEED = }\FloatTok{2.99792458e8}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+What about constant strings? Well, like Rust, you can't use the dynamically allocated \texttt{std::string}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Rust}
+\KeywordTok{const}\NormalTok{ NAME}\OperatorTok{:} \DataTypeTok{String} \OperatorTok{=} \StringTok{"Hideyo"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{;} \CommentTok{// not allowed!}
+\KeywordTok{const}\NormalTok{ NAME}\OperatorTok{:} \OperatorTok{\&}\OtherTok{\textquotesingle{}static} \DataTypeTok{str} \OperatorTok{=} \StringTok{"Hideyo"}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{//C++}
+\KeywordTok{constexpr} \BuiltInTok{std::}\NormalTok{string NAME = }\StringTok{"Hideyo"}\NormalTok{; }\CommentTok{// not allowed!}
+\KeywordTok{constexpr} \DataTypeTok{char}\NormalTok{ NAME[] = }\StringTok{"Hideyo"}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+So you have to use an array of characters. Well, it's technically closer to \texttt{const\ NAME:\ \&{[}u8{]}\ =\ b"Hideyo";}. Then, if you need to use the \texttt{std::string}, you need explicit conversion:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+
+\KeywordTok{constexpr} \DataTypeTok{char}\NormalTok{ NAME[] = }\StringTok{"Hideyo"}\NormalTok{;}
+\KeywordTok{constexpr} \DataTypeTok{char}\NormalTok{ NAME\_UTF8[] = }\StringTok{"英世"}\NormalTok{;}
+
+\DataTypeTok{int}\NormalTok{ main()}
+\NormalTok{\{}
+    \AttributeTok{const} \BuiltInTok{std::}\NormalTok{string NAME\_STRING(NAME);}
+    \AttributeTok{const} \BuiltInTok{std::}\NormalTok{string NAME\_UTF8\_STRING(NAME\_UTF8);}
+    \CommentTok{// thank god UTF8 works! If you were in C you would have a hard time.}
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} NAME\_UTF8\_STRING \textless{}\textless{} }\StringTok{" "}\NormalTok{ \textless{}\textless{} NAME\_STRING \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{functions}{%
+\section{Functions}\label{functions}}
+
+Functions are declared and defined in the following way:
+
+\begin{verbatim}
+<return_type> <function_name>(<params>) {
+    // do something
+    return something;
+}
+\end{verbatim}
+
+For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+
+\DataTypeTok{float}\NormalTok{ square(}\DataTypeTok{float}\NormalTok{ a)}
+\NormalTok{\{}
+    \ControlFlowTok{return}\NormalTok{ a * a;}
+\NormalTok{\}}
+
+\DataTypeTok{int}\NormalTok{ main()}
+\NormalTok{\{}
+    \DataTypeTok{float}\NormalTok{ x = }\FloatTok{2.5}\NormalTok{;}
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"square of "}\NormalTok{ \textless{}\textless{} x \textless{}\textless{} }\StringTok{"is"}\NormalTok{ \textless{}\textless{} square(x) \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Note that a function must be \emph{declared} before it can be used. This means the following won't work:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+
+\CommentTok{// float square(float);}
+
+\DataTypeTok{int}\NormalTok{ main()}
+\NormalTok{\{}
+    \DataTypeTok{float}\NormalTok{ x = }\FloatTok{2.5}\NormalTok{;}
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"square of "}\NormalTok{ \textless{}\textless{} x \textless{}\textless{} }\StringTok{"is"}\NormalTok{ \textless{}\textless{} square(x) \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{\}}
+
+
+\DataTypeTok{float}\NormalTok{ square(}\DataTypeTok{float}\NormalTok{ a)}
+\NormalTok{\{}
+    \ControlFlowTok{return}\NormalTok{ a * a;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+However, by uncommenting the third line, it works. When you use a function, the compiler must know the signature, but not necessarily the \emph{definition} of the function. This is why in C++ (and in C) people split their funtions into signatures which go into header files, and definitions which go into \texttt{.cpp} files. This practice, coupled with C's macro system (inherited by C++), leads to many pitfalls and confusing situations.\footnote{\url{https://softwareengineering.stackexchange.com/questions/180904/are-header-files-actually-good}} In particular, it can be difficult to just find the definition of a function without a decent and properly configured IDE. I'll get back to header files later. For now we'll be working with single-file programs without splitting declaration and definitions.
+
 \hypertarget{pointers-and-references}{%
 \section{Pointers and References}\label{pointers-and-references}}
 
 Syntaxes related to pointers and references in C++ are\ldots interesing.
 
-In rust, when you take a reference to a type \texttt{T}, the type of the reference is \texttt{\&T}. The syntax can't be more natual: you add \texttt{\&} to both LHS and RHS:
+In Rust, when you take a reference to a type \texttt{T}, the type of the reference is \texttt{\&T}. The syntax can't be more natual: you add \texttt{\&} to both LHS and RHS:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -340,7 +481,7 @@ Since pointers are a heritage from C, it is not surprising that the \emph{creati
 \end{Shaded}
 
 Note that you do not (and cannot) use the deference operator (\texttt{*}) on a reference. In addition, a reference cannot be re-assigned to point to another value. Apart from these two rules, references are effectively the same as pointers.
-Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be use to mutate the referent.
+Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be used to mutate the referent.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -410,9 +551,11 @@ The \texttt{while} loop in C++ has nothing different from Rust, just remember to
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
 \DataTypeTok{int}\NormalTok{ i = }\DecValTok{10}\NormalTok{;}
 \ControlFlowTok{while}\NormalTok{ (i \textgreater{} }\DecValTok{0}\NormalTok{)}
 \NormalTok{\{}
+\NormalTok{    i{-}{-};}
     \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{8}\NormalTok{)}
 \NormalTok{    \{}
         \ControlFlowTok{continue}\NormalTok{;}
@@ -421,7 +564,7 @@ The \texttt{while} loop in C++ has nothing different from Rust, just remember to
 \NormalTok{    \{}
         \ControlFlowTok{break}\NormalTok{;}
 \NormalTok{    \}}
-\NormalTok{    i{-}{-};}
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} i \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -448,7 +591,7 @@ For example:
 \NormalTok{\{}
     \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ j = }\DecValTok{0}\NormalTok{; j \textless{} }\DecValTok{3}\NormalTok{; j++)}
 \NormalTok{    \{}
-\NormalTok{        printf(}\StringTok{"|}\SpecialCharTok{\%d}\StringTok{|}\SpecialCharTok{\%d}\StringTok{|"}\NormalTok{, i, j);}
+\NormalTok{        printf(}\StringTok{"|}\SpecialCharTok{\%d}\StringTok{|}\SpecialCharTok{\%d}\StringTok{|}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i, j);}
 \NormalTok{    \}}
 \NormalTok{\}}
 \end{Highlighting}
@@ -566,6 +709,7 @@ C++ doesn't support this natively, so people are using \texttt{goto} to achieve 
 \begin{Highlighting}[]
 \PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
 \NormalTok{printf(}\StringTok{"Break outer loop using goto:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"ijk "}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{\{}
 
@@ -577,7 +721,7 @@ C++ doesn't support this natively, so people are using \texttt{goto} to achieve 
 \NormalTok{            \{}
                 \ControlFlowTok{goto}\NormalTok{ the\_end;}
 \NormalTok{            \}}
-            \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"i: "}\NormalTok{ \textless{}\textless{} i \textless{}\textless{} }\StringTok{" j: "}\NormalTok{ \textless{}\textless{} j \textless{}\textless{} }\StringTok{" k "}\NormalTok{ \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+            \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} i \textless{}\textless{} j \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \NormalTok{        \}}
 \NormalTok{    \}}
 \NormalTok{the\_end:}
@@ -594,6 +738,7 @@ Alternatively you can use a flag, which is more verbose, and I think this is eve
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{printf(}\StringTok{"Break outer loop using flag:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"ijk "}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \DataTypeTok{bool}\NormalTok{ i\_is\_1\{}\KeywordTok{false}\NormalTok{\};}
 \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{\{}
@@ -611,7 +756,7 @@ Alternatively you can use a flag, which is more verbose, and I think this is eve
 \NormalTok{            \{}
 \NormalTok{                i\_is\_1 = }\KeywordTok{false}\NormalTok{;}
 \NormalTok{            \}}
-            \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"i: "}\NormalTok{ \textless{}\textless{} i \textless{}\textless{} }\StringTok{" j: "}\NormalTok{ \textless{}\textless{} j \textless{}\textless{} }\StringTok{" k "}\NormalTok{ \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+            \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} i \textless{}\textless{} j \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \NormalTok{        \}}
         \ControlFlowTok{if}\NormalTok{ (i\_is\_1)}
 \NormalTok{        \{}
@@ -627,6 +772,7 @@ There is another cleaner way, using the lambda trick (but why the hell must I us
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{printf(}\StringTok{"Break outer loop using lambda:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"ijk "}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{\{}
 \NormalTok{    [\&] \{}
@@ -638,7 +784,7 @@ There is another cleaner way, using the lambda trick (but why the hell must I us
 \NormalTok{                \{}
                     \ControlFlowTok{return}\NormalTok{;}
 \NormalTok{                \}}
-                \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"i: "}\NormalTok{ \textless{}\textless{} i \textless{}\textless{} }\StringTok{" j: "}\NormalTok{ \textless{}\textless{} j \textless{}\textless{} }\StringTok{" k "}\NormalTok{ \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+                \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} i \textless{}\textless{} j \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \NormalTok{            \}}
 \NormalTok{        \}}
 \NormalTok{    \}();}
@@ -647,6 +793,46 @@ There is another cleaner way, using the lambda trick (but why the hell must I us
 \end{Shaded}
 
 I'll get back to lamdas later. For now just accept that they are roughly equivalent to Rust's closures.
+
+\hypertarget{switch}{%
+\subsection{\texorpdfstring{\texttt{switch}}{switch}}\label{switch}}
+
+C++'s \texttt{switch} is essentially a shortcut for a series of \texttt{if...else\ if...else\ if...else} statements. Well, often they are actually more \emph{verbose} than the \texttt{if...else} chain.
+
+The following C++ code
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ d = }\DecValTok{5}\NormalTok{;}
+\ControlFlowTok{if}\NormalTok{ (d == }\DecValTok{0}\NormalTok{) \{}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Sunday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{\} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (d == }\DecValTok{6}\NormalTok{) \{}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Saturday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s weekday.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+is equivalent to:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{switch}\NormalTok{ (d)}
+\NormalTok{\{}
+\ControlFlowTok{case} \DecValTok{0}\NormalTok{:}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Sunday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+    \ControlFlowTok{break}\NormalTok{;}
+\ControlFlowTok{case} \DecValTok{6}\NormalTok{:}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Saturday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+    \ControlFlowTok{break}\NormalTok{;}
+\ControlFlowTok{default}\NormalTok{:}
+\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s weekday.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+    \ControlFlowTok{break}\NormalTok{;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
 
   \bibliography{book.bib}
 
