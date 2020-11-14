@@ -8,7 +8,7 @@ control-flow
 if...else
 while-loop
 for-loop
-scenario-1-as-reference-borrowing
-scenario-2-mutation
-scenario-3-copying-cloning
+scenario-1-copying-cloning
+scenario-2-as-reference-borrowing
+scenario-3-mutation
 goto-statement-and-breaking-outer-loops

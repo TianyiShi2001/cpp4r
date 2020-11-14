@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Disclaimer</a></li>
-<li class="chapter" data-level="" data-path="reading-this-book-html.html"><a href="reading-this-book-html.html"><i class="fa fa-check"></i>Reading This Book (HTML)</a></li>
+<li class="chapter" data-level="" data-path="reading-this-book.html"><a href="reading-this-book.html"><i class="fa fa-check"></i>Reading This Book</a></li>
 <li class="chapter" data-level="" data-path="about-this-book.html"><a href="about-this-book.html"><i class="fa fa-check"></i>About this Book</a></li>
 <li class="chapter" data-level="" data-path="prerequisites.html"><a href="prerequisites.html"><i class="fa fa-check"></i>Prerequisites</a></li>
 <li class="chapter" data-level="1" data-path="hello-c.html"><a href="hello-c.html"><i class="fa fa-check"></i><b>1</b> Hello C++</a>
@@ -178,7 +178,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If you have experience in Javascript or Java, most of C++’s control flow syntax will be familiar to you. The conditional test associated with <code>if</code>, <code>for</code>, <code>while</code> and <code>switch</code> must be surrounded by parentheses.</p>
 <div id="if...else" class="section level3" number="1.4.1">
 <h3><span class="header-section-number">1.4.1</span> <code>if...else</code></h3>
-<p>Like Rust, C++ offers <code>if</code> and <code>else</code> keywords to work with conditionals. Unlike Rust, C++ is not expression-oriented, so you cannot write:</p>
+<p>Like Rust, C++ offers <code>if</code> and <code>else</code> keywords to work with conditionals. Unlike Rust, C++ is not expression-oriented, so you <em>cannot</em> write:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="control-flow.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="cf">if</span> (<span class="kw">true</span>) { <span class="dv">5</span> } <span class="cf">else</span> { <span class="dv">10</span> };</span></code></pre></div>
 <p>But this kind of conditional assignment is a very common pattern, so C++ invented yet another syntax specifically designed for this single task: the ternary operator. So, instead of writing:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb16-1"><a href="control-flow.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a;</span>
@@ -221,56 +221,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb20-8"><a href="control-flow.html#cb20-8" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb20-9"><a href="control-flow.html#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>C++11 introduced the range-based <code>for</code> statement, which is also known as a <code>for...in</code> loop in most other languages (Rust, Swift, Python, Ruby, …). The syntax itself is easy but knowing the relationship between the element and the iterable can be tricky. Fortuantely, we are Rustaceans, so an easy way for me to illustrate and for you to understand is to write a few equivalent examples in Rust and C++.</p>
-<div id="scenario-1-as-reference-borrowing" class="section level4" number="1.4.3.1">
-<h4><span class="header-section-number">1.4.3.1</span> Scenario 1: As Reference (Borrowing)</h4>
+<div id="scenario-1-copying-cloning" class="section level4" number="1.4.3.1">
+<h4><span class="header-section-number">1.4.3.1</span> Scenario 1: Copying (Cloning)</h4>
 <div class="sourceCode" id="cb21"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb21-1"><a href="control-flow.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
-<span id="cb21-2"><a href="control-flow.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
-<span id="cb21-3"><a href="control-flow.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e <span class="kw">in</span> <span class="op">&amp;</span>v <span class="op">{</span></span>
-<span id="cb21-4"><a href="control-flow.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> <span class="op">*</span>e)<span class="op">;</span></span>
+<span id="cb21-2"><a href="control-flow.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="st">&quot;a&quot;</span><span class="op">.</span>to_string()<span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">.</span>to_string()<span class="op">,</span> <span class="st">&quot;c&quot;</span><span class="op">.</span>to_string()]<span class="op">;</span></span>
+<span id="cb21-3"><a href="control-flow.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e<span class="op">.</span>clone() <span class="kw">in</span> <span class="op">&amp;</span>v <span class="op">{</span></span>
+<span id="cb21-4"><a href="control-flow.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> e)<span class="op">;</span></span>
 <span id="cb21-5"><a href="control-flow.html#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="control-flow.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
 <span id="cb22-2"><a href="control-flow.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
 <span id="cb22-3"><a href="control-flow.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb22-4"><a href="control-flow.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; a{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>};</span>
-<span id="cb22-5"><a href="control-flow.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span>&amp; num : a)</span>
+<span id="cb22-4"><a href="control-flow.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="bu">std::</span>string&gt; a{<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>};</span>
+<span id="cb22-5"><a href="control-flow.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span> s : a) <span class="co">// s has type `std::string`</span></span>
 <span id="cb22-6"><a href="control-flow.html#cb22-6" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb22-7"><a href="control-flow.html#cb22-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span>, num); <span class="co">// no asterisk!</span></span>
+<span id="cb22-7"><a href="control-flow.html#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; s &lt;&lt; <span class="bu">std::</span>endl;</span>
 <span id="cb22-8"><a href="control-flow.html#cb22-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Note how Rust makes it crystal clear that copying during iteration and using <code>String</code> for instead of <code>&amp;str</code> for static strings are anti-patterns and how C++ makes it easy to write such inefficient code.</p>
 </div>
-<div id="scenario-2-mutation" class="section level4" number="1.4.3.2">
-<h4><span class="header-section-number">1.4.3.2</span> Scenario 2: Mutation</h4>
+<div id="scenario-2-as-reference-borrowing" class="section level4" number="1.4.3.2">
+<h4><span class="header-section-number">1.4.3.2</span> Scenario 2: As Reference (Borrowing)</h4>
 <div class="sourceCode" id="cb23"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb23-1"><a href="control-flow.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
-<span id="cb23-2"><a href="control-flow.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
-<span id="cb23-3"><a href="control-flow.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e <span class="kw">in</span> <span class="op">&amp;</span><span class="kw">mut</span> v <span class="op">{</span></span>
-<span id="cb23-4"><a href="control-flow.html#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>e <span class="op">=</span> e <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb23-5"><a href="control-flow.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb23-6"><a href="control-flow.html#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="pp">assert_eq!</span>(v<span class="op">,</span> <span class="pp">vec!</span>[<span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">6</span>])<span class="op">;</span></span></code></pre></div>
+<span id="cb23-2"><a href="control-flow.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb23-3"><a href="control-flow.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e <span class="kw">in</span> <span class="op">&amp;</span>v <span class="op">{</span></span>
+<span id="cb23-4"><a href="control-flow.html#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> <span class="op">*</span>e)<span class="op">;</span></span>
+<span id="cb23-5"><a href="control-flow.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="control-flow.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
-<span id="cb24-2"><a href="control-flow.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb24-3"><a href="control-flow.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span></span>
+<span id="cb24-2"><a href="control-flow.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb24-3"><a href="control-flow.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
 <span id="cb24-4"><a href="control-flow.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; a{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>};</span>
-<span id="cb24-5"><a href="control-flow.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span> &amp;num : a)</span>
+<span id="cb24-5"><a href="control-flow.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span>&amp; num : a)</span>
 <span id="cb24-6"><a href="control-flow.html#cb24-6" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb24-7"><a href="control-flow.html#cb24-7" aria-hidden="true" tabindex="-1"></a>    num++;</span>
-<span id="cb24-8"><a href="control-flow.html#cb24-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb24-9"><a href="control-flow.html#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(a == (<span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt;{<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>}));</span></code></pre></div>
-<p>Note the parentheses surrounding the second argument of <code>assert</code>, without which we would get an error. This is because <code>assert</code> is a so called <code>#define</code> macro, which simply parses its arguments as comma-separated identifiers and does text replacement. Since <code>std::vector&lt;int&gt;{2, 3, 4, 5, 6}</code> contains commas, it has to be escaped with parentheses.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This macro is actually defined in <code>assert.h</code> which is part of C’s std, and its more or less copied verbatim into C++’s <code>cassert</code>. Theoretically I think it is possible to implement C++’s own <code>assert</code> or <code>#define</code> that removes the need for adding parentheses here and there. However, the C++ committee never cares about ergonomics.</p>
+<span id="cb24-7"><a href="control-flow.html#cb24-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> &quot;</span>, num); <span class="co">// no asterisk!</span></span>
+<span id="cb24-8"><a href="control-flow.html#cb24-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
-<div id="scenario-3-copying-cloning" class="section level4" number="1.4.3.3">
-<h4><span class="header-section-number">1.4.3.3</span> Scenario 3: Copying (Cloning)</h4>
-<div class="sourceCode" id="cb25"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb25-1"><a href="control-flow.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="st">&quot;a&quot;</span><span class="op">.</span>to_string()<span class="op">,</span> <span class="st">&quot;b&quot;</span><span class="op">.</span>to_string()<span class="op">,</span> <span class="st">&quot;c&quot;</span><span class="op">.</span>to_string()]<span class="op">;</span></span>
-<span id="cb25-2"><a href="control-flow.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e<span class="op">.</span>clone() <span class="kw">in</span> <span class="op">&amp;</span>v <span class="op">{</span></span>
-<span id="cb25-3"><a href="control-flow.html#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="pp">println!</span>(<span class="st">&quot;{}&quot;</span><span class="op">,</span> e)<span class="op">;</span></span>
-<span id="cb25-4"><a href="control-flow.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div id="scenario-3-mutation" class="section level4" number="1.4.3.3">
+<h4><span class="header-section-number">1.4.3.3</span> Scenario 3: Mutation</h4>
+<div class="sourceCode" id="cb25"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb25-1"><a href="control-flow.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
+<span id="cb25-2"><a href="control-flow.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> v <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></span>
+<span id="cb25-3"><a href="control-flow.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="kw">for</span> e <span class="kw">in</span> <span class="op">&amp;</span><span class="kw">mut</span> v <span class="op">{</span></span>
+<span id="cb25-4"><a href="control-flow.html#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>e <span class="op">=</span> e <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb25-5"><a href="control-flow.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb25-6"><a href="control-flow.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="pp">assert_eq!</span>(v<span class="op">,</span> <span class="pp">vec!</span>[<span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">6</span>])<span class="op">;</span></span></code></pre></div>
 <div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="control-flow.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">// C++</span></span>
-<span id="cb26-2"><a href="control-flow.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb26-3"><a href="control-flow.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
-<span id="cb26-4"><a href="control-flow.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="bu">std::</span>string&gt; a{<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>};</span>
-<span id="cb26-5"><a href="control-flow.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span> s : a) <span class="co">// s has type `std::string`</span></span>
+<span id="cb26-2"><a href="control-flow.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;vector&gt;</span></span>
+<span id="cb26-3"><a href="control-flow.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;cassert&gt;</span></span>
+<span id="cb26-4"><a href="control-flow.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt; a{<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>};</span>
+<span id="cb26-5"><a href="control-flow.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">auto</span> &amp;num : a)</span>
 <span id="cb26-6"><a href="control-flow.html#cb26-6" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb26-7"><a href="control-flow.html#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; s &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb26-8"><a href="control-flow.html#cb26-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Note how Rust makes it crystal clear that copying during iteration and using <code>String</code> for instead of <code>&amp;str</code> for static strings are an anti-pattern and how C++ makes it easy to write such inefficient code.</p>
+<span id="cb26-7"><a href="control-flow.html#cb26-7" aria-hidden="true" tabindex="-1"></a>    num++;</span>
+<span id="cb26-8"><a href="control-flow.html#cb26-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb26-9"><a href="control-flow.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(a == (<span class="bu">std::</span>vector&lt;<span class="dt">int</span>&gt;{<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>}));</span></code></pre></div>
+<p>Note the parentheses surrounding the second argument of <code>assert</code>, without which we would get an error. This is because <code>assert</code> is a so called <code>#define</code> macro, which simply parses its arguments as comma-separated identifiers and does text replacement. Since <code>std::vector&lt;int&gt;{2, 3, 4, 5, 6}</code> contains commas, it has to be escaped with parentheses.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This macro is actually defined in <code>assert.h</code> which is part of C’s std, and its more or less copied verbatim into C++’s <code>cassert</code>. Theoretically I think it is possible to implement C++’s own <code>assert</code> or <code>#define</code> that removes the need for adding parentheses here and there. However, the C++ committee never cares about ergonomics.</p>
 <!-- ####
 
 ```rust
@@ -315,7 +316,7 @@ for e in v {
 <span id="cb28-18"><a href="control-flow.html#cb28-18" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb28-19"><a href="control-flow.html#cb28-19" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb28-20"><a href="control-flow.html#cb28-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Using <code>goto</code> sounds like I am joking. I’m not. People really suggests doing this<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. It’s a consensus that <code>goto</code> statements are error-prone, but there really aren’t better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.</p>
+<p>Using <code>goto</code> sounds like I am joking. I’m not. People really suggest doing this<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. It’s a consensus that <code>goto</code> statements are error-prone, but there really aren’t better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.</p>
 <p>Alternatively you can use a flag, which is more verbose, and I think this is even less readable:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb29-1"><a href="control-flow.html#cb29-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using flag:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
 <span id="cb29-2"><a href="control-flow.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> i_is_1{<span class="kw">false</span>};</span>

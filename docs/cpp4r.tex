@@ -166,7 +166,7 @@ This is a hello world program in C++:
 
 Write the above code in \texttt{hello.cpp}, then you can compile it with \texttt{g++\ hello.cpp\ -o\ hello} and run \texttt{./hello} (you can replace \texttt{g++} with \texttt{clang++} or any other compiler).
 
-A couple of thing to note here:
+A couple of things to note here:
 
 Every C++ executable (as opposed to library) must have a \texttt{main()} function that returns \texttt{int}. Returning \texttt{0} signifies that the program terminates without errors. The final \texttt{return\ 0;} statement can be omitted in the \texttt{main()} function.
 
@@ -378,7 +378,7 @@ If you have experience in Javascript or Java, most of C++'s control flow syntax 
 \hypertarget{if...else}{%
 \subsection{\texorpdfstring{\texttt{if...else}}{if...else}}\label{if...else}}
 
-Like Rust, C++ offers \texttt{if} and \texttt{else} keywords to work with conditionals. Unlike Rust, C++ is not expression-oriented, so you cannot write:
+Like Rust, C++ offers \texttt{if} and \texttt{else} keywords to work with conditionals. Unlike Rust, C++ is not expression-oriented, so you \emph{cannot} write:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -456,8 +456,36 @@ For example:
 
 C++11 introduced the range-based \texttt{for} statement, which is also known as a \texttt{for...in} loop in most other languages (Rust, Swift, Python, Ruby, \ldots). The syntax itself is easy but knowing the relationship between the element and the iterable can be tricky. Fortuantely, we are Rustaceans, so an easy way for me to illustrate and for you to understand is to write a few equivalent examples in Rust and C++.
 
-\hypertarget{scenario-1-as-reference-borrowing}{%
-\subsubsection{Scenario 1: As Reference (Borrowing)}\label{scenario-1-as-reference-borrowing}}
+\hypertarget{scenario-1-copying-cloning}{%
+\subsubsection{Scenario 1: Copying (Cloning)}\label{scenario-1-copying-cloning}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Rust}
+\KeywordTok{let}\NormalTok{ v }\OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}\StringTok{"a"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{,} \StringTok{"b"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{,} \StringTok{"c"}\OperatorTok{.}\NormalTok{to\_string()]}\OperatorTok{;}
+\KeywordTok{for}\NormalTok{ e}\OperatorTok{.}\NormalTok{clone() }\KeywordTok{in} \OperatorTok{\&}\NormalTok{v }\OperatorTok{\{}
+    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"\{\}"}\OperatorTok{,}\NormalTok{ e)}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// C++}
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+\PreprocessorTok{\#include }\ImportTok{\textless{}vector\textgreater{}}
+\BuiltInTok{std::}\NormalTok{vector\textless{}}\BuiltInTok{std::}\NormalTok{string\textgreater{} a\{}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{\};}
+\ControlFlowTok{for}\NormalTok{ (}\KeywordTok{auto}\NormalTok{ s : a) }\CommentTok{// s has type \textasciigrave{}std::string\textasciigrave{}}
+\NormalTok{\{}
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} s \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Note how Rust makes it crystal clear that copying during iteration and using \texttt{String} for instead of \texttt{\&str} for static strings are anti-patterns and how C++ makes it easy to write such inefficient code.
+
+\hypertarget{scenario-2-as-reference-borrowing}{%
+\subsubsection{Scenario 2: As Reference (Borrowing)}\label{scenario-2-as-reference-borrowing}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -482,8 +510,8 @@ C++11 introduced the range-based \texttt{for} statement, which is also known as 
 \end{Highlighting}
 \end{Shaded}
 
-\hypertarget{scenario-2-mutation}{%
-\subsubsection{Scenario 2: Mutation}\label{scenario-2-mutation}}
+\hypertarget{scenario-3-mutation}{%
+\subsubsection{Scenario 3: Mutation}\label{scenario-3-mutation}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -511,33 +539,6 @@ C++11 introduced the range-based \texttt{for} statement, which is also known as 
 \end{Shaded}
 
 Note the parentheses surrounding the second argument of \texttt{assert}, without which we would get an error. This is because \texttt{assert} is a so called \texttt{\#define} macro, which simply parses its arguments as comma-separated identifiers and does text replacement. Since \texttt{std::vector\textless{}int\textgreater{}\{2,\ 3,\ 4,\ 5,\ 6\}} contains commas, it has to be escaped with parentheses.\footnote{Related to this stackoverflow question: \url{https://stackoverflow.com/questions/38030048}} This macro is actually defined in \texttt{assert.h} which is part of C's std, and its more or less copied verbatim into C++'s \texttt{cassert}. Theoretically I think it is possible to implement C++'s own \texttt{assert} or \texttt{\#define} that removes the need for adding parentheses here and there. However, the C++ committee never cares about ergonomics.
-
-\hypertarget{scenario-3-copying-cloning}{%
-\subsubsection{Scenario 3: Copying (Cloning)}\label{scenario-3-copying-cloning}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{let}\NormalTok{ v }\OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}\StringTok{"a"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{,} \StringTok{"b"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{,} \StringTok{"c"}\OperatorTok{.}\NormalTok{to\_string()]}\OperatorTok{;}
-\KeywordTok{for}\NormalTok{ e}\OperatorTok{.}\NormalTok{clone() }\KeywordTok{in} \OperatorTok{\&}\NormalTok{v }\OperatorTok{\{}
-    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"\{\}"}\OperatorTok{,}\NormalTok{ e)}\OperatorTok{;}
-\OperatorTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{// C++}
-\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
-\PreprocessorTok{\#include }\ImportTok{\textless{}vector\textgreater{}}
-\BuiltInTok{std::}\NormalTok{vector\textless{}}\BuiltInTok{std::}\NormalTok{string\textgreater{} a\{}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{\};}
-\ControlFlowTok{for}\NormalTok{ (}\KeywordTok{auto}\NormalTok{ s : a) }\CommentTok{// s has type \textasciigrave{}std::string\textasciigrave{}}
-\NormalTok{\{}
-    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} s \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
-\NormalTok{\}}
-\end{Highlighting}
-\end{Shaded}
-
-Note how Rust makes it crystal clear that copying during iteration and using \texttt{String} for instead of \texttt{\&str} for static strings are an anti-pattern and how C++ makes it easy to write such inefficient code.
 
 \hypertarget{goto-statement-and-breaking-outer-loops}{%
 \subsection{\texorpdfstring{\texttt{goto} Statement and Breaking outer Loops}{goto Statement and Breaking outer Loops}}\label{goto-statement-and-breaking-outer-loops}}
@@ -586,7 +587,7 @@ C++ doesn't support this natively, so people are using \texttt{goto} to achieve 
 \end{Highlighting}
 \end{Shaded}
 
-Using \texttt{goto} sounds like I am joking. I'm not. People really suggests doing this\footnote{\url{https://stackoverflow.com/questions/1257744/can-i-use-break-to-exit-multiple-nested-for-loops}}. It's a consensus that \texttt{goto} statements are error-prone, but there really aren't better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.
+Using \texttt{goto} sounds like I am joking. I'm not. People really suggest doing this\footnote{\url{https://stackoverflow.com/questions/1257744/can-i-use-break-to-exit-multiple-nested-for-loops}}. It's a consensus that \texttt{goto} statements are error-prone, but there really aren't better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.
 
 Alternatively you can use a flag, which is more verbose, and I think this is even less readable:
 
