@@ -1,0 +1,108 @@
+# Enumerations
+
+Like Rust, C++ has `enum`s. Unlike Rust, their `enum`s are much less powerful. C++'s enumeration
+comes in two flavors: the plain, C-compatible `enum`, and the `enum class`. Generally, you should
+always use an `enum class`, but you should also learn about the plain `enum` in order to read
+others' code.
+
+## The Plain `enum`
+
+### Defining an Enum
+
+The syntax for defining an `enum` in C++ is similar to Rust. In addition, like in Rust, enum
+variants are represented as integers at the low level, and by default the value starts from 0.
+
+```c++
+enum LogLevel
+{
+    Debug,   // 0
+    Info,    // 1
+    Warning, // 2
+    Error    // 3
+};
+```
+
+You can also manually assign values to the variants (also valid in Rust):
+
+```c++
+enum LogLevel
+{
+    Debug   = 0x12,
+    Info    = 0xd1,
+    Warning = 0x7c,
+    Error   = 0x0a,
+};
+```
+
+Unlike Rust, C++ by default uses the `int` type to represent the variants, even though most of the
+time the number of variants won't exceed 256. To use a more compact representation, you can do:
+
+```c++
+enum MyEnum : uint8_t
+// or `enum Foo : char` (remember that `char` is an integer type)
+{
+    Foo,
+    Bar,
+};
+```
+
+### Using an Enum
+
+Unlike Rust, a C++ `enum` does not create a namespace, which means you cannot write `LogLevel::Info`
+to refer to the `Info` variant of the `LogLevel` enum defined in the prevous subsection. You should
+write `Info` directly.
+
+A enum is implicitly converted to an integer. Which means it can be directly compared to an integer
+(but dont't actually do this) and can be pushed to `std::cout` directly.
+
+```c++
+LogLevel lvl = Info;
+assert(Info == 1);
+assert(Warning > 1);
+assert(Error > Debug);
+std::cout << lvl << std::endl;
+```
+
+However, an integer cannot be converted implicitly into an enum, but can be done so explicitly:
+
+```c++
+LogLevel lvl = 2;           // won't work
+LogLevel lvl = (LogLevel)2; // OK, but don't actually do this
+```
+
+You can reassign the identifier `Info` to another value
+
+```c++
+int Info = 999;
+```
+
+But can you set another `LogLevel` to `Info`?
+
+```c++
+LogLevel m = Info; // Error!
+```
+
+No you can't. C++ generally disallows re-defining variables,
+but in the case of enums you are allowed to re-bind a enum
+variant identifier to another value, then you just can't use
+that enum variant.
+
+To avoid this and other kinds of conflicts, it had been a common practice to
+enum variants with part of the enum name. For example, the `LogLevel` enum
+may be rewritten as:
+
+```c++
+enum LogLevel
+{
+    LevelDebug,
+    LevelInfo,
+    LevelWarning,
+    LevelError
+};
+```
+
+
+...which is yet another way C++ has been promoting the violation of the DRY rule
+To solve this problem. Instead of allowing using enum variant either with or
+without a namespace (which MSVC allows), the C++ committee invented yet another
+way to work with enums, known as the `enum class`.
