@@ -1,0 +1,652 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{book}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={C++ for Rustaceans},
+  pdfauthor={Tianyi Shi},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\usepackage{booktabs}
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
+
+\title{C++ for Rustaceans}
+\author{Tianyi Shi}
+\date{2020-11-14}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\hypertarget{disclaimer}{%
+\chapter*{Disclaimer}\label{disclaimer}}
+\addcontentsline{toc}{chapter}{Disclaimer}
+
+I am neither a pro in Rust nor in C++. It is possible that some of my conceptual understandings are wrong, and it is very likely that some examples, especially C++ ones, are not the best practice. I could only promise that all programs should compile and run without safety issues. If you spot anything that could be improved, please submit a PR!
+
+\hypertarget{about-this-book}{%
+\chapter*{About this Book}\label{about-this-book}}
+\addcontentsline{toc}{chapter}{About this Book}
+
+I'm a biochemistry student wishing to specialize in computational biology, and I need a fast (specifically, no-GC) language for implementing algorithms. Since the decision was made in April 2020, I naturally chose Rust. Soon I fell in love with it. Cargo, rustdoc, crates.io, clippy etc. just makes Rust so nice--even better than Python. However, I have to face the reality: the majority of bioinformatics algorithms to date are written in C or C++ (either as pure C or C++ libraries or as extensions to Python or R), and most labs are still developing on them. It turns out that some C and C++ literacy is necessary for me.
+
+While there is a project called \href{https://github.com/nrc/r4cppp}{r4cppp} that introduces Rust to C++ programmers, I haven't found any cpp4r, so I started this one. I'm not an expert in Rust and C++ and I'm writing this book while learning them, so it'll be more like a personal notebook than a perfessional guide. I'll try to make it readable, though.
+
+\hypertarget{prerequisites}{%
+\chapter*{Prerequisites}\label{prerequisites}}
+\addcontentsline{toc}{chapter}{Prerequisites}
+
+You'll need a C++ compiler. I recommend using \texttt{clang++} on Linux \& MacOS because it generally gives better error message than \texttt{g++}. On Windows you should use \texttt{msvc}.
+
+\hypertarget{hello-c}{%
+\chapter{Hello C++}\label{hello-c}}
+
+\hypertarget{hello-world}{%
+\section{Hello world}\label{hello-world}}
+
+This is a hello world program in C++:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+\DataTypeTok{int}\NormalTok{ main()}
+\NormalTok{\{}
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"Hello C++!"}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+    \ControlFlowTok{return} \DecValTok{0}\NormalTok{;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Write the above code in \texttt{hello.cpp}, then you can compile it with \texttt{g++\ hello.cpp\ -o\ hello} and run \texttt{./hello} (you can replace \texttt{g++} with \texttt{clang++} or any other compiler).
+
+A couple of thing to note here:
+
+Every C++ executable (as opposed to library) must have a \texttt{main()} function that returns \texttt{int}. Returning \texttt{0} signifies that the program terminates without errors. The final \texttt{return\ 0;} statement can be omitted in the \texttt{main()} function.
+
+\texttt{\#include} is a preprocessor. We'll meet more preprocessors in the future, for now just accept that they are ``naive macros'' that are ``expanded'' before the actual compilation.
+Here \texttt{\#include} copies the content of file called \texttt{iostream}, which has tens of thousands lines, and pastes it here. Yes, it literally does so, and you can check this by running \texttt{g++\ -E\ main.c}, which ``expands'' all preprocessor statements.
+
+\texttt{iostream} contains definitions of functions and objects such as \texttt{std::cout} and \texttt{std::endl}, which are used for IO manipulations. \texttt{cout} stands for ``character output'', and \texttt{endl} stands for ``endline'' (it appends \texttt{\textbackslash{}n} and flushes the buffer). \texttt{\textless{}\textless{}} is the bitwise left shift operator, and the designers of C++ decided that overloading bitwise shift operators for \texttt{cout} and \texttt{cin} can make C++ look fancy from the beginning. That's why we need to learn yet another special syntax.
+
+Fortunately (or unfortunately), there's another way to do exactly the same thing:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{printf(}\StringTok{"Hello from printf}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+Now you might begin to wonder, why isn't \texttt{std::cout} called \texttt{std::iostream::cout}, and why \texttt{printf} can be called without any prefix. This is because in C++ filenames have no relationships to \texttt{namespace}s by default. \texttt{namespace} is similar to Rust's \texttt{mod}, but more flexible. In this case, the \texttt{iostream} file contains something conceptually like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{void}\NormalTok{ printf(...);}
+
+\KeywordTok{namespace}\NormalTok{ std \{}
+    \KeywordTok{class}\NormalTok{ cout \{\}}
+    \KeywordTok{class}\NormalTok{ endl \{\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{printf} isn't placed inside \texttt{std} because it is a heritage from C. Many other C functions are also available in C++, and they can be distinguished by the absence of the \texttt{std::} prefix.
+
+\hypertarget{hello-data-types-and-variables}{%
+\section{Hello Data Types and Variables}\label{hello-data-types-and-variables}}
+
+The following table summarises the relationship between Rust's and C++'s integer data types:
+
+\begin{longtable}[]{@{}ccc@{}}
+\toprule
+Rust & C++ & C \& C++\tabularnewline
+\midrule
+\endhead
+\texttt{i8} & \texttt{int8\_t} & \texttt{char}\tabularnewline
+\texttt{i16} & \texttt{int16\_t} & \texttt{short}\tabularnewline
+\texttt{i32} & \texttt{int32\_t} & \texttt{int}\tabularnewline
+\texttt{i64} & \texttt{int64\_t} & \texttt{long}\tabularnewline
+\texttt{i128} & &\tabularnewline
+\texttt{u8} & \texttt{uint8\_t} & \texttt{unsigned\ char}\tabularnewline
+\texttt{u16} & \texttt{uint16\_t} & \texttt{unsigned\ short}\tabularnewline
+\texttt{u32} & \texttt{uint32\_t} & \texttt{unsigned\ int}\tabularnewline
+\texttt{u64} & \texttt{uint64\_t} & \texttt{unsigned\ long}\tabularnewline
+\texttt{u128} & &\tabularnewline
+\texttt{isize} & &\tabularnewline
+\texttt{usize} & \texttt{size\_t} &\tabularnewline
+\bottomrule
+\end{longtable}
+
+While the equivalence between the first column and the second column always holds true, the third column depends on the platform and here I'm assuming you're on a modern, 64-bit system.
+
+While the relationships described in the table are always true, C++'s integer types are much more complex. The types above are fixed width integer types, and there are additional integer types whose width is dependent on the implementation. These include C-compatible ones (i.e.~\texttt{char}, \texttt{short}, \texttt{int}, \texttt{long}, \texttt{long\ long}), and other C++ artifects such as \texttt{int\_fast16\_t} and \texttt{int\_least32\_t}. You can learn about them at \href{https://en.cppreference.com/w/cpp/types/integer}{cppreference}.
+
+For floating numbers, \texttt{f32} and \texttt{f64} correspond to \texttt{float} and \texttt{double}, respectively (stand for single-precision and double-precision floating point numbers).
+
+Like in Rust, creating a variable requires two steps, declaration and initialization. In C++, there are usually more than one syntax to do any task, and these two basic operations are no exception.
+
+The traditional syntax for declaration and initialization is \texttt{\textless{}type\textgreater{}\ \textless{}var\ name\textgreater{}\ =\ \textless{}value\textgreater{};}, and these two steps can be separated:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ a = }\DecValTok{5}\NormalTok{;}
+\DataTypeTok{char}\NormalTok{ b;}
+\NormalTok{b = }\CharTok{\textquotesingle{}A\textquotesingle{}}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+The above syntax is compatible with C, which has a problem: if you initialize an \texttt{int} with a float:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ a = }\FloatTok{5.5}\NormalTok{;}
+\OtherTok{assert}\NormalTok{(a == }\DecValTok{5}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+The value will be implicitly converted. Instead of giving a warning or simply disallowing this (recent compilers DO give a warning; see Figure \ref{fig:equal}), the designers of C++ decided to invent another syntax for declaration and initialization, using curly braces:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ a\{}\DecValTok{5}\NormalTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{img/equal.png}
+\caption{\label{fig:equal}When implicit conversion occurs, a decent modern C++ compiler will give a warning.}
+\end{figure}
+
+If you try \texttt{int\ a\{5.5\};} with this syntax, the compiler will give an error and abort (Figure \ref{fig:braces} ). In addition, you can't separate the two parts:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// not allowed}
+\DataTypeTok{int}\NormalTok{ a;}
+\NormalTok{a\{}\DecValTok{5}\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\centering
+\includegraphics{img/equal.png}
+\caption{\label{fig:braces}When implicit conversion occurs, a decent modern C++ compiler will give a warning.}
+\end{figure}
+
+\hypertarget{pointers-and-references}{%
+\section{Pointers and References}\label{pointers-and-references}}
+
+Syntaxes related to pointers and references in C++ are\ldots interesing.
+
+In rust, when you take a reference to a type \texttt{T}, the type of the reference is \texttt{\&T}. The syntax can't be more natual: you add \texttt{\&} to both LHS and RHS:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{   a}\OperatorTok{:}  \DataTypeTok{i32} \OperatorTok{=}  \DecValTok{5}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{ p\_a}\OperatorTok{:} \OperatorTok{\&}\DataTypeTok{i32} \OperatorTok{=} \OperatorTok{\&}\DecValTok{5}\OperatorTok{;} \CommentTok{// type annotations are not required; this is just for demonstration}
+\end{Highlighting}
+\end{Shaded}
+
+and when you deference, you use \texttt{*}. Just remembering that \texttt{*} is the reverse of \texttt{\&}, everything is natual as well. Every \texttt{*} just removes one \texttt{\&} from both LHS and RHS:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ p\_a}\OperatorTok{:} \OperatorTok{\&}\DataTypeTok{i32} \OperatorTok{=} \OperatorTok{\&}\DecValTok{5}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{   a}\OperatorTok{:}  \DataTypeTok{i32} \OperatorTok{=} \OperatorTok{*}\NormalTok{p\_a}\OperatorTok{;}
+\KeywordTok{let}\NormalTok{   a}\OperatorTok{:}  \DataTypeTok{i32} \OperatorTok{=} \OperatorTok{*\&*\&*\&}\NormalTok{a}
+\end{Highlighting}
+\end{Shaded}
+
+In C++, this is what you would do to make a pointer:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{    a =  }\DecValTok{5}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{ *p\_a = \&}\DecValTok{5}\NormalTok{;}
+\CommentTok{// or}
+\DataTypeTok{int}\NormalTok{ * p\_a = \&}\DecValTok{5}\NormalTok{;}
+\CommentTok{// or}
+\DataTypeTok{int}\NormalTok{*  p\_a = \&}\DecValTok{5}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+and to dereference a pointer:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ b = *p\_a;}
+\end{Highlighting}
+\end{Shaded}
+
+You add \texttt{\&} to RHS, but you add \texttt{*} to LHS. Weird. What's worse, despite the fact that the variable name really is \texttt{p\_a}, not \texttt{*p\_a}, and the type really is \texttt{int*}, most people and formatters prepend the asterisk before the variable name, which looks like you're declaring an \texttt{int} which is clearly not true. So why are people doing that? There are some discussion on \href{https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type}{StackOverflow}.
+
+But wait, how did people learn this weird convention in the first place? On \href{https://en.cppreference.com/w/cpp/language/pointer}{cppreference}, and in Bjarne Stroustrup's \emph{A Tour of C++}, the \texttt{int*\ p\_a\ =\ \&5} style is always used, so just\ldots why? Why are people sticking to the anti-standard?
+
+Since pointers are a heritage from C, it is not surprising that the \emph{creative} C++ designers invented yet another similar syntax for achieving almost the same task: references. You create and read a reference like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ l = }\DecValTok{5}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{ \&m = l;}
+\OtherTok{assert}\NormalTok{(m == }\DecValTok{5}\NormalTok{); }\CommentTok{// not \textasciigrave{}*m\textasciigrave{} !}
+\end{Highlighting}
+\end{Shaded}
+
+Note that you do not (and cannot) use the deference operator (\texttt{*}) on a reference. In addition, a reference cannot be re-assigned to point to another value. Apart from these two rules, references are effectively the same as pointers.
+Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be use to mutate the referent.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+\DataTypeTok{int}\NormalTok{ main()}
+\NormalTok{\{}
+    \DataTypeTok{int}\NormalTok{ a\{}\DecValTok{5}\NormalTok{\};}
+    \DataTypeTok{int}\NormalTok{ \&r\_a = a;  }\CommentTok{// create a reference}
+    \DataTypeTok{int}\NormalTok{ *p\_a = \&a; }\CommentTok{// create a pointer}
+\NormalTok{    printf(}\StringTok{"| a|r\_a|*p\_a|     p\_a      |}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    a = }\DecValTok{10}\NormalTok{; }\CommentTok{// mutate the value}
+\NormalTok{    printf(}\StringTok{"|}\SpecialCharTok{\%d}\StringTok{| }\SpecialCharTok{\%d}\StringTok{|  }\SpecialCharTok{\%d}\StringTok{|}\SpecialCharTok{\%p}\StringTok{|}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, a, r\_a, *p\_a, p\_a);}
+\NormalTok{    r\_a = }\DecValTok{15}\NormalTok{; }\CommentTok{// mutate via reference; no asterisk!}
+\NormalTok{    printf(}\StringTok{"|}\SpecialCharTok{\%d}\StringTok{| }\SpecialCharTok{\%d}\StringTok{|  }\SpecialCharTok{\%d}\StringTok{|}\SpecialCharTok{\%p}\StringTok{|}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, a, r\_a, *p\_a, p\_a);}
+\NormalTok{    *p\_a = }\DecValTok{20}\NormalTok{; }\CommentTok{// mutate via pointer}
+\NormalTok{    printf(}\StringTok{"|}\SpecialCharTok{\%d}\StringTok{| }\SpecialCharTok{\%d}\StringTok{|  }\SpecialCharTok{\%d}\StringTok{|}\SpecialCharTok{\%p}\StringTok{|}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, a, r\_a, *p\_a, p\_a);}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+| a|r_a|*p_a|     p_a      |
+|10| 10|  10|0x7ffe09e40404|
+|15| 15|  15|0x7ffe09e40404|
+|20| 20|  20|0x7ffe09e40404|
+\end{verbatim}
+
+\hypertarget{control-flow}{%
+\section{Control Flow}\label{control-flow}}
+
+C++ offers 5 types of control flow statements. \texttt{if...else}, \texttt{for} loop and \texttt{while} loop are pretty much the same as in Rust, but the \texttt{switch} statement is much less powerful than Rust's \texttt{match}. Additionally there is a \texttt{goto} statement which performs unconditional jump and is notorious for leading to ``unmaintainable spaghetti code'' (however, people are still using them, and you'll see why in a minute).
+
+If you have experience in Javascript or Java, most of C++'s control flow syntax will be familiar to you. The conditional test associated with \texttt{if}, \texttt{for}, \texttt{while} and \texttt{switch} must be surrounded by parentheses.
+
+\hypertarget{if...else}{%
+\subsection{\texorpdfstring{\texttt{if...else}}{if...else}}\label{if...else}}
+
+Like Rust, C++ offers \texttt{if} and \texttt{else} keywords to work with conditionals. Unlike Rust, C++ is not expression-oriented, so you cannot write:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ a = }\ControlFlowTok{if}\NormalTok{ (}\KeywordTok{true}\NormalTok{) \{ }\DecValTok{5}\NormalTok{ \} }\ControlFlowTok{else}\NormalTok{ \{ }\DecValTok{10}\NormalTok{ \};}
+\end{Highlighting}
+\end{Shaded}
+
+But this kind of conditional assignment is a very common pattern, so C++ invented yet another syntax specifically designed for this single task: the ternary operator. So, instead of writing:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ a;}
+\ControlFlowTok{if}\NormalTok{ (}\KeywordTok{true}\NormalTok{) \{ a = }\DecValTok{5}\NormalTok{; \} }\ControlFlowTok{else}\NormalTok{ \{ a = }\DecValTok{10}\NormalTok{; \};}
+\end{Highlighting}
+\end{Shaded}
+
+you could write:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ a = }\KeywordTok{true}\NormalTok{ ? }\DecValTok{5}\NormalTok{ : }\DecValTok{10}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{while-loop}{%
+\subsection{\texorpdfstring{\texttt{while} Loop}{while Loop}}\label{while-loop}}
+
+The \texttt{while} loop in C++ has nothing different from Rust, just remember to wrap the test expression with parentheses.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ i = }\DecValTok{10}\NormalTok{;}
+\ControlFlowTok{while}\NormalTok{ (i \textgreater{} }\DecValTok{0}\NormalTok{)}
+\NormalTok{\{}
+    \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{8}\NormalTok{)}
+\NormalTok{    \{}
+        \ControlFlowTok{continue}\NormalTok{;}
+\NormalTok{    \}}
+    \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{5}\NormalTok{)}
+\NormalTok{    \{}
+        \ControlFlowTok{break}\NormalTok{;}
+\NormalTok{    \}}
+\NormalTok{    i{-}{-};}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{for-loop}{%
+\subsection{\texorpdfstring{\texttt{for} Loop}{for Loop}}\label{for-loop}}
+
+A traditional C-style \texttt{for} loop looks like this (you'll be familiar with this if you code Javascript or Java):
+
+\begin{verbatim}
+for (<initializationStatement>; <testExpression>; <updateStatement>)
+{
+    // do something
+}
+\end{verbatim}
+
+For example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+\NormalTok{printf(}\StringTok{"|i|j|}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{2}\NormalTok{; i++)}
+\NormalTok{\{}
+    \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ j = }\DecValTok{0}\NormalTok{; j \textless{} }\DecValTok{3}\NormalTok{; j++)}
+\NormalTok{    \{}
+\NormalTok{        printf(}\StringTok{"|}\SpecialCharTok{\%d}\StringTok{|}\SpecialCharTok{\%d}\StringTok{|"}\NormalTok{, i, j);}
+\NormalTok{    \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+C++11 introduced the range-based \texttt{for} statement, which is also known as a \texttt{for...in} loop in most other languages (Rust, Swift, Python, Ruby, \ldots). The syntax itself is easy but knowing the relationship between the element and the iterable can be tricky. Fortuantely, we are Rustaceans, so an easy way for me to illustrate and for you to understand is to write a few equivalent examples in Rust and C++.
+
+\hypertarget{scenario-1-as-reference-borrowing}{%
+\subsubsection{Scenario 1: As Reference (Borrowing)}\label{scenario-1-as-reference-borrowing}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Rust}
+\KeywordTok{let}\NormalTok{ v }\OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}\DecValTok{1}\OperatorTok{,} \DecValTok{2}\OperatorTok{,} \DecValTok{3}\OperatorTok{,} \DecValTok{4}\OperatorTok{,} \DecValTok{5}\NormalTok{]}\OperatorTok{;}
+\KeywordTok{for}\NormalTok{ e }\KeywordTok{in} \OperatorTok{\&}\NormalTok{v }\OperatorTok{\{}
+    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"\{\}"}\OperatorTok{,} \OperatorTok{*}\NormalTok{e)}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// C++}
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+\PreprocessorTok{\#include }\ImportTok{\textless{}vector\textgreater{}}
+\BuiltInTok{std::}\NormalTok{vector\textless{}}\DataTypeTok{int}\NormalTok{\textgreater{} a\{}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{\};}
+\ControlFlowTok{for}\NormalTok{ (}\KeywordTok{auto}\NormalTok{\& num : a)}
+\NormalTok{\{}
+\NormalTok{    printf(}\StringTok{"}\SpecialCharTok{\%d}\StringTok{ "}\NormalTok{, num); }\CommentTok{// no asterisk!}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{scenario-2-mutation}{%
+\subsubsection{Scenario 2: Mutation}\label{scenario-2-mutation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// Rust}
+\KeywordTok{let} \KeywordTok{mut}\NormalTok{ v }\OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}\DecValTok{1}\OperatorTok{,} \DecValTok{2}\OperatorTok{,} \DecValTok{3}\OperatorTok{,} \DecValTok{4}\OperatorTok{,} \DecValTok{5}\NormalTok{]}\OperatorTok{;}
+\KeywordTok{for}\NormalTok{ e }\KeywordTok{in} \OperatorTok{\&}\KeywordTok{mut}\NormalTok{ v }\OperatorTok{\{}
+    \OperatorTok{*}\NormalTok{e }\OperatorTok{=}\NormalTok{ e }\OperatorTok{+} \DecValTok{1}\OperatorTok{;}
+\OperatorTok{\}}
+\PreprocessorTok{assert\_eq!}\NormalTok{(v}\OperatorTok{,} \PreprocessorTok{vec!}\NormalTok{[}\DecValTok{2}\OperatorTok{,} \DecValTok{3}\OperatorTok{,} \DecValTok{4}\OperatorTok{,} \DecValTok{5}\OperatorTok{,} \DecValTok{6}\NormalTok{])}\OperatorTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// C++}
+\PreprocessorTok{\#include }\ImportTok{\textless{}vector\textgreater{}}
+\PreprocessorTok{\#include }\ImportTok{\textless{}cassert\textgreater{}}
+\BuiltInTok{std::}\NormalTok{vector\textless{}}\DataTypeTok{int}\NormalTok{\textgreater{} a\{}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{\};}
+\ControlFlowTok{for}\NormalTok{ (}\KeywordTok{auto}\NormalTok{ \&num : a)}
+\NormalTok{\{}
+\NormalTok{    num++;}
+\NormalTok{\}}
+\OtherTok{assert}\NormalTok{(a == (}\BuiltInTok{std::}\NormalTok{vector\textless{}}\DataTypeTok{int}\NormalTok{\textgreater{}\{}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{\}));}
+\end{Highlighting}
+\end{Shaded}
+
+Note the parentheses surrounding the second argument of \texttt{assert}, without which we would get an error. This is because \texttt{assert} is a so called \texttt{\#define} macro, which simply parses its arguments as comma-separated identifiers and does text replacement. Since \texttt{std::vector\textless{}int\textgreater{}\{2,\ 3,\ 4,\ 5,\ 6\}} contains commas, it has to be escaped with parentheses.\footnote{Related to this stackoverflow question: \url{https://stackoverflow.com/questions/38030048}} This macro is actually defined in \texttt{assert.h} which is part of C's std, and its more or less copied verbatim into C++'s \texttt{cassert}. Theoretically I think it is possible to implement C++'s own \texttt{assert} or \texttt{\#define} that removes the need for adding parentheses here and there. However, the C++ committee never cares about ergonomics.
+
+\hypertarget{scenario-3-copying-cloning}{%
+\subsubsection{Scenario 3: Copying (Cloning)}\label{scenario-3-copying-cloning}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{let}\NormalTok{ v }\OperatorTok{=} \PreprocessorTok{vec!}\NormalTok{[}\StringTok{"a"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{,} \StringTok{"b"}\OperatorTok{.}\NormalTok{to\_string()}\OperatorTok{,} \StringTok{"c"}\OperatorTok{.}\NormalTok{to\_string()]}\OperatorTok{;}
+\KeywordTok{for}\NormalTok{ e}\OperatorTok{.}\NormalTok{clone() }\KeywordTok{in} \OperatorTok{\&}\NormalTok{v }\OperatorTok{\{}
+    \PreprocessorTok{println!}\NormalTok{(}\StringTok{"\{\}"}\OperatorTok{,}\NormalTok{ e)}\OperatorTok{;}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{// C++}
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+\PreprocessorTok{\#include }\ImportTok{\textless{}vector\textgreater{}}
+\BuiltInTok{std::}\NormalTok{vector\textless{}}\BuiltInTok{std::}\NormalTok{string\textgreater{} a\{}\StringTok{"a"}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\StringTok{"c"}\NormalTok{\};}
+\ControlFlowTok{for}\NormalTok{ (}\KeywordTok{auto}\NormalTok{ s : a) }\CommentTok{// s has type \textasciigrave{}std::string\textasciigrave{}}
+\NormalTok{\{}
+    \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} s \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Note how Rust makes it crystal clear that copying during iteration and using \texttt{String} for instead of \texttt{\&str} for static strings are an anti-pattern and how C++ makes it easy to write such inefficient code.
+
+\hypertarget{goto-statement-and-breaking-outer-loops}{%
+\subsection{\texorpdfstring{\texttt{goto} Statement and Breaking outer Loops}{goto Statement and Breaking outer Loops}}\label{goto-statement-and-breaking-outer-loops}}
+
+Rust, like Java and Python, allows you to break an outer loop from an inner loop:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{for}\NormalTok{ i }\KeywordTok{in} \DecValTok{0}\OperatorTok{..}\DecValTok{3} \OperatorTok{\{}
+    \OtherTok{\textquotesingle{}for\_j}\OperatorTok{:} \KeywordTok{for}\NormalTok{ j }\KeywordTok{in} \DecValTok{0}\OperatorTok{..}\DecValTok{3} \OperatorTok{\{}
+        \KeywordTok{for}\NormalTok{ k }\KeywordTok{in} \DecValTok{0}\OperatorTok{..}\DecValTok{3} \OperatorTok{\{}
+            \KeywordTok{if}\NormalTok{ i }\OperatorTok{==} \DecValTok{1} \OperatorTok{\{}
+                \KeywordTok{break} \OtherTok{\textquotesingle{}for\_j}\OperatorTok{;}
+            \OperatorTok{\}}
+            \PreprocessorTok{println!}\NormalTok{(}\StringTok{"\{\} \{\} \{\}"}\OperatorTok{,}\NormalTok{ i}\OperatorTok{,}\NormalTok{ j}\OperatorTok{,}\NormalTok{ k)}\OperatorTok{;}
+        \OperatorTok{\}}
+    \OperatorTok{\}}
+\OperatorTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+C++ doesn't support this natively, so people are using \texttt{goto} to achieve this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
+\NormalTok{printf(}\StringTok{"Break outer loop using goto:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
+\NormalTok{\{}
+
+    \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ j = }\DecValTok{0}\NormalTok{; j \textless{} }\DecValTok{3}\NormalTok{; ++j)}
+\NormalTok{    \{}
+        \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ k = }\DecValTok{0}\NormalTok{; k \textless{} }\DecValTok{3}\NormalTok{; ++k)}
+\NormalTok{        \{}
+            \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{1}\NormalTok{)}
+\NormalTok{            \{}
+                \ControlFlowTok{goto}\NormalTok{ the\_end;}
+\NormalTok{            \}}
+            \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"i: "}\NormalTok{ \textless{}\textless{} i \textless{}\textless{} }\StringTok{" j: "}\NormalTok{ \textless{}\textless{} j \textless{}\textless{} }\StringTok{" k "}\NormalTok{ \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{        \}}
+\NormalTok{    \}}
+\NormalTok{the\_end:}
+\NormalTok{\{}
+\NormalTok{\}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Using \texttt{goto} sounds like I am joking. I'm not. People really suggests doing this\footnote{\url{https://stackoverflow.com/questions/1257744/can-i-use-break-to-exit-multiple-nested-for-loops}}. It's a consensus that \texttt{goto} statements are error-prone, but there really aren't better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.
+
+Alternatively you can use a flag, which is more verbose, and I think this is even less readable:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{printf(}\StringTok{"Break outer loop using flag:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\DataTypeTok{bool}\NormalTok{ i\_is\_1\{}\KeywordTok{false}\NormalTok{\};}
+\ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
+\NormalTok{\{}
+
+    \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ j = }\DecValTok{0}\NormalTok{; j \textless{} }\DecValTok{3}\NormalTok{; ++j)}
+\NormalTok{    \{}
+        \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ k = }\DecValTok{0}\NormalTok{; k \textless{} }\DecValTok{3}\NormalTok{; ++k)}
+\NormalTok{        \{}
+            \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{1}\NormalTok{)}
+\NormalTok{            \{}
+\NormalTok{                i\_is\_1 = }\KeywordTok{true}\NormalTok{;}
+                \ControlFlowTok{break}\NormalTok{;}
+\NormalTok{            \}}
+            \ControlFlowTok{else}
+\NormalTok{            \{}
+\NormalTok{                i\_is\_1 = }\KeywordTok{false}\NormalTok{;}
+\NormalTok{            \}}
+            \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"i: "}\NormalTok{ \textless{}\textless{} i \textless{}\textless{} }\StringTok{" j: "}\NormalTok{ \textless{}\textless{} j \textless{}\textless{} }\StringTok{" k "}\NormalTok{ \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{        \}}
+        \ControlFlowTok{if}\NormalTok{ (i\_is\_1)}
+\NormalTok{        \{}
+            \ControlFlowTok{break}\NormalTok{;}
+\NormalTok{        \}}
+\NormalTok{    \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+There is another cleaner way, using the lambda trick (but why the hell must I use a lamba for such a basic task???):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{printf(}\StringTok{"Break outer loop using lambda:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
+\NormalTok{\{}
+\NormalTok{    [\&] \{}
+        \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ j = }\DecValTok{0}\NormalTok{; j \textless{} }\DecValTok{3}\NormalTok{; ++j)}
+\NormalTok{        \{}
+            \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ k = }\DecValTok{0}\NormalTok{; k \textless{} }\DecValTok{3}\NormalTok{; ++k)}
+\NormalTok{            \{}
+                \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{1}\NormalTok{)}
+\NormalTok{                \{}
+                    \ControlFlowTok{return}\NormalTok{;}
+\NormalTok{                \}}
+                \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"i: "}\NormalTok{ \textless{}\textless{} i \textless{}\textless{} }\StringTok{" j: "}\NormalTok{ \textless{}\textless{} j \textless{}\textless{} }\StringTok{" k "}\NormalTok{ \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{            \}}
+\NormalTok{        \}}
+\NormalTok{    \}();}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+I'll get back to lamdas later. For now just accept that they are roughly equivalent to Rust's closures.
+
+  \bibliography{book.bib}
+
+\end{document}
