@@ -114,6 +114,9 @@
 \setCJKmainfont{Source Han Serif}
 \setCJKmonofont{Source Han Serif}
 \setCJKsansfont{YouYuan}
+
+\usepackage{lscape}
+\usepackage{pdfpages}
 \ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -156,6 +159,8 @@ You'll need a C++ compiler. I recommend using \texttt{clang++} on Linux \& MacOS
 \hypertarget{hello-c}{%
 \chapter{Hello C++}\label{hello-c}}
 
+In this chapter, we'll learn the very basics of C++.
+
 \hypertarget{hello-world}{%
 \section{Hello world}\label{hello-world}}
 
@@ -172,16 +177,29 @@ This is a hello world program in C++:
 \end{Highlighting}
 \end{Shaded}
 
-Write the above code in \texttt{hello.cpp}, then you can compile it with \texttt{g++\ hello.cpp\ -o\ hello} and run \texttt{./hello} (you can replace \texttt{g++} with \texttt{clang++} or any other compiler).
+Write the above code in \texttt{hello.cpp}, then you can compile it with
+\texttt{g++\ hello.cpp\ -o\ hello} and run \texttt{./hello} (you can replace \texttt{g++} with \texttt{clang++}
+or any other compiler).
 
 A couple of things to note here:
 
-Every C++ executable (as opposed to library) must have a \texttt{main()} function that returns \texttt{int}. Returning \texttt{0} signifies that the program terminates without errors. The final \texttt{return\ 0;} statement can be omitted in the \texttt{main()} function.
+Every C++ executable (as opposed to library) must have a \texttt{main()} function that
+returns \texttt{int}. Returning \texttt{0} signifies that the program terminates without errors.
+The final \texttt{return\ 0;} statement can be omitted in the \texttt{main()} function.
 
-\texttt{\#include} is a preprocessor. We'll meet more preprocessors in the future, for now just accept that they are ``naive macros'' that are ``expanded'' before the actual compilation.
-Here \texttt{\#include} copies the content of file called \texttt{iostream}, which has tens of thousands lines, and pastes it here. Yes, it literally does so, and you can check this by running \texttt{g++\ -E\ main.c}, which ``expands'' all preprocessor statements.
+\texttt{\#include} is a preprocessor. We'll meet more preprocessors in the future, for now
+just accept that they are ``naive macros'' that are ``expanded'' before the actual
+compilation.
+Here \texttt{\#include} copies the content of file called \texttt{iostream}, which has tens of
+thousands lines, and pastes it here. Yes, it literally does so, and you can check
+this by running \texttt{g++\ -E\ main.c}, which ``expands'' all preprocessor statements.
 
-\texttt{iostream} contains definitions of functions and objects such as \texttt{std::cout} and \texttt{std::endl}, which are used for IO manipulations. \texttt{cout} stands for ``character output'', and \texttt{endl} stands for ``endline'' (it appends \texttt{\textbackslash{}n} and flushes the buffer). \texttt{\textless{}\textless{}} is the bitwise left shift operator, and the designers of C++ decided that overloading bitwise shift operators for \texttt{cout} and \texttt{cin} can make C++ look fancy from the beginning. That's why we need to learn yet another special syntax.
+\texttt{iostream} contains definitions of functions and objects such as \texttt{std::cout} and
+\texttt{std::endl}, which are used for IO manipulations. \texttt{cout} stands for ``character
+output'', and \texttt{endl} stands for ``endline'' (it appends \texttt{\textbackslash{}n} and flushes the buffer).
+\texttt{\textless{}\textless{}} is the bitwise left shift operator, and the designers of C++ decided that
+overloading bitwise shift operators for \texttt{cout} and \texttt{cin} can make C++ look fancy
+from the beginning. That's why we need to learn yet another special syntax.
 
 Fortunately (or unfortunately), there's another way to do exactly the same thing:
 
@@ -293,8 +311,8 @@ If you try \texttt{int\ a\{5.5\};} with this syntax, the compiler will give an e
 
 \begin{figure}
 \centering
-\includegraphics{img/equal.png}
-\caption{\label{fig:braces}When implicit conversion occurs, a decent modern C++ compiler will give a warning.}
+\includegraphics{img/brace.png}
+\caption{\label{fig:braces}The uniform initialization syntax.}
 \end{figure}
 
 \hypertarget{mutability}{%
@@ -528,6 +546,116 @@ Since we are Rustaceans, we are sensitive to mutability. Are there any differenc
 |15| 15|  15|0x7ffe09e40404|
 |20| 20|  20|0x7ffe09e40404|
 \end{verbatim}
+
+I think it would be helpful to make a line-by-line comparison of some common tasks in Rust and in C++:
+
+\hypertarget{reading-the-value-without-mutation-with-a-pointer-or-reference}{%
+\subsubsection{Reading The Value Without Mutation with A Pointer or Reference}\label{reading-the-value-without-mutation-with-a-pointer-or-reference}}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+\begin{minipage}[b]{0.16\columnwidth}\raggedright
+step\strut
+\end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\raggedright
+C++ (pointer)\strut
+\end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\raggedright
+C++ (reference)\strut
+\end{minipage} & \begin{minipage}[b]{0.16\columnwidth}\raggedright
+Rust\strut
+\end{minipage} & \begin{minipage}[b]{0.22\columnwidth}\raggedright
+Rust (raw pointer)\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.16\columnwidth}\raggedright
+init referent\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{const\ int\ a\ =\ 5}\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{const\ int\ a\ =\ 5}\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{let\ a\ =\ 5}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+\texttt{let\ \ a\ =\ 5}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.16\columnwidth}\raggedright
+make ptr/ref\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{const\ int*\ p\ =\ \&a}\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{const\ int\&\ r\ =\ a}\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{let\ r:\ \&i32\ =\ \&a}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+\texttt{let\ p:\ *const\ i32\ =\ \&a;}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.16\columnwidth}\raggedright
+read referent value\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{*p}\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{r}\strut
+\end{minipage} & \begin{minipage}[t]{0.16\columnwidth}\raggedright
+\texttt{*r}\strut
+\end{minipage} & \begin{minipage}[t]{0.22\columnwidth}\raggedright
+\texttt{*p}\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{mutating-the-value-of-the-referent-with-a-pointer-or-reference}{%
+\subsubsection{Mutating the Value of the Referent with A Pointer or Reference}\label{mutating-the-value-of-the-referent-with-a-pointer-or-reference}}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule
+\begin{minipage}[b]{0.12\columnwidth}\raggedright
+step\strut
+\end{minipage} & \begin{minipage}[b]{0.12\columnwidth}\raggedright
+C++ (pointer)\strut
+\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\raggedright
+C++ (reference)\strut
+\end{minipage} & \begin{minipage}[b]{0.24\columnwidth}\raggedright
+Rust\strut
+\end{minipage} & \begin{minipage}[b]{0.25\columnwidth}\raggedright
+Rust (raw pointer)\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.12\columnwidth}\raggedright
+init referent\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright
+\texttt{int\ a\ =\ 5}\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+\texttt{int\ a\ =\ 5}\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright
+\texttt{let\ mut\ a\ =\ 5}\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+\texttt{let\ mut\ a\ =\ 5}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.12\columnwidth}\raggedright
+make ptr/ref\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright
+\texttt{int*\ p\ =\ \&a}\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+\texttt{int*\ r\ =\ \&a}\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright
+\texttt{let\ r:\ \&mut\ i32\ =\ \&mut\ a}\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+\texttt{let\ p:\ *mut\ i32\ =\ \&mut\ a;}\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.12\columnwidth}\raggedright
+mutate\strut
+\end{minipage} & \begin{minipage}[t]{0.12\columnwidth}\raggedright
+\texttt{*p\ =\ 10}\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright
+\texttt{r\ =\ 10}\strut
+\end{minipage} & \begin{minipage}[t]{0.24\columnwidth}\raggedright
+\texttt{*r\ =\ 10}\strut
+\end{minipage} & \begin{minipage}[t]{0.25\columnwidth}\raggedright
+\texttt{*p\ =\ 10}\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
 
 \hypertarget{control-flow}{%
 \section{Control Flow}\label{control-flow}}
@@ -915,6 +1043,132 @@ This is all about \texttt{switch} in C++. Forget everything about the fancy patt
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{enumerations}{%
+\chapter{Enumerations}\label{enumerations}}
+
+Like Rust, C++ has \texttt{enum}s. Unlike Rust, their \texttt{enum}s are much less powerful. C++`s enumeration
+comes in two flavors: the plain, C-compatible \texttt{enum}, and the \texttt{enum\ class}. Generally, you should
+always use an \texttt{enum\ class}, but you should also learn about the plain \texttt{enum} in order to read
+others' code.
+
+\hypertarget{the-plain-enum}{%
+\section{\texorpdfstring{The Plain \texttt{enum}}{The Plain enum}}\label{the-plain-enum}}
+
+\hypertarget{defining-an-enum}{%
+\subsection{Defining an Enum}\label{defining-an-enum}}
+
+The syntax for defining an \texttt{enum} in C++ is similar to Rust. In addition, like in Rust, enum
+variants are represented as integers at the low level, and by default the value starts from 0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{enum}\NormalTok{ LogLevel}
+\NormalTok{\{}
+\NormalTok{    Debug,   }\CommentTok{// 0}
+\NormalTok{    Info,    }\CommentTok{// 1}
+\NormalTok{    Warning, }\CommentTok{// 2}
+\NormalTok{    Error    }\CommentTok{// 3}
+\NormalTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+You can also manually assign values to the variants (also valid in Rust):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{enum}\NormalTok{ LogLevel}
+\NormalTok{\{}
+\NormalTok{    Debug   = }\BaseNTok{0x12}\NormalTok{,}
+\NormalTok{    Info    = }\BaseNTok{0xd1}\NormalTok{,}
+\NormalTok{    Warning = }\BaseNTok{0x7c}\NormalTok{,}
+\NormalTok{    Error   = }\BaseNTok{0x0a}\NormalTok{,}
+\NormalTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+Unlike Rust, C++ by default uses the \texttt{int} type to represent the variants, even though most of the
+time the number of variants won't exceed 256. To use a more compact representation, you can do:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{enum}\NormalTok{ MyEnum : }\DataTypeTok{uint8\_t}
+\CommentTok{// or \textasciigrave{}enum Foo : char\textasciigrave{} (remember that \textasciigrave{}char\textasciigrave{} is an integer type)}
+\NormalTok{\{}
+\NormalTok{    Foo,}
+\NormalTok{    Bar,}
+\NormalTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{using-an-enum}{%
+\subsection{Using an Enum}\label{using-an-enum}}
+
+Unlike Rust, a C++ \texttt{enum} does not create a namespace, which means you cannot write \texttt{LogLevel::Info}
+to refer to the \texttt{Info} variant of the \texttt{LogLevel} enum defined in the prevous subsection. You should
+write \texttt{Info} directly.
+
+A enum is implicitly converted to an integer. Which means it can be directly compared to an integer
+(but dont't actually do this) and can be pushed to \texttt{std::cout} directly.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LogLevel lvl = Info;}
+\OtherTok{assert}\NormalTok{(Info == }\DecValTok{1}\NormalTok{);}
+\OtherTok{assert}\NormalTok{(Warning \textgreater{} }\DecValTok{1}\NormalTok{);}
+\OtherTok{assert}\NormalTok{(Error \textgreater{} Debug);}
+\BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} lvl \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\end{Highlighting}
+\end{Shaded}
+
+However, an integer cannot be converted implicitly into an enum, but can be done so explicitly:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LogLevel lvl = }\DecValTok{2}\NormalTok{;           }\CommentTok{// won\textquotesingle{}t work}
+\NormalTok{LogLevel lvl = (LogLevel)}\DecValTok{2}\NormalTok{; }\CommentTok{// OK, but don\textquotesingle{}t actually do this}
+\end{Highlighting}
+\end{Shaded}
+
+You can reassign the identifier \texttt{Info} to another value
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{ Info = }\DecValTok{999}\NormalTok{;}
+\end{Highlighting}
+\end{Shaded}
+
+\ldots but can you set another \texttt{LogLevel} to \texttt{Info}?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LogLevel m = Info; }\CommentTok{// Error!}
+\end{Highlighting}
+\end{Shaded}
+
+No you can't. C++ generally forbids re-defining variables, but in the case of
+enums you are allowed to re-bind a enum variant identifier (\texttt{Info}) to another
+value (\texttt{999}), then you just can't use that enum variant.
+
+To avoid this and other kinds of conflicts, it had been a common practice to
+enum variants with part of the enum name. For example, the \texttt{LogLevel} enum
+may be rewritten as:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{enum}\NormalTok{ LogLevel}
+\NormalTok{\{}
+\NormalTok{    LevelDebug,}
+\NormalTok{    LevelInfo,}
+\NormalTok{    LevelWarning,}
+\NormalTok{    LevelError}
+\NormalTok{\};}
+\end{Highlighting}
+\end{Shaded}
+
+\ldots which is yet another way in which C++ has been promoting the violation of the DRY rule
+To solve this problem. Instead of allowing using enum variant either with or
+without a namespace (which MSVC allows), the C++ committee invented yet another
+way to work with enums, known as the \texttt{enum\ class}.
 
   \bibliography{book.bib}
 

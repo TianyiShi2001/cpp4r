@@ -9,6 +9,8 @@ variables
 mutability
 functions
 pointers-and-references
+reading-the-value-without-mutation-with-a-pointer-or-reference
+mutating-the-value-of-the-referent-with-a-pointer-or-reference
 control-flow
 if...else
 while-loop
@@ -18,3 +20,7 @@ scenario-2-as-reference-borrowing
 scenario-3-mutation
 goto-statement-and-breaking-outer-loops
 switch
+enumerations
+the-plain-enum
+defining-an-enum
+using-an-enum

@@ -1,5 +1,5 @@
 book_filename: "cpp4r"
-rmd_files: ["index.Rmd", "hello.Rmd"]
+rmd_files: ["index.Rmd", "hello.Rmd", "enum.Rmd"]
 output_dir: "../docs"
 delete_merged_file: true
 language:

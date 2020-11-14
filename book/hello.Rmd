@@ -124,8 +124,8 @@ int a;
 a{5}
 ```
 
-```{r braces, echo=FALSE, out_width="100%", fig.cap="When implicit conversion occurs, a decent modern C++ compiler will give a warning."}
-knitr::include_graphics("img/equal.png")
+```{r braces, echo=FALSE, out_width="100%", fig.cap="The uniform initialization syntax."}
+knitr::include_graphics("img/brace.png")
 ```
 
 ### Mutability
@@ -329,6 +329,25 @@ int main()
 |15| 15|  15|0x7ffe09e40404|
 |20| 20|  20|0x7ffe09e40404|
 ```
+I think it would be helpful to make a line-by-line comparison of some common tasks in Rust and in C++:
+
+#### Reading The Value Without Mutation with A Pointer or Reference
+
+| step                | C++    (pointer)    | C++ (reference)    | Rust               | Rust (raw pointer)        |
+| ------------------- | ------------------- | ------------------ | ------------------ | ------------------------- |
+| init referent       | `const int a = 5`   | `const int a = 5`  | `let a = 5`        | `let  a = 5`              |
+| make ptr/ref        | `const int* p = &a` | `const int& r = a` | `let r: &i32 = &a` | `let p: *const i32 = &a;` |
+| read referent value | `*p`                | ` r`               | `*r`               | `*p`                      |
+
+
+#### Mutating the Value of the Referent with A Pointer or Reference
+
+| step          | C++ (pointer) | C++ (reference) | Rust                       | Rust (raw pointer)          |
+| ------------- | ------------- | --------------- | -------------------------- | --------------------------- |
+| init referent | `int a = 5`   | `int a = 5`     | `let mut a = 5`            | `let mut a = 5`             |
+| make ptr/ref  | `int* p = &a` | `int* r = &a`   | `let r: &mut i32 = &mut a` | `let p: *mut i32 = &mut a;` |
+| mutate        | `*p = 10`     | ` r = 10`       | `*r = 10`                  | `*p = 10`                   |
+
 
 ## Control Flow
 

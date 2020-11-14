@@ -76,16 +76,15 @@ You can reassign the identifier `Info` to another value
 int Info = 999;
 ```
 
-But can you set another `LogLevel` to `Info`?
+...but can you set another `LogLevel` to `Info`?
 
 ```c++
 LogLevel m = Info; // Error!
 ```
 
-No you can't. C++ generally disallows re-defining variables,
-but in the case of enums you are allowed to re-bind a enum
-variant identifier to another value, then you just can't use
-that enum variant.
+No you can't. C++ generally forbids re-defining variables, but in the case of
+enums you are allowed to re-bind a enum variant identifier (`Info`) to another
+value (`999`), then you just can't use that enum variant.
 
 To avoid this and other kinds of conflicts, it had been a common practice to
 enum variants with part of the enum name. For example, the `LogLevel` enum
@@ -102,7 +101,7 @@ enum LogLevel
 ```
 
 
-...which is yet another way C++ has been promoting the violation of the DRY rule
+...which is yet another way in which C++ has been promoting the violation of the DRY rule
 To solve this problem. Instead of allowing using enum variant either with or
 without a namespace (which MSVC allows), the C++ committee invented yet another
 way to work with enums, known as the `enum class`.

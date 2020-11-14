@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 1 Hello C++ | C++ for Rustaceans</title>
-  <meta name="description" content="Chapter 1 Hello C++ | C++ for Rustaceans" />
+  <title>Exercise | C++ for Rustaceans</title>
+  <meta name="description" content="Exercise | C++ for Rustaceans" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 1 Hello C++ | C++ for Rustaceans" />
+  <meta property="og:title" content="Exercise | C++ for Rustaceans" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Chapter 1 Hello C++ | C++ for Rustaceans" />
+  <meta property="og:description" content="Exercise | C++ for Rustaceans" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Hello C++ | C++ for Rustaceans" />
+  <meta name="twitter:title" content="Exercise | C++ for Rustaceans" />
   
-  <meta name="twitter:description" content="Chapter 1 Hello C++ | C++ for Rustaceans" />
+  <meta name="twitter:description" content="Exercise | C++ for Rustaceans" />
   
 
 <meta name="author" content="Tianyi Shi" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="prerequisites.html"/>
-<link rel="next" href="hello-world.html"/>
+<link rel="prev" href="control-flow.html"/>
+<link rel="next" href="enumerations.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -191,17 +191,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="hello-c" class="section level1" number="1">
-<h1><span class="header-section-number">Chapter 1</span> Hello C++</h1>
-<p>In this chapter, we’ll learn the very basics of C++.</p>
+<div id="exercise" class="section level2 unnumbered">
+<h2>Exercise</h2>
+<ol style="list-style-type: decimal">
+<li><strong>Pointers and references.</strong></li>
+</ol>
+<div class="sourceCode" id="cb45"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="exercise.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x = <span class="dv">5</span>;</span>
+<span id="cb45-2"><a href="exercise.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> y = <span class="dv">10</span>;</span>
+<span id="cb45-3"><a href="exercise.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>* px = &amp;x;</span>
+<span id="cb45-4"><a href="exercise.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>* py = &amp;y;</span>
+<span id="cb45-5"><a href="exercise.html#cb45-5" aria-hidden="true" tabindex="-1"></a>px = py;</span>
+<span id="cb45-6"><a href="exercise.html#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co">// what are the values of x, y, *px and *py now?</span></span>
+<span id="cb45-7"><a href="exercise.html#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="exercise.html#cb45-8" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> i = <span class="dv">5</span>;</span>
+<span id="cb45-9"><a href="exercise.html#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> j = <span class="dv">10</span>;</span>
+<span id="cb45-10"><a href="exercise.html#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>&amp; ri = i;</span>
+<span id="cb45-11"><a href="exercise.html#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>&amp; rj = j;</span>
+<span id="cb45-12"><a href="exercise.html#cb45-12" aria-hidden="true" tabindex="-1"></a>ri = rj;</span>
+<span id="cb45-13"><a href="exercise.html#cb45-13" aria-hidden="true" tabindex="-1"></a><span class="co">// what are the values of i, j, ri and rj now?</span></span></code></pre></div>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="prerequisites.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="hello-world.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="control-flow.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="enumerations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

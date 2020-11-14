@@ -163,6 +163,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="exercise.html"><a href="exercise.html"><i class="fa fa-check"></i>Exercise</a></li>
 </ul></li>
+<li class="chapter" data-level="2" data-path="enumerations.html"><a href="enumerations.html"><i class="fa fa-check"></i><b>2</b> Enumerations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="the-plain-enum.html"><a href="the-plain-enum.html"><i class="fa fa-check"></i><b>2.1</b> The Plain <code>enum</code></a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="the-plain-enum.html"><a href="the-plain-enum.html#defining-an-enum"><i class="fa fa-check"></i><b>2.1.1</b> Defining an Enum</a></li>
+<li class="chapter" data-level="2.1.2" data-path="the-plain-enum.html"><a href="the-plain-enum.html#using-an-enum"><i class="fa fa-check"></i><b>2.1.2</b> Using an Enum</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -192,12 +200,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-4"><a href="hello-world.html#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;Hello C++!&quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
 <span id="cb1-5"><a href="hello-world.html#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">0</span>;</span>
 <span id="cb1-6"><a href="hello-world.html#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Write the above code in <code>hello.cpp</code>, then you can compile it with <code>g++ hello.cpp -o hello</code> and run <code>./hello</code> (you can replace <code>g++</code> with <code>clang++</code> or any other compiler).</p>
+<p>Write the above code in <code>hello.cpp</code>, then you can compile it with
+<code>g++ hello.cpp -o hello</code> and run <code>./hello</code> (you can replace <code>g++</code> with <code>clang++</code>
+or any other compiler).</p>
 <p>A couple of things to note here:</p>
-<p>Every C++ executable (as opposed to library) must have a <code>main()</code> function that returns <code>int</code>. Returning <code>0</code> signifies that the program terminates without errors. The final <code>return 0;</code> statement can be omitted in the <code>main()</code> function.</p>
-<p><code>#include</code> is a preprocessor. We’ll meet more preprocessors in the future, for now just accept that they are “naive macros” that are “expanded” before the actual compilation.
-Here <code>#include</code> copies the content of file called <code>iostream</code>, which has tens of thousands lines, and pastes it here. Yes, it literally does so, and you can check this by running <code>g++ -E main.c</code>, which “expands” all preprocessor statements.</p>
-<p><code>iostream</code> contains definitions of functions and objects such as <code>std::cout</code> and <code>std::endl</code>, which are used for IO manipulations. <code>cout</code> stands for “character output,” and <code>endl</code> stands for “endline” (it appends <code>\n</code> and flushes the buffer). <code>&lt;&lt;</code> is the bitwise left shift operator, and the designers of C++ decided that overloading bitwise shift operators for <code>cout</code> and <code>cin</code> can make C++ look fancy from the beginning. That’s why we need to learn yet another special syntax.</p>
+<p>Every C++ executable (as opposed to library) must have a <code>main()</code> function that
+returns <code>int</code>. Returning <code>0</code> signifies that the program terminates without errors.
+The final <code>return 0;</code> statement can be omitted in the <code>main()</code> function.</p>
+<p><code>#include</code> is a preprocessor. We’ll meet more preprocessors in the future, for now
+just accept that they are “naive macros” that are “expanded” before the actual
+compilation.
+Here <code>#include</code> copies the content of file called <code>iostream</code>, which has tens of
+thousands lines, and pastes it here. Yes, it literally does so, and you can check
+this by running <code>g++ -E main.c</code>, which “expands” all preprocessor statements.</p>
+<p><code>iostream</code> contains definitions of functions and objects such as <code>std::cout</code> and
+<code>std::endl</code>, which are used for IO manipulations. <code>cout</code> stands for “character
+output,” and <code>endl</code> stands for “endline” (it appends <code>\n</code> and flushes the buffer).
+<code>&lt;&lt;</code> is the bitwise left shift operator, and the designers of C++ decided that
+overloading bitwise shift operators for <code>cout</code> and <code>cin</code> can make C++ look fancy
+from the beginning. That’s why we need to learn yet another special syntax.</p>
 <p>Fortunately (or unfortunately), there’s another way to do exactly the same thing:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="hello-world.html#cb2-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Hello from printf</span><span class="sc">\n</span><span class="st">&quot;</span>);</span></code></pre></div>
 <p>Now you might begin to wonder, why isn’t <code>std::cout</code> called <code>std::iostream::cout</code>, and why <code>printf</code> can be called without any prefix. This is because in C++ filenames have no relationships to <code>namespace</code>s by default. <code>namespace</code> is similar to Rust’s <code>mod</code>, but more flexible. In this case, the <code>iostream</code> file contains something conceptually like this:</p>
