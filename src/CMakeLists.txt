@@ -18,6 +18,7 @@ add_executable(helloworld hello/helloworld.cpp)
 add_executable(types hello/types.cpp)
 add_executable(pointers_and_references hello/pointers_and_references.cpp)
 add_executable(controlflow hello/controlflow.cpp)
+add_executable(enum enum.cpp)
 
 
 add_executable(class-complex-number class/complex-number.cpp)

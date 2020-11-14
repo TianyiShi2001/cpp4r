@@ -10,3 +10,12 @@ The actual book is being developed on the [`docs` branch](https://github.com/Tia
 I'm a biochemistry student wishing to specialize in computational biology, and I need a fast (specifically, no-GC) language for implementing algorithms. Since the decision was made in April 2020, I naturally chose Rust. Soon I fell in love with it. Cargo, rustdoc, crates.io, clippy etc. just makes Rust so nice--even better than Python. However, I have to face the reality: the majority of bioinformatics algorithms to date are written in C or C++ (either as pure C or C++ libraries or as extensions to Python or R), and most labs are still developing on them. It turns out that some C and C++ literacy is necessary for me.
 
 While there is a project called [r4cppp](https://github.com/nrc/r4cppp) that introduces Rust to C++ programmers, I haven't found any cpp4r, so I started this one. I'm not an expert in Rust and C++ and I'm writing this book while learning them, so it'll be more like a personal notebook than a perfessional guide. I'll try to make it readable, though.
+
+
+# About the Code
+
+I recommend reading the source code in Visual Studio Code with the [Better Comments](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) extension.
+
+# The Goal of this Book
+
+Help Rustaceans read C++ code and translating them to Rust in order to make the world a better place.
