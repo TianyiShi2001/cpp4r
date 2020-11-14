@@ -15,8 +15,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 add_executable(helloworld hello/helloworld.cpp)
-add_executable(hellotypes hello/hellotypes.cpp)
-add_executable(hellopointers hello/hellopointers.cpp)
+add_executable(types hello/types.cpp)
+add_executable(pointers_and_references hello/pointers_and_references.cpp)
 add_executable(controlflow hello/controlflow.cpp)
 add_subdirectory(Adder)
 

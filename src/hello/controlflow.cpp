@@ -36,7 +36,7 @@ namespace basic
     }
     void switch_example()
     {
-        int d{5};
+        int d = 5;
         switch (d)
         {
         case 0:
@@ -45,8 +45,15 @@ namespace basic
         case 6:
             printf("It's Saturday!\n");
             break;
-        default:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
             printf("It's weekday.\n");
+            break;
+        default:
+            printf("Not a valid day of week!\n");
             break;
         }
     }
