@@ -519,25 +519,33 @@ In C++ (and C), this is how you make a pointer:
 \begin{Shaded}
 \begin{Highlighting}[]
 \DataTypeTok{int}\NormalTok{    a =  }\DecValTok{5}\NormalTok{;}
-\DataTypeTok{int}\NormalTok{ *p\_a = \&}\DecValTok{5}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{ *p\_a = \&a;}
 \CommentTok{// or}
-\DataTypeTok{int}\NormalTok{ * p\_a = \&}\DecValTok{5}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{ * p\_a = \&a;}
 \CommentTok{// or}
-\DataTypeTok{int}\NormalTok{*  p\_a = \&}\DecValTok{5}\NormalTok{;}
+\DataTypeTok{int}\NormalTok{*  p\_a = \&a;}
 \end{Highlighting}
 \end{Shaded}
 
-and to dereference a pointer:
+You add \texttt{\&} to RHS, but you add \texttt{*} to LHS. Despite the fact that the variable name really is \texttt{p\_a}, not \texttt{*p\_a}, and the type really is \texttt{int*}, many people and formatters prepend the asterisk before the variable name (\texttt{int\ *p\_a\ =\ \&a;}). There are some discussion at \href{https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type}{StackOverflow} on why people are preferring this style. I personally prefer using the \texttt{int*\ p\_a\ =\ \&a} style, which is also being used consistently on \href{https://en.cppreference.com/w/cpp/language/pointer}{cppreference}, and in Bjarne Stroustrup's \emph{A Tour of C++}.
+
+Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others' code.
+
+Note that, unlike in Rust, you cannot create a pointer to a literal in C++:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{* p = \&}\DecValTok{5}\NormalTok{; }\CommentTok{// not allowed!}
+\end{Highlighting}
+\end{Shaded}
+
+To dereference a pointer, you use the dereference operator, \texttt{*}, which has the same semantics as Rust.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \DataTypeTok{int}\NormalTok{ b = *p\_a;}
 \end{Highlighting}
 \end{Shaded}
-
-You add \texttt{\&} to RHS, but you add \texttt{*} to LHS. Despite the fact that the variable name really is \texttt{p\_a}, not \texttt{*p\_a}, and the type really is \texttt{int*}, most people and formatters prepend the asterisk before the variable name (\texttt{int\ *p\_a\ =\ \&a;}). There are some discussion at \href{https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type}{StackOverflow} on why people are preferring this style. I personally prefer using the \texttt{int*\ p\_a\ =\ \&a} style, which is also being used consistently on \href{https://en.cppreference.com/w/cpp/language/pointer}{cppreference}, and in Bjarne Stroustrup's \emph{A Tour of C++}.
-
-Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others' code.
 
 References have similar capabilities as pointers, with the only big difference being their semantics.
 This is how you create a reference and read its referent's value:
@@ -547,15 +555,6 @@ This is how you create a reference and read its referent's value:
 \DataTypeTok{int}\NormalTok{ l = }\DecValTok{5}\NormalTok{;}
 \DataTypeTok{int}\NormalTok{\& m = l;}
 \OtherTok{assert}\NormalTok{(m == }\DecValTok{5}\NormalTok{); }\CommentTok{// not \textasciigrave{}*m\textasciigrave{} !}
-\end{Highlighting}
-\end{Shaded}
-
-Note that you can directly create a pointer, but not a reference to a literal, that is to say:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DataTypeTok{int}\NormalTok{* i = \&}\DecValTok{5}\NormalTok{; }\CommentTok{// is valid}
-\DataTypeTok{int}\NormalTok{\& j = }\DecValTok{5}\NormalTok{;  }\CommentTok{// is not allowed}
 \end{Highlighting}
 \end{Shaded}
 
@@ -918,35 +917,42 @@ C++ doesn't support this natively, so it's common to use the \texttt{goto} trick
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
-\NormalTok{printf(}\StringTok{"Break outer loop using goto:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
-\BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"ijk "}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
-\ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
+\DataTypeTok{void}\NormalTok{ break\_outer()}
 \NormalTok{\{}
-
-    \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ j = }\DecValTok{0}\NormalTok{; j \textless{} }\DecValTok{3}\NormalTok{; ++j)}
+\NormalTok{    printf(}\StringTok{"Break outer loop using goto:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    printf(}\StringTok{"i j k}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+    \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{    \{}
-        \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ k = }\DecValTok{0}\NormalTok{; k \textless{} }\DecValTok{3}\NormalTok{; ++k)}
+
+        \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ j = }\DecValTok{0}\NormalTok{; j \textless{} }\DecValTok{3}\NormalTok{; ++j)}
 \NormalTok{        \{}
-            \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{1}\NormalTok{)}
+            \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ k = }\DecValTok{0}\NormalTok{; k \textless{} }\DecValTok{3}\NormalTok{; ++k)}
 \NormalTok{            \{}
-                \ControlFlowTok{goto}\NormalTok{ for\_j\_end;}
+                \ControlFlowTok{if}\NormalTok{ (i == }\DecValTok{1}\NormalTok{)}
+\NormalTok{                \{}
+                    \ControlFlowTok{goto}\NormalTok{ for\_j\_end;}
+\NormalTok{                \}}
+\NormalTok{                printf(}\StringTok{"}\SpecialCharTok{\%d}\StringTok{ }\SpecialCharTok{\%d}\StringTok{ }\SpecialCharTok{\%d\textbackslash{}n}\StringTok{"}\NormalTok{, i, j, k);}
 \NormalTok{            \}}
-            \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} i \textless{}\textless{} j \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
 \NormalTok{        \}}
-\NormalTok{    \}}
 \NormalTok{    for\_j\_end:}
 \NormalTok{    \{}
+        \CommentTok{// cannot be left blank. Needs a placeholder}
+\NormalTok{    \}}
 \NormalTok{    \}}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
+
+The \texttt{goto} statement must be in the same function as the label it is referring,
+so duplicated labels across different functions won't cause conflicts.
 
 Alternatively you can use a flag, which is more verbose, and I think this is even less readable:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{printf(}\StringTok{"Break outer loop using flag:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
-\BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"ijk "}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{printf(}\StringTok{"i j k}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
 \DataTypeTok{bool}\NormalTok{ i\_is\_1\{}\KeywordTok{false}\NormalTok{\};}
 \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{\{}
@@ -964,7 +970,7 @@ Alternatively you can use a flag, which is more verbose, and I think this is eve
 \NormalTok{            \{}
 \NormalTok{                i\_is\_1 = }\KeywordTok{false}\NormalTok{;}
 \NormalTok{            \}}
-            \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} i \textless{}\textless{} j \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{            printf(}\StringTok{"}\SpecialCharTok{\%d}\StringTok{ }\SpecialCharTok{\%d}\StringTok{ }\SpecialCharTok{\%d\textbackslash{}n}\StringTok{"}\NormalTok{, i, j, k);}
 \NormalTok{        \}}
         \ControlFlowTok{if}\NormalTok{ (i\_is\_1)}
 \NormalTok{        \{}
@@ -980,7 +986,7 @@ There is another cleaner way, using the lambda trick (less common than the \text
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{printf(}\StringTok{"Break outer loop using lambda:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
-\BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} }\StringTok{"ijk "}\NormalTok{ \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{printf(}\StringTok{"i j k}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
 \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{\{}
 \NormalTok{    [\&] \{}
@@ -992,7 +998,7 @@ There is another cleaner way, using the lambda trick (less common than the \text
 \NormalTok{                \{}
                     \ControlFlowTok{return}\NormalTok{;}
 \NormalTok{                \}}
-                \BuiltInTok{std::}\NormalTok{cout \textless{}\textless{} i \textless{}\textless{} j \textless{}\textless{} k \textless{}\textless{} }\BuiltInTok{std::}\NormalTok{endl;}
+\NormalTok{                printf(}\StringTok{"}\SpecialCharTok{\%d}\StringTok{ }\SpecialCharTok{\%d}\StringTok{ }\SpecialCharTok{\%d\textbackslash{}n}\StringTok{"}\NormalTok{, i, j, k);}
 \NormalTok{            \}}
 \NormalTok{        \}}
 \NormalTok{    \}();}
@@ -1092,14 +1098,15 @@ This is all about \texttt{switch} in C++. (You need to unlearn the pattern match
 \DataTypeTok{int}\NormalTok{* px = \&x;}
 \DataTypeTok{int}\NormalTok{* py = \&y;}
 \NormalTok{px = py;}
-\CommentTok{// what are the values of x, y, *px and *py now?}
+\CommentTok{// What are the values of x, y, *px and *py now?}
 
 \DataTypeTok{int}\NormalTok{ i = }\DecValTok{5}\NormalTok{;}
 \DataTypeTok{int}\NormalTok{ j = }\DecValTok{10}\NormalTok{;}
 \DataTypeTok{int}\NormalTok{\& ri = i;}
 \DataTypeTok{int}\NormalTok{\& rj = j;}
 \NormalTok{ri = rj;}
-\CommentTok{// what are the values of i, j, ri and rj now?}
+\CommentTok{// What are the values of i, j, ri and rj now?}
+\CommentTok{// Hint: a reference cannot be re{-}assigned. What\textquotesingle{}s the last line doing?}
 \end{Highlighting}
 \end{Shaded}
 

@@ -326,29 +326,35 @@ for e in v {
 <span id="cb42-10"><a href="control-flow.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 <p>C++ doesn’t support this natively, so it’s common to use the <code>goto</code> trick to achive this<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb43-1"><a href="control-flow.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb43-2"><a href="control-flow.html#cb43-2" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using goto:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb43-3"><a href="control-flow.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;ijk &quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb43-4"><a href="control-flow.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
-<span id="cb43-5"><a href="control-flow.html#cb43-5" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb43-6"><a href="control-flow.html#cb43-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-7"><a href="control-flow.html#cb43-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; <span class="dv">3</span>; ++j)</span>
-<span id="cb43-8"><a href="control-flow.html#cb43-8" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb43-9"><a href="control-flow.html#cb43-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; <span class="dv">3</span>; ++k)</span>
+<span id="cb43-2"><a href="control-flow.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> break_outer()</span>
+<span id="cb43-3"><a href="control-flow.html#cb43-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb43-4"><a href="control-flow.html#cb43-4" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;Break outer loop using goto:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb43-5"><a href="control-flow.html#cb43-5" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;i j k</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
+<span id="cb43-6"><a href="control-flow.html#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
+<span id="cb43-7"><a href="control-flow.html#cb43-7" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb43-8"><a href="control-flow.html#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="control-flow.html#cb43-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> (<span class="dt">int</span> j = <span class="dv">0</span>; j &lt; <span class="dv">3</span>; ++j)</span>
 <span id="cb43-10"><a href="control-flow.html#cb43-10" aria-hidden="true" tabindex="-1"></a>        {</span>
-<span id="cb43-11"><a href="control-flow.html#cb43-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (i == <span class="dv">1</span>)</span>
+<span id="cb43-11"><a href="control-flow.html#cb43-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> (<span class="dt">int</span> k = <span class="dv">0</span>; k &lt; <span class="dv">3</span>; ++k)</span>
 <span id="cb43-12"><a href="control-flow.html#cb43-12" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb43-13"><a href="control-flow.html#cb43-13" aria-hidden="true" tabindex="-1"></a>                <span class="cf">goto</span> for_j_end;</span>
-<span id="cb43-14"><a href="control-flow.html#cb43-14" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb43-15"><a href="control-flow.html#cb43-15" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb43-16"><a href="control-flow.html#cb43-16" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb43-17"><a href="control-flow.html#cb43-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb43-18"><a href="control-flow.html#cb43-18" aria-hidden="true" tabindex="-1"></a>    for_j_end:</span>
-<span id="cb43-19"><a href="control-flow.html#cb43-19" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb43-20"><a href="control-flow.html#cb43-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb43-21"><a href="control-flow.html#cb43-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb43-13"><a href="control-flow.html#cb43-13" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (i == <span class="dv">1</span>)</span>
+<span id="cb43-14"><a href="control-flow.html#cb43-14" aria-hidden="true" tabindex="-1"></a>                {</span>
+<span id="cb43-15"><a href="control-flow.html#cb43-15" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">goto</span> for_j_end;</span>
+<span id="cb43-16"><a href="control-flow.html#cb43-16" aria-hidden="true" tabindex="-1"></a>                }</span>
+<span id="cb43-17"><a href="control-flow.html#cb43-17" aria-hidden="true" tabindex="-1"></a>                printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%d</span><span class="st"> </span><span class="sc">%d\n</span><span class="st">&quot;</span>, i, j, k);</span>
+<span id="cb43-18"><a href="control-flow.html#cb43-18" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb43-19"><a href="control-flow.html#cb43-19" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb43-20"><a href="control-flow.html#cb43-20" aria-hidden="true" tabindex="-1"></a>    for_j_end:</span>
+<span id="cb43-21"><a href="control-flow.html#cb43-21" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb43-22"><a href="control-flow.html#cb43-22" aria-hidden="true" tabindex="-1"></a>        <span class="co">// cannot be left blank. Needs a placeholder</span></span>
+<span id="cb43-23"><a href="control-flow.html#cb43-23" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb43-24"><a href="control-flow.html#cb43-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb43-25"><a href="control-flow.html#cb43-25" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>The <code>goto</code> statement must be in the same function as the label it is referring,
+so duplicated labels across different functions won’t cause conflicts.</p>
 <p>Alternatively you can use a flag, which is more verbose, and I think this is even less readable:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb44-1"><a href="control-flow.html#cb44-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using flag:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb44-2"><a href="control-flow.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;ijk &quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb44-2"><a href="control-flow.html#cb44-2" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;i j k</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
 <span id="cb44-3"><a href="control-flow.html#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> i_is_1{<span class="kw">false</span>};</span>
 <span id="cb44-4"><a href="control-flow.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
 <span id="cb44-5"><a href="control-flow.html#cb44-5" aria-hidden="true" tabindex="-1"></a>{</span>
@@ -366,7 +372,7 @@ for e in v {
 <span id="cb44-17"><a href="control-flow.html#cb44-17" aria-hidden="true" tabindex="-1"></a>            {</span>
 <span id="cb44-18"><a href="control-flow.html#cb44-18" aria-hidden="true" tabindex="-1"></a>                i_is_1 = <span class="kw">false</span>;</span>
 <span id="cb44-19"><a href="control-flow.html#cb44-19" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb44-20"><a href="control-flow.html#cb44-20" aria-hidden="true" tabindex="-1"></a>            <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb44-20"><a href="control-flow.html#cb44-20" aria-hidden="true" tabindex="-1"></a>            printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%d</span><span class="st"> </span><span class="sc">%d\n</span><span class="st">&quot;</span>, i, j, k);</span>
 <span id="cb44-21"><a href="control-flow.html#cb44-21" aria-hidden="true" tabindex="-1"></a>        }</span>
 <span id="cb44-22"><a href="control-flow.html#cb44-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (i_is_1)</span>
 <span id="cb44-23"><a href="control-flow.html#cb44-23" aria-hidden="true" tabindex="-1"></a>        {</span>
@@ -376,7 +382,7 @@ for e in v {
 <span id="cb44-27"><a href="control-flow.html#cb44-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>There is another cleaner way, using the lambda trick (less common than the <code>goto</code> approach):</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb45-1"><a href="control-flow.html#cb45-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Break outer loop using lambda:</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb45-2"><a href="control-flow.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; <span class="st">&quot;ijk &quot;</span> &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb45-2"><a href="control-flow.html#cb45-2" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;i j k</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
 <span id="cb45-3"><a href="control-flow.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">3</span>; ++i)</span>
 <span id="cb45-4"><a href="control-flow.html#cb45-4" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb45-5"><a href="control-flow.html#cb45-5" aria-hidden="true" tabindex="-1"></a>    [&amp;] {</span>
@@ -388,7 +394,7 @@ for e in v {
 <span id="cb45-11"><a href="control-flow.html#cb45-11" aria-hidden="true" tabindex="-1"></a>                {</span>
 <span id="cb45-12"><a href="control-flow.html#cb45-12" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span>;</span>
 <span id="cb45-13"><a href="control-flow.html#cb45-13" aria-hidden="true" tabindex="-1"></a>                }</span>
-<span id="cb45-14"><a href="control-flow.html#cb45-14" aria-hidden="true" tabindex="-1"></a>                <span class="bu">std::</span>cout &lt;&lt; i &lt;&lt; j &lt;&lt; k &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb45-14"><a href="control-flow.html#cb45-14" aria-hidden="true" tabindex="-1"></a>                printf(<span class="st">&quot;</span><span class="sc">%d</span><span class="st"> </span><span class="sc">%d</span><span class="st"> </span><span class="sc">%d\n</span><span class="st">&quot;</span>, i, j, k);</span>
 <span id="cb45-15"><a href="control-flow.html#cb45-15" aria-hidden="true" tabindex="-1"></a>            }</span>
 <span id="cb45-16"><a href="control-flow.html#cb45-16" aria-hidden="true" tabindex="-1"></a>        }</span>
 <span id="cb45-17"><a href="control-flow.html#cb45-17" aria-hidden="true" tabindex="-1"></a>    }();</span>

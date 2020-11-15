@@ -303,22 +303,29 @@ In C++ (and C), this is how you make a pointer:
 
 ```c++
 int    a =  5;
-int *p_a = &5;
+int *p_a = &a;
 // or
-int * p_a = &5;
+int * p_a = &a;
 // or
-int*  p_a = &5;
+int*  p_a = &a;
 ```
 
-and to dereference a pointer:
+You add `&` to RHS, but you add `*` to LHS. Despite the fact that the variable name really is `p_a`, not `*p_a`, and the type really is `int*`, many people and formatters prepend the asterisk before the variable name (`int *p_a = &a;`). There are some discussion at [StackOverflow](https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type) on why people are preferring this style. I personally prefer using the `int* p_a = &a` style, which is also being used consistently on [cppreference](https://en.cppreference.com/w/cpp/language/pointer), and in Bjarne Stroustrup's *A Tour of C++*.
+
+Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others' code.
+
+Note that, unlike in Rust, you cannot create a pointer to a literal in C++:
+
+```c++
+int* p = &5; // not allowed!
+```
+
+
+To dereference a pointer, you use the dereference operator, `*`, which has the same semantics as Rust.
 
 ```c++
 int b = *p_a;
 ```
-
-You add `&` to RHS, but you add `*` to LHS. Despite the fact that the variable name really is `p_a`, not `*p_a`, and the type really is `int*`, most people and formatters prepend the asterisk before the variable name (`int *p_a = &a;`). There are some discussion at [StackOverflow](https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type) on why people are preferring this style. I personally prefer using the `int* p_a = &a` style, which is also being used consistently on [cppreference](https://en.cppreference.com/w/cpp/language/pointer), and in Bjarne Stroustrup's *A Tour of C++*.
-
-Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others' code.
 
 References have similar capabilities as pointers, with the only big difference being their semantics.
 This is how you create a reference and read its referent's value:
@@ -327,13 +334,6 @@ This is how you create a reference and read its referent's value:
 int l = 5;
 int& m = l;
 assert(m == 5); // not `*m` !
-```
-
-Note that you can directly create a pointer, but not a reference to a literal, that is to say:
-
-```c++
-int* i = &5; // is valid
-int& j = 5;  // is not allowed
 ```
 
 You do not need to (and cannot) use the deference operator (`*`) on a reference to access the value of the referent. In addition, a reference cannot be re-assigned to refer to another value. Apart from these two rules, references are effectively the same as pointers. It can be helpful to see a reference as an *alias* to a *named variable*. Indeed, a reference shares the same memory address as its referent.
