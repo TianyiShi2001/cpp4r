@@ -24,7 +24,7 @@
 <meta name="author" content="Tianyi Shi" />
 
 
-<meta name="date" content="2020-11-14" />
+<meta name="date" content="2020-11-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -193,15 +193,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="variables" class="section level2" number="1.3">
 <h2><span class="header-section-number">1.3</span> Variables</h2>
-<p>Like in Rust, creating a variable requires two steps, declaration and initialization. In C++, there are usually more than one syntax to do any task, and these two basic operations are no exception.</p>
-<p>The traditional syntax for declaration and initialization is <code>&lt;type&gt; &lt;var name&gt; = &lt;value&gt;;</code>, and these two steps can be separated:</p>
+<p>Like in Rust, creating a variable requires two steps, declaration and initialization.</p>
+<p>The traditional syntax for declaration and initialization is <code>&lt;type&gt; &lt;var name&gt; = &lt;value&gt;;</code>,
+and these two steps can be separated:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="variables.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="dv">5</span>;</span>
 <span id="cb4-2"><a href="variables.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> b;</span>
 <span id="cb4-3"><a href="variables.html#cb4-3" aria-hidden="true" tabindex="-1"></a>b = <span class="ch">&#39;A&#39;</span>;</span></code></pre></div>
 <p>The above syntax is compatible with C, which has a problem: if you initialize an <code>int</code> with a float:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="variables.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="fl">5.5</span>;</span>
 <span id="cb5-2"><a href="variables.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(a == <span class="dv">5</span>);</span></code></pre></div>
-<p>The value will be implicitly converted. Instead of giving a warning or simply disallowing this (recent compilers DO give a warning; see Figure <a href="variables.html#fig:equal">1.1</a>), the designers of C++ decided to invent another syntax for declaration and initialization, using curly braces:</p>
+<p>The value will be implicitly converted (recent compilers will give a warning when this happens; see Figure <a href="variables.html#fig:equal">1.1</a>).
+C++11 introduced the “uniform initialization” syntax, which forbids this implicit conversion. In its simplest form:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="variables.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a{<span class="dv">5</span>};</span></code></pre></div>
 <div class="figure"><span id="fig:equal"></span>
 <img src="img/equal.png" alt="When implicit conversion occurs, a decent modern C++ compiler will give a warning."  />
@@ -219,6 +221,7 @@ Figure 1.1: When implicit conversion occurs, a decent modern C++ compiler will g
 Figure 1.2: The uniform initialization syntax.
 </p>
 </div>
+<p>Of course, the uniform initialization syntax isn’t invented just to prevent implicit conversion. As you’ll see later, it can become handy when initializing complicated, non-primitive data types.</p>
 <div id="mutability" class="section level3" number="1.3.1">
 <h3><span class="header-section-number">1.3.1</span> Mutability</h3>
 <p>Variables are mutable by default. If you want to create an immutable variable, use the <code>const</code> keyword.</p>

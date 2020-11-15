@@ -24,7 +24,7 @@
 <meta name="author" content="Tianyi Shi" />
 
 
-<meta name="date" content="2020-11-14" />
+<meta name="date" content="2020-11-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -197,29 +197,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">2.1.1</span> Defining an Enum</h3>
 <p>The syntax for defining an <code>enum</code> in C++ is similar to Rust. In addition, like in Rust, enum
 variants are represented as integers at the low level, and by default the value starts from 0.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb46-1"><a href="the-plain-enum.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> LogLevel</span>
-<span id="cb46-2"><a href="the-plain-enum.html#cb46-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb46-3"><a href="the-plain-enum.html#cb46-3" aria-hidden="true" tabindex="-1"></a>    Debug,   <span class="co">// 0</span></span>
-<span id="cb46-4"><a href="the-plain-enum.html#cb46-4" aria-hidden="true" tabindex="-1"></a>    Info,    <span class="co">// 1</span></span>
-<span id="cb46-5"><a href="the-plain-enum.html#cb46-5" aria-hidden="true" tabindex="-1"></a>    Warning, <span class="co">// 2</span></span>
-<span id="cb46-6"><a href="the-plain-enum.html#cb46-6" aria-hidden="true" tabindex="-1"></a>    Error    <span class="co">// 3</span></span>
-<span id="cb46-7"><a href="the-plain-enum.html#cb46-7" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="the-plain-enum.html#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> LogLevel</span>
+<span id="cb50-2"><a href="the-plain-enum.html#cb50-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb50-3"><a href="the-plain-enum.html#cb50-3" aria-hidden="true" tabindex="-1"></a>    Debug,   <span class="co">// 0</span></span>
+<span id="cb50-4"><a href="the-plain-enum.html#cb50-4" aria-hidden="true" tabindex="-1"></a>    Info,    <span class="co">// 1</span></span>
+<span id="cb50-5"><a href="the-plain-enum.html#cb50-5" aria-hidden="true" tabindex="-1"></a>    Warning, <span class="co">// 2</span></span>
+<span id="cb50-6"><a href="the-plain-enum.html#cb50-6" aria-hidden="true" tabindex="-1"></a>    Error    <span class="co">// 3</span></span>
+<span id="cb50-7"><a href="the-plain-enum.html#cb50-7" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
 <p>You can also manually assign values to the variants (also valid in Rust):</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb47-1"><a href="the-plain-enum.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> LogLevel</span>
-<span id="cb47-2"><a href="the-plain-enum.html#cb47-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb47-3"><a href="the-plain-enum.html#cb47-3" aria-hidden="true" tabindex="-1"></a>    Debug   = <span class="bn">0x12</span>,</span>
-<span id="cb47-4"><a href="the-plain-enum.html#cb47-4" aria-hidden="true" tabindex="-1"></a>    Info    = <span class="bn">0xd1</span>,</span>
-<span id="cb47-5"><a href="the-plain-enum.html#cb47-5" aria-hidden="true" tabindex="-1"></a>    Warning = <span class="bn">0x7c</span>,</span>
-<span id="cb47-6"><a href="the-plain-enum.html#cb47-6" aria-hidden="true" tabindex="-1"></a>    Error   = <span class="bn">0x0a</span>,</span>
-<span id="cb47-7"><a href="the-plain-enum.html#cb47-7" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="the-plain-enum.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> LogLevel</span>
+<span id="cb51-2"><a href="the-plain-enum.html#cb51-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb51-3"><a href="the-plain-enum.html#cb51-3" aria-hidden="true" tabindex="-1"></a>    Debug   = <span class="bn">0x12</span>,</span>
+<span id="cb51-4"><a href="the-plain-enum.html#cb51-4" aria-hidden="true" tabindex="-1"></a>    Info    = <span class="bn">0xd1</span>,</span>
+<span id="cb51-5"><a href="the-plain-enum.html#cb51-5" aria-hidden="true" tabindex="-1"></a>    Warning = <span class="bn">0x7c</span>,</span>
+<span id="cb51-6"><a href="the-plain-enum.html#cb51-6" aria-hidden="true" tabindex="-1"></a>    Error   = <span class="bn">0x0a</span>,</span>
+<span id="cb51-7"><a href="the-plain-enum.html#cb51-7" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
 <p>Unlike Rust, C++ by default uses the <code>int</code> type to represent the variants, even though most of the
 time the number of variants won’t exceed 256. To use a more compact representation, you can do:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb48-1"><a href="the-plain-enum.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> MyEnum : <span class="dt">uint8_t</span></span>
-<span id="cb48-2"><a href="the-plain-enum.html#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co">// or `enum Foo : char` (remember that `char` is an integer type)</span></span>
-<span id="cb48-3"><a href="the-plain-enum.html#cb48-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb48-4"><a href="the-plain-enum.html#cb48-4" aria-hidden="true" tabindex="-1"></a>    Foo,</span>
-<span id="cb48-5"><a href="the-plain-enum.html#cb48-5" aria-hidden="true" tabindex="-1"></a>    Bar,</span>
-<span id="cb48-6"><a href="the-plain-enum.html#cb48-6" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb52-1"><a href="the-plain-enum.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> MyEnum : <span class="dt">uint8_t</span></span>
+<span id="cb52-2"><a href="the-plain-enum.html#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co">// or `enum Foo : char` (remember that `char` is an integer type)</span></span>
+<span id="cb52-3"><a href="the-plain-enum.html#cb52-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb52-4"><a href="the-plain-enum.html#cb52-4" aria-hidden="true" tabindex="-1"></a>    Foo,</span>
+<span id="cb52-5"><a href="the-plain-enum.html#cb52-5" aria-hidden="true" tabindex="-1"></a>    Bar,</span>
+<span id="cb52-6"><a href="the-plain-enum.html#cb52-6" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
 </div>
 <div id="using-an-enum" class="section level3" number="2.1.2">
 <h3><span class="header-section-number">2.1.2</span> Using an Enum</h3>
@@ -228,40 +228,37 @@ to refer to the <code>Info</code> variant of the <code>LogLevel</code> enum defi
 write <code>Info</code> directly.</p>
 <p>A enum is implicitly converted to an integer. Which means it can be directly compared to an integer
 (but dont’t actually do this) and can be pushed to <code>std::cout</code> directly.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb49-1"><a href="the-plain-enum.html#cb49-1" aria-hidden="true" tabindex="-1"></a>LogLevel lvl = Info;</span>
-<span id="cb49-2"><a href="the-plain-enum.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(Info == <span class="dv">1</span>);</span>
-<span id="cb49-3"><a href="the-plain-enum.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(Warning &gt; <span class="dv">1</span>);</span>
-<span id="cb49-4"><a href="the-plain-enum.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(Error &gt; Debug);</span>
-<span id="cb49-5"><a href="the-plain-enum.html#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; lvl &lt;&lt; <span class="bu">std::</span>endl;</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb53-1"><a href="the-plain-enum.html#cb53-1" aria-hidden="true" tabindex="-1"></a>LogLevel lvl = Info;</span>
+<span id="cb53-2"><a href="the-plain-enum.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(Info == <span class="dv">1</span>);</span>
+<span id="cb53-3"><a href="the-plain-enum.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(Warning &gt; <span class="dv">1</span>);</span>
+<span id="cb53-4"><a href="the-plain-enum.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(Error &gt; Debug);</span>
+<span id="cb53-5"><a href="the-plain-enum.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="bu">std::</span>cout &lt;&lt; lvl &lt;&lt; <span class="bu">std::</span>endl;</span></code></pre></div>
 <p>However, an integer cannot be converted implicitly into an enum, but can be done so explicitly:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb50-1"><a href="the-plain-enum.html#cb50-1" aria-hidden="true" tabindex="-1"></a>LogLevel lvl = <span class="dv">2</span>;           <span class="co">// won&#39;t work</span></span>
-<span id="cb50-2"><a href="the-plain-enum.html#cb50-2" aria-hidden="true" tabindex="-1"></a>LogLevel lvl = (LogLevel)<span class="dv">2</span>; <span class="co">// OK, but don&#39;t actually do this</span></span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb54-1"><a href="the-plain-enum.html#cb54-1" aria-hidden="true" tabindex="-1"></a>LogLevel lvl = <span class="dv">2</span>;           <span class="co">// won&#39;t work</span></span>
+<span id="cb54-2"><a href="the-plain-enum.html#cb54-2" aria-hidden="true" tabindex="-1"></a>LogLevel lvl = (LogLevel)<span class="dv">2</span>; <span class="co">// OK, but don&#39;t actually do this</span></span></code></pre></div>
 <p>You can reassign the identifier <code>Info</code> to another value</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb51-1"><a href="the-plain-enum.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> Info = <span class="dv">999</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb55-1"><a href="the-plain-enum.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> Info = <span class="dv">999</span>;</span></code></pre></div>
 <p>…but can you set another <code>LogLevel</code> to <code>Info</code>?</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb52-1"><a href="the-plain-enum.html#cb52-1" aria-hidden="true" tabindex="-1"></a>LogLevel m = Info; <span class="co">// Error!</span></span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb56-1"><a href="the-plain-enum.html#cb56-1" aria-hidden="true" tabindex="-1"></a>LogLevel m = Info; <span class="co">// Error!</span></span></code></pre></div>
 <p>No you can’t. C++ generally forbids re-defining variables, but in the case of
 enums you are allowed to re-bind a enum variant identifier (<code>Info</code>) to another
 value (<code>999</code>), then you just can’t use that enum variant.</p>
 <p>To avoid this and other kinds of conflicts, it had been a common practice to
 enum variants with part of the enum name. For example, the <code>LogLevel</code> enum
 may be rewritten as:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb53-1"><a href="the-plain-enum.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> LogLevel</span>
-<span id="cb53-2"><a href="the-plain-enum.html#cb53-2" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb53-3"><a href="the-plain-enum.html#cb53-3" aria-hidden="true" tabindex="-1"></a>    LevelDebug,</span>
-<span id="cb53-4"><a href="the-plain-enum.html#cb53-4" aria-hidden="true" tabindex="-1"></a>    LevelInfo,</span>
-<span id="cb53-5"><a href="the-plain-enum.html#cb53-5" aria-hidden="true" tabindex="-1"></a>    LevelWarning,</span>
-<span id="cb53-6"><a href="the-plain-enum.html#cb53-6" aria-hidden="true" tabindex="-1"></a>    LevelError</span>
-<span id="cb53-7"><a href="the-plain-enum.html#cb53-7" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
-<p>…which is yet another way in which C++ has been promoting the violation of the DRY rule
-To solve this problem. Instead of allowing using enum variant either with or
-without a namespace (which MSVC allows), the C++ committee invented yet another
-way to work with enums, known as the <code>enum class</code>.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb57-1"><a href="the-plain-enum.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="kw">enum</span> LogLevel</span>
+<span id="cb57-2"><a href="the-plain-enum.html#cb57-2" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb57-3"><a href="the-plain-enum.html#cb57-3" aria-hidden="true" tabindex="-1"></a>    LevelDebug,</span>
+<span id="cb57-4"><a href="the-plain-enum.html#cb57-4" aria-hidden="true" tabindex="-1"></a>    LevelInfo,</span>
+<span id="cb57-5"><a href="the-plain-enum.html#cb57-5" aria-hidden="true" tabindex="-1"></a>    LevelWarning,</span>
+<span id="cb57-6"><a href="the-plain-enum.html#cb57-6" aria-hidden="true" tabindex="-1"></a>    LevelError</span>
+<span id="cb57-7"><a href="the-plain-enum.html#cb57-7" aria-hidden="true" tabindex="-1"></a>};</span></code></pre></div>
+<p>…which violates the DRY rule in a bad way. To solve this problem, <code>enum class</code> was introduced
+in C++11, and we’ll learn about it in the next section.</p>
 
 </div>
 </div>
 <!-- </div> -->
-
 
 
 

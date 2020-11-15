@@ -39,13 +39,17 @@ output", and `endl` stands for "endline" (it appends `\n` and flushes the buffer
 overloading bitwise shift operators for `cout` and `cin` can make C++ look fancy
 from the beginning. That's why we need to learn yet another special syntax.
 
-Fortunately (or unfortunately), there's another way to do exactly the same thing:
+`iostream` also introduces another function into scope, the C-compatible `printf` into scope,
+which can also be used to print "Hello world".
 
 ```c++
 printf("Hello from printf\n");
 ```
 
-Now you might begin to wonder, why isn't `std::cout` called `std::iostream::cout`, and why `printf` can be called without any prefix. This is because in C++ filenames have no relationships to `namespace`s by default. `namespace` is similar to Rust's `mod`, but more flexible. In this case, the `iostream` file contains something conceptually like this:
+Now you might begin to wonder, why isn't `std::cout` called `std::iostream::cout`,
+and why `printf` can be called without any prefix. This is because in C++ filenames
+have no relationships to `namespace`s by default. `namespace` is similar to Rust's `mod`,
+but more flexible. In this case, the `iostream` file contains something conceptually like this:
 
 ```c++
 void printf(...);
@@ -56,7 +60,8 @@ namespace std {
 }
 ```
 
-`printf` isn't placed inside `std` because it is a heritage from C. Many other C functions are also available in C++, and they can be distinguished by the absence of the `std::` prefix.
+`printf` isn't placed inside `std` because it is a heritage from C. Many other C functions
+are also available in C++, and they can be distinguished by the absence of the `std::` prefix.
 
 ## Data Types
 
@@ -79,19 +84,28 @@ The following table summarises the relationship between Rust's and C++'s integer
 | `isize` |            |                  |
 | `usize` |  `size_t`  |                  |
 
-While the equivalence between the first column and the second column always holds true, the third column depends on the platform and here I'm assuming you're on a modern, 64-bit system.
+While the equivalence between the first column and the second column always holds true,
+the third column depends on the platform and here I'm assuming you're on a modern, 64-bit
+system.
 
-While the relationships described in the table are always true, C++'s integer types are much more complex. The types above are fixed width integer types, and there are additional integer types whose width is dependent on the implementation. These include C-compatible ones (i.e. `char`, `short`, `int`, `long`, `long long`), and other C++ artifects such as `int_fast16_t` and `int_least32_t`. You can learn about them at [cppreference](https://en.cppreference.com/w/cpp/types/integer).
+While the relationships described in the table are always true, C++'s integer types
+are much more complex. The types above are fixed width integer types, and there are
+additional integer types whose width is dependent on the implementation. These include
+C-compatible ones (i.e. `char`, `short`, `int`, `long`, `long long`), and other C++
+artifects such as `int_fast16_t` and `int_least32_t`. You can learn about them at
+[cppreference](https://en.cppreference.com/w/cpp/types/integer).
 
 ### Floating Point Numbers
 
-For floating numbers, `f32` and `f64` correspond to `float` and `double`, respectively (stand for single-precision and double-precision floating point numbers).
+For floating numbers, `f32` and `f64` correspond to `float` and `double`, respectively
+(stand for single-precision and double-precision floating point numbers).
 
 ## Variables
 
-Like in Rust, creating a variable requires two steps, declaration and initialization. In C++, there are usually more than one syntax to do any task, and these two basic operations are no exception.
+Like in Rust, creating a variable requires two steps, declaration and initialization.
 
-The traditional syntax for declaration and initialization is `<type> <var name> = <value>;`, and these two steps can be separated:
+The traditional syntax for declaration and initialization is `<type> <var name> = <value>;`,
+and these two steps can be separated:
 
 ```c++
 int a = 5;
@@ -106,7 +120,8 @@ int a = 5.5;
 assert(a == 5);
 ```
 
-The value will be implicitly converted. Instead of giving a warning or simply disallowing this (recent compilers DO give a warning; see Figure \@ref(fig:equal)), the designers of C++ decided to invent another syntax for declaration and initialization, using curly braces:
+The value will be implicitly converted (recent compilers will give a warning when this happens; see Figure \@ref(fig:equal)). 
+C++11 introduced the "uniform initialization" syntax, which forbids this implicit conversion. In its simplest form:
 
 ```c++
 int a{5};
@@ -127,6 +142,8 @@ a{5}
 ```{r braces, echo=FALSE, out_width="100%", fig.cap="The uniform initialization syntax."}
 knitr::include_graphics("img/brace.png")
 ```
+
+Of course, the uniform initialization syntax isn't invented just to prevent implicit conversion. As you'll see later, it can become handy when initializing complicated, non-primitive data types.
 
 ### Mutability
 
@@ -239,30 +256,50 @@ float square(float a)
 }
 ```
 
-However, by uncommenting the third line, it works. When you use a function, the compiler must know the signature, but not necessarily the *definition* of the function. This is why in C++ (and in C) people split their funtions into signatures which go into header files, and definitions which go into `.cpp` files. This practice, coupled with C's macro system (inherited by C++), leads to many pitfalls and confusing situations.[^header-bad] In particular, it can be difficult to just find the definition of a function without a decent and properly configured IDE. I'll get back to header files later. For now we'll be working with single-file programs without splitting declaration and definitions.
-
-[^header-bad]: https://softwareengineering.stackexchange.com/questions/180904/are-header-files-actually-good
+However, by uncommenting the third line, it works. When you use a function, the compiler must know the signature, but not necessarily the *definition* of the function. This is why in C++ (and in C) people split their funtions into signatures which go into header files, and definitions which go into `.cpp` files. I'll get back to header files later. For now we'll be working with single-file programs without splitting declaration and definitions.
 
 ## Pointers and References
 
-Syntaxes related to pointers and references in C++ are...interesing.
+Let's revisit how we make references and pointers in Rust:
 
-In Rust, when you take a reference to a type `T`, the type of the reference is `&T`. The syntax can't be more natual: you add `&` to both LHS and RHS:
+In Rust, when you take a reference to a type `T`, the type of the reference is `&T`. Basically, you add `&` to both LHS and RHS:
 
 ```rust
+// type annotations are not required; this is just for demonstration
 let   a:  i32 =  5;
-let p_a: &i32 = &5; // type annotations are not required; this is just for demonstration
+let r_a: &i32 = &a; // r_a == &5
 ```
 
-and when you deference, you use `*`. Just remembering that `*` is the reverse of `&`, everything is natual as well. Every `*` just removes one `&` from both LHS and RHS:
+and when you deference, you use `*`. Just remember that `*` is the reverse of `&`, and every `*` removes one `&` from both LHS and RHS:
 
 ```rust
-let p_a: &i32 = &5;
-let   a:  i32 = *p_a;
+let r_a: &i32 = &5;
+let   a:  i32 = *r_a; // a == 5
 let   a:  i32 = *&*&*&a
 ```
 
-In C++, this is how you make a pointer:
+You can coerce a reference into a raw pointer, using either of the two syntaxes:
+
+```rust
+let a = 5;
+let p_a: *const i32 = &a;
+// or
+let p_a = &a as *const i32;
+```
+
+You need to be explicit about mutability:
+
+```rust
+let a = 5;
+let p_a: *mut i32 = &mut a;
+// or
+let p_a = &mut a as *mut i32;
+```
+
+In C++, the difference between a reference and pointer is smaller. Pointers are
+compatible with C, and references are a C++-only thing.
+
+In C++ (and C), this is how you make a pointer:
 
 ```c++
 int    a =  5;
@@ -279,15 +316,12 @@ and to dereference a pointer:
 int b = *p_a;
 ```
 
-You add `&` to RHS, but you add `*` to LHS. Weird. What's worse, despite the fact that the variable name really is `p_a`, not `*p_a`, and the type really is `int*`, most people and formatters prepend the asterisk before the variable name, which looks like you're declaring an `int` which is clearly not true. So why are people doing that? There are some discussion on [StackOverflow](https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type).
-
-<!-- To be consistent with this weird convention, tools will also name pointer types as `` `T *` `` (with a space in between), not `` `T*` ``. -->
-
-But wait, how did people learn this weird convention in the first place? On [cppreference](https://en.cppreference.com/w/cpp/language/pointer), and in Bjarne Stroustrup's *A Tour of C++*, the `int* p_a = &5` style is always used, so just...why? Why are people sticking to the anti-standard?
+You add `&` to RHS, but you add `*` to LHS. Despite the fact that the variable name really is `p_a`, not `*p_a`, and the type really is `int*`, most people and formatters prepend the asterisk before the variable name (`int *p_a = &a;`). There are some discussion at [StackOverflow](https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type) on why people are preferring this style. I personally prefer using the `int* p_a = &a` style, which is also being used consistently on [cppreference](https://en.cppreference.com/w/cpp/language/pointer), and in Bjarne Stroustrup's *A Tour of C++*.
 
 Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others' code.
 
-Since pointers are a heritage from C, it is not surprising that the *creative* C++ designers invented yet another similar syntax for achieving almost the same task: references. You create and read a reference like this:
+References have similar capabilities as pointers, with the only big difference being their semantics.
+This is how you create a reference and read its referent's value:
 
 ```c++
 int l = 5;
@@ -351,7 +385,7 @@ I think it would be helpful to make a line-by-line comparison of some common tas
 
 ## Control Flow
 
-C++ offers 5 types of control flow statements. `if...else`, `for` loop and `while` loop are pretty much the same as in Rust, but the `switch` statement is much less powerful than Rust's `match`. Additionally there is a `goto` statement which performs unconditional jump and is notorious for leading to "unmaintainable spaghetti code" (however, people are still using them, and you'll see why in a minute).
+C++ offers 5 types of control flow statements. `if...else`, `for` loop and `while` loop are pretty much the same as in Rust, but the `switch` statement is much less powerful than Rust's `match`. Additionally there is a `goto` statement which performs unconditional jump.
 
 If you have experience in Javascript or Java, most of C++'s control flow syntax will be familiar to you. The conditional test associated with `if`, `for`, `while` and `switch` must be surrounded by parentheses.
 
@@ -374,6 +408,22 @@ you could write:
 
 ```c++
 int a = true ? 5 : 10;
+```
+
+The braces around the statement after the condition of `if` can be omitted if the statement can be written in a single line.
+For example:
+
+```c++
+if (i > 5) {
+    std::cout << "i is greater than 5" << std::endl;
+}
+```
+
+can be reduced to:
+
+```c++
+if (i > 5)
+    std::cout << "i is greater than 5" << std::endl;
 ```
 
 ### `while` Loop
@@ -400,7 +450,7 @@ while (i > 0)
 
 ### `for` Loop
 
-A traditional C-style `for` loop looks like this (you'll be familiar with this if you code Javascript or Java):
+A traditional C-style `for` loop looks like this:
 
 ```
 for (<initializationStatement>; <testExpression>; <updateStatement>)
@@ -476,7 +526,7 @@ for (auto& num : a)
 // Rust
 let mut v = vec![1, 2, 3, 4, 5];
 for e in &mut v {
-    *e = e + 1;
+    *e = *e + 1;
 }
 assert_eq!(v, vec![2, 3, 4, 5, 6]);
 ```
@@ -493,7 +543,7 @@ for (auto &num : a)
 assert(a == (std::vector<int>{2, 3, 4, 5, 6}));
 ```
 
-Note the parentheses surrounding the second argument of `assert`, without which we would get an error. This is because `assert` is a so called `#define` macro, which simply parses its arguments as comma-separated identifiers and does text replacement. Since `std::vector<int>{2, 3, 4, 5, 6}` contains commas, it has to be escaped with parentheses.[^assert] This macro is actually defined in `assert.h` which is part of C's std, and its more or less copied verbatim into C++'s `cassert`. Theoretically I think it is possible to implement C++'s own `assert` or `#define` that removes the need for adding parentheses here and there. However, the C++ committee never cares about ergonomics.
+Note the parentheses surrounding the second argument of `assert`, without which we would get an error. This is because `assert` is a so called `#define` macro, which simply parses its arguments as comma-separated identifiers and does text replacement. Since `std::vector<int>{2, 3, 4, 5, 6}` contains commas, it has to be escaped with parentheses.[^assert] This macro is actually defined in `assert.h` which is part of C's std, and its more or less copied verbatim into C++'s `cassert`.
 
 [^assert]: Related to this stackoverflow question: https://stackoverflow.com/questions/38030048
 
@@ -524,7 +574,7 @@ for i in 0..3 {
 }
 ```
 
-C++ doesn't support this natively, so people are using `goto` to achieve this:
+C++ doesn't support this natively, so it's common to use the `goto` trick to achive this[^goto-break].
 
 ```c++
 #include <iostream>
@@ -550,7 +600,7 @@ for (int i = 0; i < 3; ++i)
 }
 ```
 
-Using `goto` sounds like I am joking. I'm not. People really suggest doing this[^goto-break]. It's a consensus that `goto` statements are error-prone, but there really aren't better ways to do this when you absolutely need to break an outer loop. The C++ committee never solves really problems.
+
 
 Alternatively you can use a flag, which is more verbose, and I think this is even less readable:
 
@@ -584,7 +634,7 @@ for (int i = 0; i < 3; ++i)
 }
 ```
 
-There is another cleaner way, using the lambda trick (but why the hell should I use a lamba for such a basic task???):
+There is another cleaner way, using the lambda trick (less common than the `goto` approach):
 
 ```c++
 printf("Break outer loop using lambda:\n");
@@ -613,7 +663,7 @@ I'll get back to lamdas later. For now just accept that they are roughly equival
 
 ### `switch`
 
-C++'s `switch` is essentially a shortcut for a series of `if...else if...else if...else` statements. Well, often they are actually more *verbose* than the `if...else` chain.
+C++'s `switch` is essentially a shortcut for a series of `if...else if...else if...else` statements when you want to match the value a single expression to a range of constant values. For example:
 
 The following C++ code
 
@@ -647,9 +697,9 @@ default:
 
 (I'll start to omit headers from now on.)
 
-Note the `break` statement at the end of each `case`, without which the `default` branch will always be triggered, which is clearly not you meant to do. Oh, if the proper usage requires that `break;` needs to be appended to every case, why isn't the C++ language designed so that the `break`s happen implicitly[^fuck-switch]? Are there any `switch`- or `match`-like statements in other languages uglier than this? (Sorry there really is, that's [bash's `case` statement](https://linuxize.com/post/bash-case-statement/).)
+Note the `break` statement at the end of each `case`, without which the `default` branch will always be triggered, which is clearly not we mean to do[^switch].
 
-[^fuck-switch]: We're not the only ones to spot this problem; see this [StackOverflow question](https://stackoverflow.com/questions/252489/why-was-the-switch-statement-designed-to-need-a-break). But if this is merely a design mistake in C and is inherited by C++, why don't Java and Javascript take the opportunity to break from this ugly semantics? (Stockholm syndrom, I know)
+[^switch]: This [StackOverflow question](https://stackoverflow.com/questions/252489/why-was-the-switch-statement-designed-to-need-a-break) might be interesting.
 
 You can group several values into a single branch:
 
@@ -676,7 +726,7 @@ default:
 }
 ```
 
-This is all about `switch` in C++. Forget everything about the fancy pattern matching in Rust!
+This is all about `switch` in C++. (You need to unlearn the pattern matching in Rust)
 
 ## Exercise {-}
 

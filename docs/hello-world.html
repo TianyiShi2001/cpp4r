@@ -24,7 +24,7 @@
 <meta name="author" content="Tianyi Shi" />
 
 
-<meta name="date" content="2020-11-14" />
+<meta name="date" content="2020-11-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -219,16 +219,21 @@ output,” and <code>endl</code> stands for “endline” (it appends <code>\n</
 <code>&lt;&lt;</code> is the bitwise left shift operator, and the designers of C++ decided that
 overloading bitwise shift operators for <code>cout</code> and <code>cin</code> can make C++ look fancy
 from the beginning. That’s why we need to learn yet another special syntax.</p>
-<p>Fortunately (or unfortunately), there’s another way to do exactly the same thing:</p>
+<p><code>iostream</code> also introduces another function into scope, the C-compatible <code>printf</code> into scope,
+which can also be used to print “Hello world.”</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="hello-world.html#cb2-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Hello from printf</span><span class="sc">\n</span><span class="st">&quot;</span>);</span></code></pre></div>
-<p>Now you might begin to wonder, why isn’t <code>std::cout</code> called <code>std::iostream::cout</code>, and why <code>printf</code> can be called without any prefix. This is because in C++ filenames have no relationships to <code>namespace</code>s by default. <code>namespace</code> is similar to Rust’s <code>mod</code>, but more flexible. In this case, the <code>iostream</code> file contains something conceptually like this:</p>
+<p>Now you might begin to wonder, why isn’t <code>std::cout</code> called <code>std::iostream::cout</code>,
+and why <code>printf</code> can be called without any prefix. This is because in C++ filenames
+have no relationships to <code>namespace</code>s by default. <code>namespace</code> is similar to Rust’s <code>mod</code>,
+but more flexible. In this case, the <code>iostream</code> file contains something conceptually like this:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="hello-world.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printf(...);</span>
 <span id="cb3-2"><a href="hello-world.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="hello-world.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> std {</span>
 <span id="cb3-4"><a href="hello-world.html#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> cout {}</span>
 <span id="cb3-5"><a href="hello-world.html#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> endl {}</span>
 <span id="cb3-6"><a href="hello-world.html#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><code>printf</code> isn’t placed inside <code>std</code> because it is a heritage from C. Many other C functions are also available in C++, and they can be distinguished by the absence of the <code>std::</code> prefix.</p>
+<p><code>printf</code> isn’t placed inside <code>std</code> because it is a heritage from C. Many other C functions
+are also available in C++, and they can be distinguished by the absence of the <code>std::</code> prefix.</p>
 </div>
             </section>
 

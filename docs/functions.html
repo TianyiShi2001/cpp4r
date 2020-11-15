@@ -24,7 +24,7 @@
 <meta name="author" content="Tianyi Shi" />
 
 
-<meta name="date" content="2020-11-14" />
+<meta name="date" content="2020-11-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -227,13 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb17-13"><a href="functions.html#cb17-13" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb17-14"><a href="functions.html#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a * a;</span>
 <span id="cb17-15"><a href="functions.html#cb17-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>However, by uncommenting the third line, it works. When you use a function, the compiler must know the signature, but not necessarily the <em>definition</em> of the function. This is why in C++ (and in C) people split their funtions into signatures which go into header files, and definitions which go into <code>.cpp</code> files. This practice, coupled with C’s macro system (inherited by C++), leads to many pitfalls and confusing situations.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> In particular, it can be difficult to just find the definition of a function without a decent and properly configured IDE. I’ll get back to header files later. For now we’ll be working with single-file programs without splitting declaration and definitions.</p>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p><a href="https://softwareengineering.stackexchange.com/questions/180904/are-header-files-actually-good" class="uri">https://softwareengineering.stackexchange.com/questions/180904/are-header-files-actually-good</a><a href="functions.html#fnref1" class="footnote-back">↩︎</a></p></li>
-</ol>
+<p>However, by uncommenting the third line, it works. When you use a function, the compiler must know the signature, but not necessarily the <em>definition</em> of the function. This is why in C++ (and in C) people split their funtions into signatures which go into header files, and definitions which go into <code>.cpp</code> files. I’ll get back to header files later. For now we’ll be working with single-file programs without splitting declaration and definitions.</p>
 </div>
             </section>
 
