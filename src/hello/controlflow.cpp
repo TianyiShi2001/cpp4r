@@ -109,7 +109,7 @@ namespace break_outer
     void with_goto()
     {
         printf("Break outer loop using goto:\n");
-        std::cout << "ijk " << std::endl;
+        std::cout << "i j k" << std::endl;
         for (int i = 0; i < 3; ++i)
         {
 
@@ -121,11 +121,12 @@ namespace break_outer
                     {
                         goto for_i_end;
                     }
-                    std::cout << i << j << k << std::endl;
+                    printf("%d %d %d\n", i, j, k);
                 }
             }
         for_i_end:
         {
+            // * cannot be left blank; needs a placeholder
         }
         }
     }
@@ -133,7 +134,7 @@ namespace break_outer
     void with_flag()
     {
         printf("Break outer loop using flag:\n");
-        std::cout << "ijk " << std::endl;
+        std::cout << "i j k" << std::endl;
         bool i_is_1{false};
         for (int i = 0; i < 3; ++i)
         {
@@ -151,7 +152,7 @@ namespace break_outer
                     {
                         i_is_1 = false;
                     }
-                    std::cout << i << j << k << std::endl;
+                    printf("%d %d %d\n", i, j, k);
                 }
                 if (i_is_1)
                 {
@@ -164,7 +165,7 @@ namespace break_outer
     void with_lambda()
     {
         printf("Break outer loop using lambda:\n");
-        std::cout << "ijk " << std::endl;
+        std::cout << "i j k " << std::endl;
         for (int i = 0; i < 3; ++i)
         {
             [&] {
@@ -176,7 +177,7 @@ namespace break_outer
                         {
                             return;
                         }
-                        std::cout << i << j << k << std::endl;
+                        printf("%d %d %d\n", i, j, k);
                     }
                 }
             }();
