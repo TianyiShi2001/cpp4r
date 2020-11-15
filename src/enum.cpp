@@ -58,9 +58,7 @@ int main()
         // *         LevelError
         // *     };
         // *
-        // * ...which is yet another way C++ has been promoting the violation of the DRY rule
-        // * To solve this problem. Instead of allowing using enum variant either with or
-        // * without a namespace (which MSVC allows), the C++ committee invented yet another
-        // * way to deal with enums, known as the `enum class`.
+        // * ...which violates the DRY rule in a bad way. To solve this problem, `enum class`
+        // * was introduced in C++11, and we'll learn about it in the next section.
     }
 }
