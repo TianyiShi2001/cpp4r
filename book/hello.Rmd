@@ -578,35 +578,40 @@ C++ doesn't support this natively, so it's common to use the `goto` trick to ach
 
 ```c++
 #include <iostream>
-printf("Break outer loop using goto:\n");
-std::cout << "ijk " << std::endl;
-for (int i = 0; i < 3; ++i)
+void break_outer()
 {
-
-    for (int j = 0; j < 3; ++j)
+    printf("Break outer loop using goto:\n");
+    printf("i j k\n");
+    for (int i = 0; i < 3; ++i)
     {
-        for (int k = 0; k < 3; ++k)
+
+        for (int j = 0; j < 3; ++j)
         {
-            if (i == 1)
+            for (int k = 0; k < 3; ++k)
             {
-                goto for_j_end;
+                if (i == 1)
+                {
+                    goto for_j_end;
+                }
+                printf("%d %d %d\n", i, j, k);
             }
-            std::cout << i << j << k << std::endl;
         }
-    }
     for_j_end:
     {
+        // cannot be left blank. Needs a placeholder
+    }
     }
 }
 ```
 
-
+The `goto` statement must be in the same function as the label it is referring,
+so duplicated labels across different functions won't cause conflicts.
 
 Alternatively you can use a flag, which is more verbose, and I think this is even less readable:
 
 ```c++
 printf("Break outer loop using flag:\n");
-std::cout << "ijk " << std::endl;
+printf("i j k\n");
 bool i_is_1{false};
 for (int i = 0; i < 3; ++i)
 {
@@ -624,7 +629,7 @@ for (int i = 0; i < 3; ++i)
             {
                 i_is_1 = false;
             }
-            std::cout << i << j << k << std::endl;
+            printf("%d %d %d\n", i, j, k);
         }
         if (i_is_1)
         {
@@ -638,7 +643,7 @@ There is another cleaner way, using the lambda trick (less common than the `goto
 
 ```c++
 printf("Break outer loop using lambda:\n");
-std::cout << "ijk " << std::endl;
+printf("i j k\n");
 for (int i = 0; i < 3; ++i)
 {
     [&] {
@@ -650,7 +655,7 @@ for (int i = 0; i < 3; ++i)
                 {
                     return;
                 }
-                std::cout << i << j << k << std::endl;
+                printf("%d %d %d\n", i, j, k);
             }
         }
     }();
@@ -738,12 +743,13 @@ int y = 10;
 int* px = &x;
 int* py = &y;
 px = py;
-// what are the values of x, y, *px and *py now?
+// What are the values of x, y, *px and *py now?
 
 int i = 5;
 int j = 10;
 int& ri = i;
 int& rj = j;
 ri = rj;
-// what are the values of i, j, ri and rj now?
+// What are the values of i, j, ri and rj now?
+// Hint: a reference cannot be re-assigned. What's the last line doing?
 ```
