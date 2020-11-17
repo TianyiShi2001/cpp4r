@@ -24,7 +24,7 @@
 <meta name="author" content="Tianyi Shi" />
 
 
-<meta name="date" content="2020-11-15" />
+<meta name="date" content="2020-11-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -152,7 +152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.1" data-path="variables.html"><a href="variables.html#mutability"><i class="fa fa-check"></i><b>1.3.1</b> Mutability</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>1.4</b> Functions</a></li>
-<li class="chapter" data-level="1.5" data-path="pointers-and-references.html"><a href="pointers-and-references.html"><i class="fa fa-check"></i><b>1.5</b> Pointers and References</a></li>
+<li class="chapter" data-level="1.5" data-path="pointers-and-references.html"><a href="pointers-and-references.html"><i class="fa fa-check"></i><b>1.5</b> Pointers and References</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="pointers-and-references.html"><a href="pointers-and-references.html#lvalues-rvalues-and-rvalue-references"><i class="fa fa-check"></i><b>1.5.1</b> <code>lvalue</code>s, <code>rvalue</code>s, and rvalue references</a></li>
+</ul></li>
 <li class="chapter" data-level="1.6" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>1.6</b> Control Flow</a>
 <ul>
 <li class="chapter" data-level="1.6.1" data-path="control-flow.html"><a href="control-flow.html#if...else"><i class="fa fa-check"></i><b>1.6.1</b> <code>if...else</code></a></li>
@@ -196,15 +199,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Like in Rust, creating a variable requires two steps, declaration and initialization.</p>
 <p>The traditional syntax for declaration and initialization is <code>&lt;type&gt; &lt;var name&gt; = &lt;value&gt;;</code>,
 and these two steps can be separated:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="variables.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="dv">5</span>;</span>
-<span id="cb4-2"><a href="variables.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> b;</span>
-<span id="cb4-3"><a href="variables.html#cb4-3" aria-hidden="true" tabindex="-1"></a>b = <span class="ch">&#39;A&#39;</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="variables.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="dv">5</span>;</span>
+<span id="cb5-2"><a href="variables.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="dt">char</span> b;</span>
+<span id="cb5-3"><a href="variables.html#cb5-3" aria-hidden="true" tabindex="-1"></a>b = <span class="ch">&#39;A&#39;</span>;</span></code></pre></div>
 <p>The above syntax is compatible with C, which has a problem: if you initialize an <code>int</code> with a float:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb5-1"><a href="variables.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="fl">5.5</span>;</span>
-<span id="cb5-2"><a href="variables.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(a == <span class="dv">5</span>);</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="variables.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a = <span class="fl">5.5</span>;</span>
+<span id="cb6-2"><a href="variables.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(a == <span class="dv">5</span>);</span></code></pre></div>
 <p>The value will be implicitly converted (recent compilers will give a warning when this happens; see Figure <a href="variables.html#fig:equal">1.1</a>).
 C++11 introduced the “uniform initialization” syntax, which forbids this implicit conversion. In its simplest form:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb6-1"><a href="variables.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a{<span class="dv">5</span>};</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="variables.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a{<span class="dv">5</span>};</span></code></pre></div>
 <div class="figure"><span id="fig:equal"></span>
 <img src="img/equal.png" alt="When implicit conversion occurs, a decent modern C++ compiler will give a warning."  />
 <p class="caption">
@@ -212,9 +215,9 @@ Figure 1.1: When implicit conversion occurs, a decent modern C++ compiler will g
 </p>
 </div>
 <p>If you try <code>int a{5.5};</code> with this syntax, the compiler will give an error and abort (Figure <a href="variables.html#fig:braces">1.2</a> ). In addition, you can’t separate the two parts:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="variables.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">// not allowed</span></span>
-<span id="cb7-2"><a href="variables.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a;</span>
-<span id="cb7-3"><a href="variables.html#cb7-3" aria-hidden="true" tabindex="-1"></a>a{<span class="dv">5</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="variables.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// not allowed</span></span>
+<span id="cb8-2"><a href="variables.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> a;</span>
+<span id="cb8-3"><a href="variables.html#cb8-3" aria-hidden="true" tabindex="-1"></a>a{<span class="dv">5</span>}</span></code></pre></div>
 <div class="figure"><span id="fig:braces"></span>
 <img src="img/brace.png" alt="The uniform initialization syntax."  />
 <p class="caption">
@@ -225,38 +228,38 @@ Figure 1.2: The uniform initialization syntax.
 <div id="mutability" class="section level3" number="1.3.1">
 <h3><span class="header-section-number">1.3.1</span> Mutability</h3>
 <p>Variables are mutable by default. If you want to create an immutable variable, use the <code>const</code> keyword.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb8-1"><a href="variables.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
-<span id="cb8-2"><a href="variables.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb8-3"><a href="variables.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> b <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb9-1"><a href="variables.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
+<span id="cb9-2"><a href="variables.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb9-3"><a href="variables.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> <span class="kw">mut</span> b <span class="op">=</span> <span class="dv">10</span><span class="op">;</span></span></code></pre></div>
 <p>is equivalent to</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb9-1"><a href="variables.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">//C++</span></span>
-<span id="cb9-2"><a href="variables.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="kw">auto</span> a = <span class="dv">5</span>;</span>
-<span id="cb9-3"><a href="variables.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> b = <span class="dv">10</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb10-1"><a href="variables.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">//C++</span></span>
+<span id="cb10-2"><a href="variables.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="kw">auto</span> a = <span class="dv">5</span>;</span>
+<span id="cb10-3"><a href="variables.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">auto</span> b = <span class="dv">10</span>;</span></code></pre></div>
 <p>If <code>const</code> is used to create an immutable variable, how to create a real “constant” that’s evaluated at compile time? The answer is <code>consexpr</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb10-1"><a href="variables.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
-<span id="cb10-2"><a href="variables.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> LIGHT_SPEED<span class="op">:</span> <span class="dt">f64</span> <span class="op">=</span> <span class="dv">2.99792458e8</span><span class="op">;</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb11-1"><a href="variables.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
+<span id="cb11-2"><a href="variables.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> LIGHT_SPEED<span class="op">:</span> <span class="dt">f64</span> <span class="op">=</span> <span class="dv">2.99792458e8</span><span class="op">;</span></span></code></pre></div>
 <p>is equivalent to</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb11-1"><a href="variables.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">double</span> LIGHT_SPEED = <span class="fl">2.99792458e8</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb12-1"><a href="variables.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">double</span> LIGHT_SPEED = <span class="fl">2.99792458e8</span>;</span></code></pre></div>
 <p>What about constant strings? Well, like Rust, you can’t use the dynamically allocated <code>std::string</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb12-1"><a href="variables.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
-<span id="cb12-2"><a href="variables.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> NAME<span class="op">:</span> <span class="dt">String</span> <span class="op">=</span> <span class="st">&quot;Hideyo&quot;</span><span class="op">.</span>to_string()<span class="op">;</span> <span class="co">// not allowed!</span></span>
-<span id="cb12-3"><a href="variables.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> NAME<span class="op">:</span> <span class="op">&amp;</span><span class="ot">&#39;static</span> <span class="dt">str</span> <span class="op">=</span> <span class="st">&quot;Hideyo&quot;</span><span class="op">;</span>       <span class="co">// good</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb13-1"><a href="variables.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">//C++</span></span>
-<span id="cb13-2"><a href="variables.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="bu">std::</span>string NAME = <span class="st">&quot;Hideyo&quot;</span>; <span class="co">// not allowed!</span></span>
-<span id="cb13-3"><a href="variables.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">char</span> NAME[] = <span class="st">&quot;Hideyo&quot;</span>;      <span class="co">// good</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb13-1"><a href="variables.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Rust</span></span>
+<span id="cb13-2"><a href="variables.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> NAME<span class="op">:</span> <span class="dt">String</span> <span class="op">=</span> <span class="st">&quot;Hideyo&quot;</span><span class="op">.</span>to_string()<span class="op">;</span> <span class="co">// not allowed!</span></span>
+<span id="cb13-3"><a href="variables.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> NAME<span class="op">:</span> <span class="op">&amp;</span><span class="ot">&#39;static</span> <span class="dt">str</span> <span class="op">=</span> <span class="st">&quot;Hideyo&quot;</span><span class="op">;</span>       <span class="co">// good</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="variables.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">//C++</span></span>
+<span id="cb14-2"><a href="variables.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="bu">std::</span>string NAME = <span class="st">&quot;Hideyo&quot;</span>; <span class="co">// not allowed!</span></span>
+<span id="cb14-3"><a href="variables.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">char</span> NAME[] = <span class="st">&quot;Hideyo&quot;</span>;      <span class="co">// good</span></span></code></pre></div>
 <p>So you have to use an array of characters. Well, it’s technically closer to <code>const NAME: &amp;[u8] = b"Hideyo";</code>. Then, if you need to use the <code>std::string</code>, you need explicit conversion:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb14-1"><a href="variables.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb14-2"><a href="variables.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="variables.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">char</span> NAME[] = <span class="st">&quot;Hideyo&quot;</span>;</span>
-<span id="cb14-4"><a href="variables.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">char</span> NAME_UTF8[] = <span class="st">&quot;英世&quot;</span>;</span>
-<span id="cb14-5"><a href="variables.html#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="variables.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main()</span>
-<span id="cb14-7"><a href="variables.html#cb14-7" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb14-8"><a href="variables.html#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> <span class="bu">std::</span>string NAME_STRING(NAME);</span>
-<span id="cb14-9"><a href="variables.html#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> <span class="bu">std::</span>string NAME_UTF8_STRING(NAME_UTF8);</span>
-<span id="cb14-10"><a href="variables.html#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// thank god UTF8 works! If you were in C you would have a hard time.</span></span>
-<span id="cb14-11"><a href="variables.html#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; NAME_UTF8_STRING &lt;&lt; <span class="st">&quot; &quot;</span> &lt;&lt; NAME_STRING &lt;&lt; <span class="bu">std::</span>endl;</span>
-<span id="cb14-12"><a href="variables.html#cb14-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb15-1"><a href="variables.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb15-2"><a href="variables.html#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="variables.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">char</span> NAME[] = <span class="st">&quot;Hideyo&quot;</span>;</span>
+<span id="cb15-4"><a href="variables.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="kw">constexpr</span> <span class="dt">char</span> NAME_UTF8[] = <span class="st">&quot;英世&quot;</span>;</span>
+<span id="cb15-5"><a href="variables.html#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="variables.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main()</span>
+<span id="cb15-7"><a href="variables.html#cb15-7" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb15-8"><a href="variables.html#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> <span class="bu">std::</span>string NAME_STRING(NAME);</span>
+<span id="cb15-9"><a href="variables.html#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">const</span> <span class="bu">std::</span>string NAME_UTF8_STRING(NAME_UTF8);</span>
+<span id="cb15-10"><a href="variables.html#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">// thank god UTF8 works! If you were in C you would have a hard time.</span></span>
+<span id="cb15-11"><a href="variables.html#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">std::</span>cout &lt;&lt; NAME_UTF8_STRING &lt;&lt; <span class="st">&quot; &quot;</span> &lt;&lt; NAME_STRING &lt;&lt; <span class="bu">std::</span>endl;</span>
+<span id="cb15-12"><a href="variables.html#cb15-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 </div>
             </section>

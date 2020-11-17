@@ -125,7 +125,7 @@
 
 \title{C++ for Rustaceans}
 \author{Tianyi Shi}
-\date{2020-11-15}
+\date{2020-11-17}
 
 \begin{document}
 \maketitle
@@ -207,6 +207,14 @@ which can also be used to print ``Hello world''.
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{printf(}\StringTok{"Hello from printf}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+Since we do not have string interpolation of variable in this case, we can also use \texttt{puts}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{puts(}\StringTok{"Hello from printf"}\NormalTok{); }\CommentTok{// newline automatically appended}
 \end{Highlighting}
 \end{Shaded}
 
@@ -539,6 +547,8 @@ Note that, unlike in Rust, you cannot create a pointer to a literal in C++:
 \end{Highlighting}
 \end{Shaded}
 
+The reason is that, \texttt{5} is an ``rvalue'', which is ``temporary'' and thus it's impossible to take its memory address with \texttt{\&}.
+
 To dereference a pointer, you use the dereference operator, \texttt{*}, which has the same semantics as Rust.
 
 \begin{Shaded}
@@ -560,6 +570,15 @@ This is how you create a reference and read its referent's value:
 
 You do not need to (and cannot) use the deference operator (\texttt{*}) on a reference to access the value of the referent. In addition, a reference cannot be re-assigned to refer to another value. Apart from these two rules, references are effectively the same as pointers. It can be helpful to see a reference as an \emph{alias} to a \emph{named variable}. Indeed, a reference shares the same memory address as its referent.
 
+You can't create a non-const reference to a literal, but you can create a \texttt{const} one:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DataTypeTok{int}\NormalTok{\& r = }\DecValTok{5}\NormalTok{; }\CommentTok{// not allowed}
+\AttributeTok{const} \DataTypeTok{int}\NormalTok{\& r = }\DecValTok{5}\NormalTok{; }\CommentTok{// ok}
+\end{Highlighting}
+\end{Shaded}
+
 Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be used to mutate the referent.
 
 \begin{Shaded}
@@ -570,7 +589,7 @@ Since we are Rustaceans, we are sensitive to mutability. Are there any differenc
     \DataTypeTok{int}\NormalTok{ a\{}\DecValTok{5}\NormalTok{\};}
     \DataTypeTok{int}\NormalTok{ \&r\_a = a;  }\CommentTok{// create a reference}
     \DataTypeTok{int}\NormalTok{ *p\_a = \&a; }\CommentTok{// create a pointer}
-\NormalTok{    printf(}\StringTok{"| a|r\_a|*p\_a|     p\_a      |}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"| a|r\_a|*p\_a|     p\_a      |"}\NormalTok{);}
 \NormalTok{    a = }\DecValTok{10}\NormalTok{; }\CommentTok{// mutate the value}
 \NormalTok{    printf(}\StringTok{"|}\SpecialCharTok{\%d}\StringTok{| }\SpecialCharTok{\%d}\StringTok{|  }\SpecialCharTok{\%d}\StringTok{|}\SpecialCharTok{\%p}\StringTok{|}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, a, r\_a, *p\_a, p\_a);}
 \NormalTok{    r\_a = }\DecValTok{15}\NormalTok{; }\CommentTok{// mutate via reference; no asterisk!}
@@ -698,6 +717,11 @@ mutate\strut
 \bottomrule
 \end{longtable}
 
+\hypertarget{lvalues-rvalues-and-rvalue-references}{%
+\subsection{\texorpdfstring{\texttt{lvalue}s, \texttt{rvalue}s, and rvalue references}{lvalues, rvalues, and rvalue references}}\label{lvalues-rvalues-and-rvalue-references}}
+
+\url{https://google.github.io/styleguide/cppguide.html\#Rvalue_references}
+
 \hypertarget{control-flow}{%
 \section{Control Flow}\label{control-flow}}
 
@@ -795,7 +819,7 @@ For example:
 \begin{Shaded}
 \begin{Highlighting}[]
 \PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
-\NormalTok{printf(}\StringTok{"|i|j|}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{puts(}\StringTok{"|i|j|"}\NormalTok{);}
 \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{2}\NormalTok{; i++)}
 \NormalTok{\{}
     \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ j = }\DecValTok{0}\NormalTok{; j \textless{} }\DecValTok{3}\NormalTok{; j++)}
@@ -919,8 +943,8 @@ C++ doesn't support this natively, so it's common to use the \texttt{goto} trick
 \PreprocessorTok{\#include }\ImportTok{\textless{}iostream\textgreater{}}
 \DataTypeTok{void}\NormalTok{ break\_outer()}
 \NormalTok{\{}
-\NormalTok{    printf(}\StringTok{"Break outer loop using goto:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
-\NormalTok{    printf(}\StringTok{"i j k}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"Break outer loop using goto:"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"i j k"}\NormalTok{);}
     \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{    \{}
 
@@ -951,8 +975,8 @@ Alternatively you can use a flag, which is more verbose, and I think this is eve
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{printf(}\StringTok{"Break outer loop using flag:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
-\NormalTok{printf(}\StringTok{"i j k}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{puts(}\StringTok{"Break outer loop using flag:"}\NormalTok{);}
+\NormalTok{puts(}\StringTok{"i j k"}\NormalTok{);}
 \DataTypeTok{bool}\NormalTok{ i\_is\_1\{}\KeywordTok{false}\NormalTok{\};}
 \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{\{}
@@ -985,8 +1009,8 @@ There is another cleaner way, using the lambda trick (less common than the \text
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{printf(}\StringTok{"Break outer loop using lambda:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
-\NormalTok{printf(}\StringTok{"i j k}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{puts(}\StringTok{"Break outer loop using lambda:"}\NormalTok{);}
+\NormalTok{puts(}\StringTok{"i j k"}\NormalTok{);}
 \ControlFlowTok{for}\NormalTok{ (}\DataTypeTok{int}\NormalTok{ i = }\DecValTok{0}\NormalTok{; i \textless{} }\DecValTok{3}\NormalTok{; ++i)}
 \NormalTok{\{}
 \NormalTok{    [\&] \{}
@@ -1019,11 +1043,11 @@ The following C++ code
 \begin{Highlighting}[]
 \DataTypeTok{int}\NormalTok{ d = }\DecValTok{5}\NormalTok{;}
 \ControlFlowTok{if}\NormalTok{ (d == }\DecValTok{0}\NormalTok{) \{}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Sunday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s Sunday!"}\NormalTok{);}
 \NormalTok{\} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (d == }\DecValTok{6}\NormalTok{) \{}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Saturday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s Saturday!"}\NormalTok{);}
 \NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s weekday.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s weekday."}\NormalTok{);}
 \NormalTok{\}}
 \end{Highlighting}
 \end{Shaded}
@@ -1035,13 +1059,13 @@ is equivalent to:
 \ControlFlowTok{switch}\NormalTok{ (d)}
 \NormalTok{\{}
 \ControlFlowTok{case} \DecValTok{0}\NormalTok{:}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Sunday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s Sunday!"}\NormalTok{);}
     \ControlFlowTok{break}\NormalTok{;}
 \ControlFlowTok{case} \DecValTok{6}\NormalTok{:}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Saturday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s Saturday!"}\NormalTok{);}
     \ControlFlowTok{break}\NormalTok{;}
 \ControlFlowTok{default}\NormalTok{:}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s weekday.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s weekday."}\NormalTok{);}
     \ControlFlowTok{break}\NormalTok{;}
 \NormalTok{\}}
 \end{Highlighting}
@@ -1059,20 +1083,20 @@ You can group several values into a single branch:
 \ControlFlowTok{switch}\NormalTok{ (d)}
 \NormalTok{\{}
 \ControlFlowTok{case} \DecValTok{0}\NormalTok{:}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Sunday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s Sunday!"}\NormalTok{);}
     \ControlFlowTok{break}\NormalTok{;}
 \ControlFlowTok{case} \DecValTok{6}\NormalTok{:}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s Saturday!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s Saturday!"}\NormalTok{);}
     \ControlFlowTok{break}\NormalTok{;}
 \ControlFlowTok{case} \DecValTok{1}\NormalTok{:}
 \ControlFlowTok{case} \DecValTok{2}\NormalTok{:}
 \ControlFlowTok{case} \DecValTok{3}\NormalTok{:}
 \ControlFlowTok{case} \DecValTok{4}\NormalTok{:}
 \ControlFlowTok{case} \DecValTok{5}\NormalTok{:}
-\NormalTok{    printf(}\StringTok{"It\textquotesingle{}s weekday.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"It\textquotesingle{}s weekday."}\NormalTok{);}
     \ControlFlowTok{break}\NormalTok{;}
 \ControlFlowTok{default}\NormalTok{:}
-\NormalTok{    printf(}\StringTok{"Not a valid day of week!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{);}
+\NormalTok{    puts(}\StringTok{"Not a valid day of week!"}\NormalTok{);}
     \ControlFlowTok{break}\NormalTok{;}
 \NormalTok{\}}
 \end{Highlighting}

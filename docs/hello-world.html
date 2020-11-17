@@ -24,7 +24,7 @@
 <meta name="author" content="Tianyi Shi" />
 
 
-<meta name="date" content="2020-11-15" />
+<meta name="date" content="2020-11-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -152,7 +152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.1" data-path="variables.html"><a href="variables.html#mutability"><i class="fa fa-check"></i><b>1.3.1</b> Mutability</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>1.4</b> Functions</a></li>
-<li class="chapter" data-level="1.5" data-path="pointers-and-references.html"><a href="pointers-and-references.html"><i class="fa fa-check"></i><b>1.5</b> Pointers and References</a></li>
+<li class="chapter" data-level="1.5" data-path="pointers-and-references.html"><a href="pointers-and-references.html"><i class="fa fa-check"></i><b>1.5</b> Pointers and References</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="pointers-and-references.html"><a href="pointers-and-references.html#lvalues-rvalues-and-rvalue-references"><i class="fa fa-check"></i><b>1.5.1</b> <code>lvalue</code>s, <code>rvalue</code>s, and rvalue references</a></li>
+</ul></li>
 <li class="chapter" data-level="1.6" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>1.6</b> Control Flow</a>
 <ul>
 <li class="chapter" data-level="1.6.1" data-path="control-flow.html"><a href="control-flow.html#if...else"><i class="fa fa-check"></i><b>1.6.1</b> <code>if...else</code></a></li>
@@ -222,16 +225,18 @@ from the beginning. That’s why we need to learn yet another special syntax.</p
 <p><code>iostream</code> also introduces another function into scope, the C-compatible <code>printf</code> into scope,
 which can also be used to print “Hello world.”</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="hello-world.html#cb2-1" aria-hidden="true" tabindex="-1"></a>printf(<span class="st">&quot;Hello from printf</span><span class="sc">\n</span><span class="st">&quot;</span>);</span></code></pre></div>
+<p>Since we do not have string interpolation of variable in this case, we can also use <code>puts</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="hello-world.html#cb3-1" aria-hidden="true" tabindex="-1"></a>puts(<span class="st">&quot;Hello from printf&quot;</span>); <span class="co">// newline automatically appended</span></span></code></pre></div>
 <p>Now you might begin to wonder, why isn’t <code>std::cout</code> called <code>std::iostream::cout</code>,
 and why <code>printf</code> can be called without any prefix. This is because in C++ filenames
 have no relationships to <code>namespace</code>s by default. <code>namespace</code> is similar to Rust’s <code>mod</code>,
 but more flexible. In this case, the <code>iostream</code> file contains something conceptually like this:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb3-1"><a href="hello-world.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printf(...);</span>
-<span id="cb3-2"><a href="hello-world.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="hello-world.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> std {</span>
-<span id="cb3-4"><a href="hello-world.html#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> cout {}</span>
-<span id="cb3-5"><a href="hello-world.html#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> endl {}</span>
-<span id="cb3-6"><a href="hello-world.html#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb4-1"><a href="hello-world.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printf(...);</span>
+<span id="cb4-2"><a href="hello-world.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="hello-world.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">namespace</span> std {</span>
+<span id="cb4-4"><a href="hello-world.html#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> cout {}</span>
+<span id="cb4-5"><a href="hello-world.html#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">class</span> endl {}</span>
+<span id="cb4-6"><a href="hello-world.html#cb4-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><code>printf</code> isn’t placed inside <code>std</code> because it is a heritage from C. Many other C functions
 are also available in C++, and they can be distinguished by the absence of the <code>std::</code> prefix.</p>
 </div>

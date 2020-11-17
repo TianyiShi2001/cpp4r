@@ -24,7 +24,7 @@
 <meta name="author" content="Tianyi Shi" />
 
 
-<meta name="date" content="2020-11-15" />
+<meta name="date" content="2020-11-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -152,7 +152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.3.1" data-path="variables.html"><a href="variables.html#mutability"><i class="fa fa-check"></i><b>1.3.1</b> Mutability</a></li>
 </ul></li>
 <li class="chapter" data-level="1.4" data-path="functions.html"><a href="functions.html"><i class="fa fa-check"></i><b>1.4</b> Functions</a></li>
-<li class="chapter" data-level="1.5" data-path="pointers-and-references.html"><a href="pointers-and-references.html"><i class="fa fa-check"></i><b>1.5</b> Pointers and References</a></li>
+<li class="chapter" data-level="1.5" data-path="pointers-and-references.html"><a href="pointers-and-references.html"><i class="fa fa-check"></i><b>1.5</b> Pointers and References</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="pointers-and-references.html"><a href="pointers-and-references.html#lvalues-rvalues-and-rvalue-references"><i class="fa fa-check"></i><b>1.5.1</b> <code>lvalue</code>s, <code>rvalue</code>s, and rvalue references</a></li>
+</ul></li>
 <li class="chapter" data-level="1.6" data-path="control-flow.html"><a href="control-flow.html"><i class="fa fa-check"></i><b>1.6</b> Control Flow</a>
 <ul>
 <li class="chapter" data-level="1.6.1" data-path="control-flow.html"><a href="control-flow.html#if...else"><i class="fa fa-check"></i><b>1.6.1</b> <code>if...else</code></a></li>
@@ -195,59 +198,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">1.5</span> Pointers and References</h2>
 <p>Let’s revisit how we make references and pointers in Rust:</p>
 <p>In Rust, when you take a reference to a type <code>T</code>, the type of the reference is <code>&amp;T</code>. Basically, you add <code>&amp;</code> to both LHS and RHS:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb18-1"><a href="pointers-and-references.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">// type annotations are not required; this is just for demonstration</span></span>
-<span id="cb18-2"><a href="pointers-and-references.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span>  <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb18-3"><a href="pointers-and-references.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> r_a<span class="op">:</span> <span class="op">&amp;</span><span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span>a<span class="op">;</span> <span class="co">// r_a == &amp;5</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb19-1"><a href="pointers-and-references.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">// type annotations are not required; this is just for demonstration</span></span>
+<span id="cb19-2"><a href="pointers-and-references.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span>  <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb19-3"><a href="pointers-and-references.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> r_a<span class="op">:</span> <span class="op">&amp;</span><span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span>a<span class="op">;</span> <span class="co">// r_a == &amp;5</span></span></code></pre></div>
 <p>and when you deference, you use <code>*</code>. Just remember that <code>*</code> is the reverse of <code>&amp;</code>, and every <code>*</code> removes one <code>&amp;</code> from both LHS and RHS:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb19-1"><a href="pointers-and-references.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> r_a<span class="op">:</span> <span class="op">&amp;</span><span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span><span class="dv">5</span><span class="op">;</span></span>
-<span id="cb19-2"><a href="pointers-and-references.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span> <span class="op">*</span>r_a<span class="op">;</span> <span class="co">// a == 5</span></span>
-<span id="cb19-3"><a href="pointers-and-references.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span> <span class="op">*&amp;*&amp;*&amp;</span>a</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb20-1"><a href="pointers-and-references.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> r_a<span class="op">:</span> <span class="op">&amp;</span><span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span><span class="dv">5</span><span class="op">;</span></span>
+<span id="cb20-2"><a href="pointers-and-references.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span> <span class="op">*</span>r_a<span class="op">;</span> <span class="co">// a == 5</span></span>
+<span id="cb20-3"><a href="pointers-and-references.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span>   a<span class="op">:</span>  <span class="dt">i32</span> <span class="op">=</span> <span class="op">*&amp;*&amp;*&amp;</span>a</span></code></pre></div>
 <p>You can coerce a reference into a raw pointer, using either of the two syntaxes:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb20-1"><a href="pointers-and-references.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb20-2"><a href="pointers-and-references.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a<span class="op">:</span> <span class="op">*</span><span class="kw">const</span> <span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span>a<span class="op">;</span></span>
-<span id="cb20-3"><a href="pointers-and-references.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
-<span id="cb20-4"><a href="pointers-and-references.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a <span class="op">=</span> <span class="op">&amp;</span>a <span class="kw">as</span> <span class="op">*</span><span class="kw">const</span> <span class="dt">i32</span><span class="op">;</span></span></code></pre></div>
-<p>You need to be explicit about mutability:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb21-1"><a href="pointers-and-references.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
-<span id="cb21-2"><a href="pointers-and-references.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a<span class="op">:</span> <span class="op">*</span><span class="kw">mut</span> <span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span><span class="kw">mut</span> a<span class="op">;</span></span>
+<span id="cb21-2"><a href="pointers-and-references.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a<span class="op">:</span> <span class="op">*</span><span class="kw">const</span> <span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span>a<span class="op">;</span></span>
 <span id="cb21-3"><a href="pointers-and-references.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
-<span id="cb21-4"><a href="pointers-and-references.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a <span class="op">=</span> <span class="op">&amp;</span><span class="kw">mut</span> a <span class="kw">as</span> <span class="op">*</span><span class="kw">mut</span> <span class="dt">i32</span><span class="op">;</span></span></code></pre></div>
+<span id="cb21-4"><a href="pointers-and-references.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a <span class="op">=</span> <span class="op">&amp;</span>a <span class="kw">as</span> <span class="op">*</span><span class="kw">const</span> <span class="dt">i32</span><span class="op">;</span></span></code></pre></div>
+<p>You need to be explicit about mutability:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb22-1"><a href="pointers-and-references.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> a <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></span>
+<span id="cb22-2"><a href="pointers-and-references.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a<span class="op">:</span> <span class="op">*</span><span class="kw">mut</span> <span class="dt">i32</span> <span class="op">=</span> <span class="op">&amp;</span><span class="kw">mut</span> a<span class="op">;</span></span>
+<span id="cb22-3"><a href="pointers-and-references.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
+<span id="cb22-4"><a href="pointers-and-references.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="kw">let</span> p_a <span class="op">=</span> <span class="op">&amp;</span><span class="kw">mut</span> a <span class="kw">as</span> <span class="op">*</span><span class="kw">mut</span> <span class="dt">i32</span><span class="op">;</span></span></code></pre></div>
 <p>In C++, the difference between a reference and pointer is smaller. Pointers are
 compatible with C, and references are a C++-only thing.</p>
 <p>In C++ (and C), this is how you make a pointer:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb22-1"><a href="pointers-and-references.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    a =  <span class="dv">5</span>;</span>
-<span id="cb22-2"><a href="pointers-and-references.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> *p_a = &amp;a;</span>
-<span id="cb22-3"><a href="pointers-and-references.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
-<span id="cb22-4"><a href="pointers-and-references.html#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> * p_a = &amp;a;</span>
-<span id="cb22-5"><a href="pointers-and-references.html#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
-<span id="cb22-6"><a href="pointers-and-references.html#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>*  p_a = &amp;a;</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="pointers-and-references.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>    a =  <span class="dv">5</span>;</span>
+<span id="cb23-2"><a href="pointers-and-references.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> *p_a = &amp;a;</span>
+<span id="cb23-3"><a href="pointers-and-references.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
+<span id="cb23-4"><a href="pointers-and-references.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> * p_a = &amp;a;</span>
+<span id="cb23-5"><a href="pointers-and-references.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">// or</span></span>
+<span id="cb23-6"><a href="pointers-and-references.html#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>*  p_a = &amp;a;</span></code></pre></div>
 <p>You add <code>&amp;</code> to RHS, but you add <code>*</code> to LHS. Despite the fact that the variable name really is <code>p_a</code>, not <code>*p_a</code>, and the type really is <code>int*</code>, many people and formatters prepend the asterisk before the variable name (<code>int *p_a = &amp;a;</code>). There are some discussion at <a href="https://stackoverflow.com/questions/398395/why-is-the-asterisk-before-the-variable-name-rather-than-after-the-type">StackOverflow</a> on why people are preferring this style. I personally prefer using the <code>int* p_a = &amp;a</code> style, which is also being used consistently on <a href="https://en.cppreference.com/w/cpp/language/pointer">cppreference</a>, and in Bjarne Stroustrup’s <em>A Tour of C++</em>.</p>
 <p>Anyway, you can choose whichever form you like when you write your code, but you need to able to read all forms so that you can read others’ code.</p>
 <p>Note that, unlike in Rust, you cannot create a pointer to a literal in C++:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb23-1"><a href="pointers-and-references.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>* p = &amp;<span class="dv">5</span>; <span class="co">// not allowed!</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="pointers-and-references.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>* p = &amp;<span class="dv">5</span>; <span class="co">// not allowed!</span></span></code></pre></div>
+<p>The reason is that, <code>5</code> is an “rvalue,” which is “temporary” and thus it’s impossible to take its memory address with <code>&amp;</code>.</p>
 <p>To dereference a pointer, you use the dereference operator, <code>*</code>, which has the same semantics as Rust.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb24-1"><a href="pointers-and-references.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> b = *p_a;</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="pointers-and-references.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> b = *p_a;</span></code></pre></div>
 <p>References have similar capabilities as pointers, with the only big difference being their semantics.
 This is how you create a reference and read its referent’s value:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb25-1"><a href="pointers-and-references.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> l = <span class="dv">5</span>;</span>
-<span id="cb25-2"><a href="pointers-and-references.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>&amp; m = l;</span>
-<span id="cb25-3"><a href="pointers-and-references.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(m == <span class="dv">5</span>); <span class="co">// not `*m` !</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="pointers-and-references.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> l = <span class="dv">5</span>;</span>
+<span id="cb26-2"><a href="pointers-and-references.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>&amp; m = l;</span>
+<span id="cb26-3"><a href="pointers-and-references.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="ot">assert</span>(m == <span class="dv">5</span>); <span class="co">// not `*m` !</span></span></code></pre></div>
 <p>You do not need to (and cannot) use the deference operator (<code>*</code>) on a reference to access the value of the referent. In addition, a reference cannot be re-assigned to refer to another value. Apart from these two rules, references are effectively the same as pointers. It can be helpful to see a reference as an <em>alias</em> to a <em>named variable</em>. Indeed, a reference shares the same memory address as its referent.</p>
+<p>You can’t create a non-const reference to a literal, but you can create a <code>const</code> one:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb27-1"><a href="pointers-and-references.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span>&amp; r = <span class="dv">5</span>; <span class="co">// not allowed</span></span>
+<span id="cb27-2"><a href="pointers-and-references.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">const</span> <span class="dt">int</span>&amp; r = <span class="dv">5</span>; <span class="co">// ok</span></span></code></pre></div>
 <p>Since we are Rustaceans, we are sensitive to mutability. Are there any difference between pointers and references in terms of mutability? The answer is no. Both can be used to mutate the referent.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb26-1"><a href="pointers-and-references.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
-<span id="cb26-2"><a href="pointers-and-references.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main()</span>
-<span id="cb26-3"><a href="pointers-and-references.html#cb26-3" aria-hidden="true" tabindex="-1"></a>{</span>
-<span id="cb26-4"><a href="pointers-and-references.html#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a{<span class="dv">5</span>};</span>
-<span id="cb26-5"><a href="pointers-and-references.html#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> &amp;r_a = a;  <span class="co">// create a reference</span></span>
-<span id="cb26-6"><a href="pointers-and-references.html#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> *p_a = &amp;a; <span class="co">// create a pointer</span></span>
-<span id="cb26-7"><a href="pointers-and-references.html#cb26-7" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;| a|r_a|*p_a|     p_a      |</span><span class="sc">\n</span><span class="st">&quot;</span>);</span>
-<span id="cb26-8"><a href="pointers-and-references.html#cb26-8" aria-hidden="true" tabindex="-1"></a>    a = <span class="dv">10</span>; <span class="co">// mutate the value</span></span>
-<span id="cb26-9"><a href="pointers-and-references.html#cb26-9" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
-<span id="cb26-10"><a href="pointers-and-references.html#cb26-10" aria-hidden="true" tabindex="-1"></a>    r_a = <span class="dv">15</span>; <span class="co">// mutate via reference; no asterisk!</span></span>
-<span id="cb26-11"><a href="pointers-and-references.html#cb26-11" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
-<span id="cb26-12"><a href="pointers-and-references.html#cb26-12" aria-hidden="true" tabindex="-1"></a>    *p_a = <span class="dv">20</span>; <span class="co">// mutate via pointer</span></span>
-<span id="cb26-13"><a href="pointers-and-references.html#cb26-13" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
-<span id="cb26-14"><a href="pointers-and-references.html#cb26-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb28-1"><a href="pointers-and-references.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></span>
+<span id="cb28-2"><a href="pointers-and-references.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main()</span>
+<span id="cb28-3"><a href="pointers-and-references.html#cb28-3" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb28-4"><a href="pointers-and-references.html#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> a{<span class="dv">5</span>};</span>
+<span id="cb28-5"><a href="pointers-and-references.html#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> &amp;r_a = a;  <span class="co">// create a reference</span></span>
+<span id="cb28-6"><a href="pointers-and-references.html#cb28-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> *p_a = &amp;a; <span class="co">// create a pointer</span></span>
+<span id="cb28-7"><a href="pointers-and-references.html#cb28-7" aria-hidden="true" tabindex="-1"></a>    puts(<span class="st">&quot;| a|r_a|*p_a|     p_a      |&quot;</span>);</span>
+<span id="cb28-8"><a href="pointers-and-references.html#cb28-8" aria-hidden="true" tabindex="-1"></a>    a = <span class="dv">10</span>; <span class="co">// mutate the value</span></span>
+<span id="cb28-9"><a href="pointers-and-references.html#cb28-9" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
+<span id="cb28-10"><a href="pointers-and-references.html#cb28-10" aria-hidden="true" tabindex="-1"></a>    r_a = <span class="dv">15</span>; <span class="co">// mutate via reference; no asterisk!</span></span>
+<span id="cb28-11"><a href="pointers-and-references.html#cb28-11" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
+<span id="cb28-12"><a href="pointers-and-references.html#cb28-12" aria-hidden="true" tabindex="-1"></a>    *p_a = <span class="dv">20</span>; <span class="co">// mutate via pointer</span></span>
+<span id="cb28-13"><a href="pointers-and-references.html#cb28-13" aria-hidden="true" tabindex="-1"></a>    printf(<span class="st">&quot;|</span><span class="sc">%d</span><span class="st">| </span><span class="sc">%d</span><span class="st">|  </span><span class="sc">%d</span><span class="st">|</span><span class="sc">%p</span><span class="st">|</span><span class="sc">\n</span><span class="st">&quot;</span>, a, r_a, *p_a, p_a);</span>
+<span id="cb28-14"><a href="pointers-and-references.html#cb28-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <pre><code>| a|r_a|*p_a|     p_a      |
 |10| 10|  10|0x7ffe09e40404|
 |15| 15|  15|0x7ffe09e40404|
@@ -340,6 +347,10 @@ This is how you create a reference and read its referent’s value:</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div id="lvalues-rvalues-and-rvalue-references" class="section level3" number="1.5.1">
+<h3><span class="header-section-number">1.5.1</span> <code>lvalue</code>s, <code>rvalue</code>s, and rvalue references</h3>
+<p><a href="https://google.github.io/styleguide/cppguide.html#Rvalue_references" class="uri">https://google.github.io/styleguide/cppguide.html#Rvalue_references</a></p>
 </div>
 </div>
             </section>
