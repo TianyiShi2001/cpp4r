@@ -22,6 +22,7 @@ add_executable(enum enum.cpp)
 
 
 add_executable(class-complex-number class/complex-number.cpp)
+add_executable(pet class/pet.cpp)
 add_subdirectory(Adder)
 
 # target_link_libraries(helloworld adder)

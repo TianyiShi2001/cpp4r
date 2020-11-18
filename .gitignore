@@ -3,3 +3,4 @@ build/
 extern/
 .Rproj.user
 book/
+*/**/target

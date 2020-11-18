@@ -6,7 +6,7 @@ namespace basic
 {
     void while_example()
     {
-        std::cout << "basic while loop" << std::endl;
+        puts("basic while loop");
         int i = 10;
         while (i > 0)
         {
@@ -24,8 +24,8 @@ namespace basic
     }
     void for_traditional()
     {
-        std::cout << "basic traditional for loop" << std::endl;
-        printf("|i|j|\n");
+        puts("basic traditional for loop");
+        puts("|i|j|");
         for (int i = 0; i < 2; i++)
         {
             for (int j = 0; j < 3; j++)
@@ -40,20 +40,20 @@ namespace basic
         switch (d)
         {
         case 0:
-            printf("It's Sunday!\n");
+            puts("It's Sunday!");
             break;
         case 6:
-            printf("It's Saturday!\n");
+            puts("It's Saturday!");
             break;
         case 1:
         case 2:
         case 3:
         case 4:
         case 5:
-            printf("It's weekday.\n");
+            puts("It's weekday.");
             break;
         default:
-            printf("Not a valid day of week!\n");
+            puts("Not a valid day of week!");
             break;
         }
     }
@@ -67,10 +67,10 @@ namespace basic
 
 namespace range_based
 {
-    std::vector<std::string> v{"foo", "bar", "baz", "boo"};
+    std::vector<std::string> v{ "foo", "bar", "baz", "boo" };
     void copied()
     {
-        std::cout << "range-based for loop: copied" << std::endl;
+        puts("range-based for loop: copied");
         for (auto s : v)
         {
             std::cout << s << std::endl;
@@ -78,16 +78,16 @@ namespace range_based
     }
     void borrowed()
     {
-        std::cout << "range-based for loop: borrowed via reference" << std::endl;
-        for (auto &s : v)
+        puts("range-based for loop: borrowed via reference");
+        for (auto& s : v)
         {
             std::cout << s << std::endl;
         }
     }
     void mutation()
     {
-        std::cout << "range-based for loop: mutation" << std::endl;
-        for (auto &s : v)
+        puts("range-based for loop: mutation");
+        for (auto& s : v)
         {
             s += '!';
         }
@@ -108,8 +108,8 @@ namespace break_outer
 
     void with_goto()
     {
-        printf("Break outer loop using goto:\n");
-        std::cout << "i j k" << std::endl;
+        puts("Break outer loop using goto:");
+        puts("i j k");
         for (int i = 0; i < 3; ++i)
         {
 
@@ -125,17 +125,17 @@ namespace break_outer
                 }
             }
         for_i_end:
-        {
-            // * cannot be left blank; needs a placeholder
-        }
+            {
+                // * cannot be left blank; needs a placeholder
+            }
         }
     }
 
     void with_flag()
     {
-        printf("Break outer loop using flag:\n");
-        std::cout << "i j k" << std::endl;
-        bool i_is_1{false};
+        puts("Break outer loop using flag:");
+        puts("i j k");
+        bool i_is_1{ false };
         for (int i = 0; i < 3; ++i)
         {
 
@@ -164,8 +164,8 @@ namespace break_outer
 
     void with_lambda()
     {
-        printf("Break outer loop using lambda:\n");
-        std::cout << "i j k " << std::endl;
+        puts("Break outer loop using lambda:");
+        puts("i j k");
         for (int i = 0; i < 3; ++i)
         {
             [&] {
