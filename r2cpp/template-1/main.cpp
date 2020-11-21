@@ -1,29 +1,42 @@
+// * References
+// *    - https://stackoverflow.com/questions/1936399/c-array-operator-with-multiple-arguments
+// *    - https://isocpp.org/wiki/faq/operator-overloading#matrix-subscript-op
+
 #include <iostream>
 #include <vector>
 #include <cassert>
 
 using namespace std;
 
-struct indices
-{
-    size_t i, j;
-};
+// struct indices
+// {
+//     size_t i, j;
+// };
 
 template<typename T>
 class Matrix {
     vector<T> data;
 public:
     size_t nrow, ncol;
+    // * constructors
     Matrix() : nrow{ 0 }, ncol{ 0 }, data{ vector<T>{} }{}
     Matrix(vector<T>&& data, size_t nrow, size_t ncol) : nrow{ nrow }, ncol{ ncol }, data{ data }{}
+    // * destructor
+    ~Matrix() { delete[] data; }
+    // * reisize
     void resize(size_t m, size_t n) {
         assert(m * n == nrow * ncol);
         nrow = m;
         ncol = n;
     }
-    T& operator[](indices idx) {
-        return data[idx.i * ncol + idx.j];
+    // * index
+    T& operator()(size_t i, size_t j) {
+        return data[i * ncol + j];
     }
+    // T& operator[](indices idx) {
+    //     return data[idx.i * ncol + idx.j];
+    // }
+
 };
 
 int main() {
@@ -33,7 +46,7 @@ int main() {
     {
         for (size_t j = 0; j < m.ncol; j++)
         {
-            printf("%2i ", m[{i, j}]);
+            printf("%2i ", m(i, j));
         }
         cout << endl;
     }
